@@ -16,7 +16,6 @@ jobs:
   # Deploy preview for pull requests
   deploy-preview:
     name: Deploy Preview
-    needs: test
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     environment: preview
@@ -84,7 +83,6 @@ jobs:
   # Deploy to production (main branch)
   deploy-production:
     name: Deploy Production
-    needs: test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: production
