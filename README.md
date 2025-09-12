@@ -64,6 +64,7 @@ cp .dev.vars.example .dev.vars
 # Edit with your credentials
 # CLOUDFLARE_ACCOUNT_ID=your-account-id-here
 # CLOUDFLARE_D1_TOKEN=your-api-token-here
+# CLOUDFLARE_R2_URL=your-r2-url-here
 ```
 
 Or create `.dev.vars` manually:
