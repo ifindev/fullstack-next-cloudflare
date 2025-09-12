@@ -7,6 +7,7 @@ export async function GET() {
         return NextResponse.json({
             success: true,
             data: allTodos,
+            message: "Todos fetched successfully",
         });
     } catch (error) {
         console.error("Error fetching todos:", error);

@@ -4,7 +4,11 @@ import { createCategory, getAllCategories } from "@/server/categories.server";
 export async function GET() {
     try {
         const categories = await getAllCategories();
-        return NextResponse.json(categories);
+        return NextResponse.json({
+            success: true,
+            data: categories,
+            message: "Categories fetched successfully",
+        });
     } catch (error) {
         console.error("Error fetching categories:", error);
         return NextResponse.json(

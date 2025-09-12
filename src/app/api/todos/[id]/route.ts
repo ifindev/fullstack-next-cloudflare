@@ -30,6 +30,7 @@ export async function GET(_: NextRequest, { params }: Params) {
         return NextResponse.json({
             success: true,
             data: todo,
+            message: "Todo fetched successfully",
         });
     } catch (error) {
         console.error("Error fetching todo:", error);

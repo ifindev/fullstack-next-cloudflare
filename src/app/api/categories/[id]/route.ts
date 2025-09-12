@@ -26,7 +26,11 @@ export async function GET(_: NextRequest, { params }: Params) {
             );
         }
 
-        return NextResponse.json({ success: true, data: category });
+        return NextResponse.json({
+            success: true,
+            data: category,
+            message: "Category fetched successfully",
+        });
     } catch (error: any) {
         console.error("Error fetching category:", error);
 
