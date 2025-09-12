@@ -44,7 +44,7 @@ export async function uploadToR2(
         }
 
         // Return public URL of R2 (should be using custom domain)
-        const publicUrl = `https://${env.CLOUDFLARE_R2_URL}/${key}`;
+        const publicUrl = `https://${process.env.CLOUDFLARE_R2_URL}/${key}`;
 
         return {
             success: true,
