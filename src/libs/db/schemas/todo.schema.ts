@@ -47,6 +47,7 @@ export const insertTodoSchema = createInsertSchema(todos, {
         .string()
         .max(1000, TODO_VALIDATION_MESSAGES.DESCRIPTION_TOO_LONG)
         .optional(),
+    categoryId: z.number().optional(),
     status: z.enum(TodoStatus).optional(),
     priority: z.enum(TodoPriority).optional(),
     imageUrl: z
