@@ -225,7 +225,7 @@ jobs:
   cleanup:
     name: Cleanup
     runs-on: ubuntu-latest
-    needs: [deploy-production, deploy-staging, deploy-preview]
+    needs: [deploy-production, deploy-preview]
     if: always()
     steps:
       - name: Cleanup artifacts
