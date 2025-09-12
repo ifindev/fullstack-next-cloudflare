@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { getDb } from "@/libs/db";
+import { categories, getDb } from "@/libs/db";
 import {
     insertTodoSchema,
     type Todo,
@@ -10,15 +10,49 @@ import { type UploadResult, uploadToR2 } from "@/libs/storage/r2";
 
 export async function getAllTodos(): Promise<Todo[]> {
     const db = await getDb();
-    return await db.select().from(todos).orderBy(todos.createdAt);
+    return await db
+        .select({
+            id: todos.id,
+            title: todos.title,
+            description: todos.description,
+            completed: todos.completed,
+            categoryId: todos.categoryId,
+            categoryName: categories.name,
+            dueDate: todos.dueDate,
+            imageUrl: todos.imageUrl,
+            imageAlt: todos.imageAlt,
+            status: todos.status,
+            priority: todos.priority,
+            createdAt: todos.createdAt,
+            updatedAt: todos.updatedAt,
+        })
+        .from(todos)
+        .leftJoin(categories, eq(todos.categoryId, categories.id))
+        .orderBy(todos.createdAt);
 }
 
 export async function getTodoById(id: number): Promise<Todo | null> {
     const db = await getDb();
     const result = await db
-        .select()
+        .select({
+            id: todos.id,
+            title: todos.title,
+            description: todos.description,
+            completed: todos.completed,
+            categoryId: todos.categoryId,
+            categoryName: categories.name,
+            dueDate: todos.dueDate,
+            imageUrl: todos.imageUrl,
+            imageAlt: todos.imageAlt,
+            status: todos.status,
+            priority: todos.priority,
+            createdAt: todos.createdAt,
+            updatedAt: todos.updatedAt,
+        })
         .from(todos)
+        .leftJoin(categories, eq(todos.categoryId, categories.id))
         .where(eq(todos.id, id))
+        .orderBy(todos.createdAt)
         .limit(1);
     return result[0] || null;
 }
