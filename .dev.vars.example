@@ -7,3 +7,4 @@ NEXTJS_ENV=development
 CLOUDFLARE_ACCOUNT_ID=your-account-id-here
 CLOUDFLARE_D1_TOKEN=your-api-token-here
 CLOUDFLARE_R2_URL=your-r2-url-here
+CLOUDFLARE_API_TOKEN=your-api-token-here

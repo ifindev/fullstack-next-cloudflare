@@ -43,7 +43,7 @@ pnpm dev
 
 ## 2. Environment Setup
 
-### Get Cloudflare credentials
+### Get Cloudflare credentials & API Token
 
 You'll need these from your Cloudflare account:
 
@@ -51,7 +51,17 @@ You'll need these from your Cloudflare account:
 2. **API Token**: 
    - Go to [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens)
    - Click "Create Token"
-   - Use "D1:Edit" & "D1:Read" template or create custom with `Account: Cloudflare D1:Edit` permissions
+   - Setup permissions for the following things
+   
+```bash
+  Account - D1: Read
+  Account - D1: Edit
+  Account - Workers Agents Configuration: Edit
+  Account - Workers Scripts: Edit
+  Account - R2 Storage: Read
+  Account - R2 Storage: Edit
+  Zone - Zone: Read (only if using custom domains)
+```
 
 ### Create environment file
 
