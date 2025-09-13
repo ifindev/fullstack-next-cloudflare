@@ -22,6 +22,13 @@
       "when": 1757666976218,
       "tag": "0002_add_updated_at_category_table",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1757749366302,
+      "tag": "0003_add_better_auth_tables",
+      "breakpoints": true
     }
   ]
 }

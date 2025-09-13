@@ -11,7 +11,7 @@
         "dev:cf": "npx @opennextjs/cloudflare build && wrangler dev",
         "dev:remote": "npx @opennextjs/cloudflare build && wrangler dev --remote",
         "lint": "npx biome format --write",
-        "deploy": "npx @opennextjs/cloudflare build && npx @opennextjs/cloudflare deploy",
+        "deploy": "wrangler d1 migrations apply next-cf-app --remote && npx @opennextjs/cloudflare build && npx @opennextjs/cloudflare deploy",
         "preview": "npx @opennextjs/cloudflare build && npx @opennextjs/cloudflare preview",
         "db:generate": "drizzle-kit generate",
         "db:generate:named": "drizzle-kit generate --name",
