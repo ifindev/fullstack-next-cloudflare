@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { getAllCategories } from "@/server/categories.server";
 import { getTodoById } from "@/server/todos.server";
-import { TodoForm } from "../../components/todo-form";
+import { TodoForm } from "../../_components/todo-form";
 
 export const dynamic = "force-dynamic";
 

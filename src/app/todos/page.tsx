@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { getAllTodos } from "@/server/todos.server";
-import { TodoCard } from "./components/todo-card";
+import { TodoCard } from "./_components/todo-card";
 
 export const dynamic = "force-dynamic";
 
