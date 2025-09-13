@@ -88,6 +88,10 @@ CLOUDFLARE_ACCOUNT_ID=your-account-id-here
 CLOUDFLARE_D1_TOKEN=your-api-token-here
 ```
 
+### Add Environment Secret to Workers
+
+To store all the secrets on Workers for production, you can refer to the following documentations https://developers.cloudflare.com/workers/configuration/secrets/. Basically, all the secrets such as `GOOGLE_CLIENT_ID` and others should be kept on Cloudflare Secrets. 
+
 ## 3. Database Setup
 
 ### Option A: Use existing database (Recommended)

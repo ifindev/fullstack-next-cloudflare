@@ -11,7 +11,7 @@ CLOUDFLARE_API_TOKEN=your-api-token-here
 
 # Authentication
 BETTER_AUTH_SECRET=your-better-auth-secret # see https://www.better-auth.com/docs/installation
-BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app
+BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app - should use the deployed URL in Workers for prod
 
 # Google Auth : see https://www.better-auth.com/docs/authentication/google
 GOOGLE_CLIENT_ID=your-google-client-id
