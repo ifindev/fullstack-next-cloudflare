@@ -1,7 +1,7 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-import { VALIDATION_MESSAGES } from "@/libs/constants/validation.constant";
+import { VALIDATION_MESSAGES } from "@/lib/constants/validation.constant";
 
 export const categories = sqliteTable("categories", {
     id: integer("id").primaryKey({ autoIncrement: true }),

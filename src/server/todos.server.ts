@@ -1,12 +1,12 @@
 import { eq } from "drizzle-orm";
-import { categories, getDb } from "@/libs/db";
+import { categories, getDb } from "@/lib/db";
 import {
     insertTodoSchema,
     type Todo,
     todos,
     updateTodoSchema,
-} from "@/libs/db/schemas/todo.schema";
-import { type UploadResult, uploadToR2 } from "@/libs/storage/r2";
+} from "@/lib/db/schemas/todo.schema";
+import { type UploadResult, uploadToR2 } from "@/lib/r2";
 
 export async function getAllTodos(): Promise<Todo[]> {
     const db = await getDb();

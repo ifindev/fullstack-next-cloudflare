@@ -28,13 +28,13 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { insertTodoSchema } from "@/libs/db/schemas/todo.schema";
+import { insertTodoSchema } from "@/lib/db/schemas/todo.schema";
 import {
     TodoPriority,
     type TodoPriorityType,
     TodoStatus,
     type TodoStatusType,
-} from "@/libs/enums/todo.enum";
+} from "@/lib/enums/todo.enum";
 
 type Category = {
     id: number;
