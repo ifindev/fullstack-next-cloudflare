@@ -1,10 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { requireAuth } from "@/lib/auth-utils";
+import { requireAuth } from "@/modules/auth/utils/auth-utils";
 import {
     deleteCategory,
     getCategoryById,
     updateCategory,
-} from "@/server/categories.server";
+} from "@/modules/todos/server/categories.server";
 
 type Params = {
     params: Promise<{ id: string }>;

@@ -1,5 +1,5 @@
 import { toNextJsHandler } from "better-auth/next-js";
-import { getAuthInstance } from "@/lib/auth-utils";
+import { getAuthInstance } from "@/modules/auth/utils/auth-utils";
 
 // Create a dynamic handler that gets the auth instance
 const createHandler = async () => {

@@ -1,6 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { requireAuth } from "@/lib/auth-utils";
-import { createCategory, getAllCategories } from "@/server/categories.server";
+import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import {
+    createCategory,
+    getAllCategories,
+} from "@/modules/todos/server/categories.server";
 
 export async function GET() {
     try {

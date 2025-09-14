@@ -1,6 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/lib/auth-utils";
-import { deleteTodo, getTodoById, updateTodo } from "@/server/todos.server";
+import {
+    deleteTodo,
+    getTodoById,
+    updateTodo,
+} from "@/modules/todos/server/todos.server";
 
 type Params = {
     params: Promise<{ id: string }>;
