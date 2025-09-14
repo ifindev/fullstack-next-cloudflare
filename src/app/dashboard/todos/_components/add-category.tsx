@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -110,6 +110,10 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
                     variant="ghost"
                     size="sm"
                     className="w-full justify-start px-2 py-1.5 h-auto font-normal"
+                    onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }}
                 >
                     <Plus className="mr-2 h-4 w-4" />
                     Add new category
