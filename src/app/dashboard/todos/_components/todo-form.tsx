@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, X } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
@@ -435,9 +436,11 @@ export function TodoForm({
                                 <div className="mt-2">
                                     {imagePreview ? (
                                         <div className="relative inline-block">
-                                            <img
+                                            <Image
                                                 src={imagePreview}
                                                 alt="Preview"
+                                                width={400}
+                                                height={200}
                                                 className="max-w-full h-auto rounded-md max-h-48 object-cover"
                                             />
                                             <Button

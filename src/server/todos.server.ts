@@ -6,6 +6,7 @@ import {
     todos,
     updateTodoSchema,
 } from "@/lib/db/schemas/todo.schema";
+import { TodoPriority, TodoStatus } from "@/lib/enums/todo.enum";
 import { type UploadResult, uploadToR2 } from "@/lib/r2";
 
 export async function getAllTodos(userId: string): Promise<Todo[]> {
@@ -110,6 +111,12 @@ export async function createTodo(
         .values({
             ...validatedData,
             userId,
+            status:
+                (validatedData.status as (typeof TodoStatus)[keyof typeof TodoStatus]) ||
+                TodoStatus.PENDING,
+            priority:
+                (validatedData.priority as (typeof TodoPriority)[keyof typeof TodoPriority]) ||
+                TodoPriority.MEDIUM,
             imageUrl: imageUrl || validatedData.imageUrl,
             imageAlt: imageAlt || validatedData.imageAlt,
             createdAt: new Date().toISOString(),
@@ -148,10 +155,22 @@ export async function updateTodo(
     }
 
     const db = await getDb();
+
+    // Extract status and priority from validatedData to handle them separately
+    const { status, priority, ...restValidatedData } = validatedData;
+
     const result = await db
         .update(todos)
         .set({
-            ...validatedData,
+            ...restValidatedData,
+            // Ensure proper typing for enum fields
+            ...(status && {
+                status: status as (typeof TodoStatus)[keyof typeof TodoStatus],
+            }),
+            ...(priority && {
+                priority:
+                    priority as (typeof TodoPriority)[keyof typeof TodoPriority],
+            }),
             // Only update image fields if we have new values
             ...(imageUrl && { imageUrl }),
             ...(imageAlt && { imageAlt }),
