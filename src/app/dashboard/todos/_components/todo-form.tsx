@@ -28,7 +28,6 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import type { AuthUser } from "@/lib/auth-utils";
 import { insertTodoSchema } from "@/lib/db/schemas/todo.schema";
 import {
     TodoPriority,
@@ -36,6 +35,7 @@ import {
     TodoStatus,
     type TodoStatusType,
 } from "@/lib/enums/todo.enum";
+import type { AuthUser } from "@/modules/auth/utils/auth-utils";
 import { AddCategory } from "./add-category";
 
 type Category = {

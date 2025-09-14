@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { requireAuth } from "@/lib/auth-utils";
+import { requireAuth } from "@/modules/auth/utils/auth-utils";
 import { createTodo, getAllTodos } from "@/modules/todos/server/todos.server";
 
 export async function GET() {
