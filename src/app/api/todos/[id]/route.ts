@@ -1,4 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { requireAuth } from "@/lib/auth-utils";
 import { deleteTodo, getTodoById, updateTodo } from "@/server/todos.server";
 
 type Params = {
@@ -8,6 +9,7 @@ type Params = {
 // GET /api/todos/[id] - Get specific todo
 export async function GET(_: NextRequest, { params }: Params) {
     try {
+        const user = await requireAuth();
         const { id } = await params;
         const todoId = parseInt(id, 10);
 
@@ -18,7 +20,7 @@ export async function GET(_: NextRequest, { params }: Params) {
             );
         }
 
-        const todo = await getTodoById(todoId);
+        const todo = await getTodoById(todoId, user.id);
 
         if (!todo) {
             return NextResponse.json(
@@ -32,8 +34,16 @@ export async function GET(_: NextRequest, { params }: Params) {
             data: todo,
             message: "Todo fetched successfully",
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error fetching todo:", error);
+
+        if (error.message === "Authentication required") {
+            return NextResponse.json(
+                { success: false, error: "Authentication required" },
+                { status: 401 },
+            );
+        }
+
         return NextResponse.json(
             { success: false, error: "Failed to fetch todo" },
             { status: 500 },
@@ -94,7 +104,8 @@ export async function PUT(request: NextRequest, { params }: Params) {
             todoData = await request.json();
         }
 
-        const todo = await updateTodo(todoId, todoData, imageFile);
+        const user = await requireAuth();
+        const todo = await updateTodo(todoId, todoData, user.id, imageFile);
 
         if (!todo) {
             return NextResponse.json(
@@ -110,6 +121,13 @@ export async function PUT(request: NextRequest, { params }: Params) {
         });
     } catch (error: any) {
         console.error("Error updating todo:", error);
+
+        if (error.message === "Authentication required") {
+            return NextResponse.json(
+                { success: false, error: "Authentication required" },
+                { status: 401 },
+            );
+        }
 
         if (error.name === "ZodError") {
             return NextResponse.json(
@@ -132,6 +150,7 @@ export async function PUT(request: NextRequest, { params }: Params) {
 // DELETE /api/todos/[id] - Delete specific todo
 export async function DELETE(_: NextRequest, { params }: Params) {
     try {
+        const user = await requireAuth();
         const { id } = await params;
         const todoId = parseInt(id, 10);
 
@@ -142,7 +161,7 @@ export async function DELETE(_: NextRequest, { params }: Params) {
             );
         }
 
-        const deleted = await deleteTodo(todoId);
+        const deleted = await deleteTodo(todoId, user.id);
 
         if (!deleted) {
             return NextResponse.json(
@@ -155,8 +174,16 @@ export async function DELETE(_: NextRequest, { params }: Params) {
             success: true,
             message: "Todo deleted successfully",
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error deleting todo:", error);
+
+        if (error.message === "Authentication required") {
+            return NextResponse.json(
+                { success: false, error: "Authentication required" },
+                { status: 401 },
+            );
+        }
+
         return NextResponse.json(
             { success: false, error: "Failed to delete todo" },
             { status: 500 },

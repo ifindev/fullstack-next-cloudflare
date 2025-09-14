@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import { categories, getDb } from "@/lib/db";
 import {
     insertTodoSchema,
@@ -8,7 +8,7 @@ import {
 } from "@/lib/db/schemas/todo.schema";
 import { type UploadResult, uploadToR2 } from "@/lib/r2";
 
-export async function getAllTodos(): Promise<Todo[]> {
+export async function getAllTodos(userId: string): Promise<Todo[]> {
     const db = await getDb();
     return await db
         .select({
@@ -23,15 +23,26 @@ export async function getAllTodos(): Promise<Todo[]> {
             imageAlt: todos.imageAlt,
             status: todos.status,
             priority: todos.priority,
+            userId: todos.userId,
             createdAt: todos.createdAt,
             updatedAt: todos.updatedAt,
         })
         .from(todos)
-        .leftJoin(categories, eq(todos.categoryId, categories.id))
+        .leftJoin(
+            categories,
+            and(
+                eq(todos.categoryId, categories.id),
+                eq(categories.userId, userId),
+            ),
+        )
+        .where(eq(todos.userId, userId))
         .orderBy(todos.createdAt);
 }
 
-export async function getTodoById(id: number): Promise<Todo | null> {
+export async function getTodoById(
+    id: number,
+    userId: string,
+): Promise<Todo | null> {
     const db = await getDb();
     const result = await db
         .select({
@@ -46,12 +57,19 @@ export async function getTodoById(id: number): Promise<Todo | null> {
             imageAlt: todos.imageAlt,
             status: todos.status,
             priority: todos.priority,
+            userId: todos.userId,
             createdAt: todos.createdAt,
             updatedAt: todos.updatedAt,
         })
         .from(todos)
-        .leftJoin(categories, eq(todos.categoryId, categories.id))
-        .where(eq(todos.id, id))
+        .leftJoin(
+            categories,
+            and(
+                eq(todos.categoryId, categories.id),
+                eq(categories.userId, userId),
+            ),
+        )
+        .where(and(eq(todos.id, id), eq(todos.userId, userId)))
         .orderBy(todos.createdAt)
         .limit(1);
     return result[0] || null;
@@ -59,9 +77,13 @@ export async function getTodoById(id: number): Promise<Todo | null> {
 
 export async function createTodo(
     data: unknown,
+    userId: string,
     imageFile?: File,
 ): Promise<Todo> {
-    const validatedData = insertTodoSchema.parse(data);
+    const validatedData = insertTodoSchema.parse({
+        ...(data as object),
+        userId,
+    });
 
     // Handle optional image upload
     let imageUrl: string | undefined;
@@ -87,6 +109,7 @@ export async function createTodo(
         .insert(todos)
         .values({
             ...validatedData,
+            userId,
             imageUrl: imageUrl || validatedData.imageUrl,
             imageAlt: imageAlt || validatedData.imageAlt,
             createdAt: new Date().toISOString(),
@@ -100,6 +123,7 @@ export async function createTodo(
 export async function updateTodo(
     id: number,
     data: unknown,
+    userId: string,
     imageFile?: File,
 ): Promise<Todo | null> {
     const validatedData = updateTodoSchema.parse(data);
@@ -133,22 +157,24 @@ export async function updateTodo(
             ...(imageAlt && { imageAlt }),
             updatedAt: new Date().toISOString(),
         })
-        .where(eq(todos.id, id))
+        .where(and(eq(todos.id, id), eq(todos.userId, userId)))
         .returning();
 
     return result[0] || null;
 }
 
-export async function deleteTodo(id: number): Promise<boolean> {
+export async function deleteTodo(id: number, userId: string): Promise<boolean> {
     const db = await getDb();
 
-    // Check if todo exists first
-    const existingTodo = await getTodoById(id);
+    // Check if todo exists and belongs to user first
+    const existingTodo = await getTodoById(id, userId);
     if (!existingTodo) {
         return false;
     }
 
     // Delete the todo
-    await db.delete(todos).where(eq(todos.id, id));
+    await db
+        .delete(todos)
+        .where(and(eq(todos.id, id), eq(todos.userId, userId)));
     return true;
 }

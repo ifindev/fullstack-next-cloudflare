@@ -9,9 +9,9 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
-export default function Home() {
+export default function Dashboard() {
     return (
-        <div className="container mx-auto py-12">
+        <div className="container mx-auto py-12 px-4">
             <div className="text-center mb-12">
                 <h1 className="text-4xl font-bold text-gray-900 mb-4">
                     Welcome to TodoApp
@@ -34,7 +34,7 @@ export default function Home() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Link href="/todos">
+                        <Link href="/dashboard/todos">
                             <Button className="w-full">
                                 <CheckSquare className="mr-2 h-4 w-4" />
                                 Go to Todos
@@ -54,7 +54,7 @@ export default function Home() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <Link href="/todos/new">
+                        <Link href="/dashboard/todos/new">
                             <Button className="w-full" variant="outline">
                                 <Plus className="mr-2 h-4 w-4" />
                                 Create New Todo

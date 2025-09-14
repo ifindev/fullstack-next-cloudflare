@@ -8,6 +8,7 @@ import {
     TodoStatus,
     type TodoStatusType,
 } from "../../enums/todo.enum";
+import { user } from "./auth.schema";
 import { categories } from "./category.schema";
 
 export const todos = sqliteTable("todos", {
@@ -15,6 +16,9 @@ export const todos = sqliteTable("todos", {
     title: text("title").notNull(),
     description: text("description"),
     categoryId: integer("category_id").references(() => categories.id),
+    userId: text("user_id")
+        .notNull()
+        .references(() => user.id, { onDelete: "cascade" }),
     status: text("status")
         .$type<TodoStatusType>()
         .notNull()
@@ -48,8 +52,13 @@ export const insertTodoSchema = createInsertSchema(todos, {
         .max(1000, TODO_VALIDATION_MESSAGES.DESCRIPTION_TOO_LONG)
         .optional(),
     categoryId: z.number().optional(),
-    status: z.enum(TodoStatus).optional(),
-    priority: z.enum(TodoPriority).optional(),
+    userId: z.string().min(1, "User ID is required"),
+    status: z
+        .enum(Object.values(TodoStatus) as [string, ...string[]])
+        .optional(),
+    priority: z
+        .enum(Object.values(TodoPriority) as [string, ...string[]])
+        .optional(),
     imageUrl: z
         .string()
         .url(TODO_VALIDATION_MESSAGES.INVALID_IMAGE_URL)
@@ -57,12 +66,14 @@ export const insertTodoSchema = createInsertSchema(todos, {
         .or(z.literal("")),
     imageAlt: z.string().optional().or(z.literal("")),
     completed: z.boolean().optional(),
+    dueDate: z.string().optional().or(z.literal("")),
 });
 
 export const selectTodoSchema = createSelectSchema(todos);
 
 export const updateTodoSchema = insertTodoSchema.partial().omit({
     id: true,
+    userId: true,
     createdAt: true,
 });
 

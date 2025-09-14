@@ -1,16 +1,26 @@
 import { type NextRequest, NextResponse } from "next/server";
+import { requireAuth } from "@/lib/auth-utils";
 import { createTodo, getAllTodos } from "@/server/todos.server";
 
 export async function GET() {
     try {
-        const allTodos = await getAllTodos();
+        const user = await requireAuth();
+        const allTodos = await getAllTodos(user.id);
         return NextResponse.json({
             success: true,
             data: allTodos,
             message: "Todos fetched successfully",
         });
-    } catch (error) {
+    } catch (error: any) {
         console.error("Error fetching todos:", error);
+
+        if (error.message === "Authentication required") {
+            return NextResponse.json(
+                { success: false, error: "Authentication required" },
+                { status: 401 },
+            );
+        }
+
         return NextResponse.json(
             { success: false, error: "Failed to fetch todos" },
             { status: 500 },
@@ -20,6 +30,7 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
     try {
+        const user = await requireAuth();
         const contentType = request.headers.get("content-type");
         let todoData: any;
         let imageFile: File | undefined;
@@ -60,7 +71,7 @@ export async function POST(request: NextRequest) {
             todoData = await request.json();
         }
 
-        const todo = await createTodo(todoData, imageFile);
+        const todo = await createTodo(todoData, user.id, imageFile);
 
         return NextResponse.json(
             {
@@ -72,6 +83,13 @@ export async function POST(request: NextRequest) {
         );
     } catch (error: any) {
         console.error("Error creating todo:", error);
+
+        if (error.message === "Authentication required") {
+            return NextResponse.json(
+                { success: false, error: "Authentication required" },
+                { status: 401 },
+            );
+        }
 
         if (error.name === "ZodError") {
             return NextResponse.json(

@@ -2,6 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { requireAuth } from "@/lib/auth-utils";
 import { getAllCategories } from "@/server/categories.server";
 import { getTodoById } from "@/server/todos.server";
 import { TodoForm } from "../../_components/todo-form";
@@ -13,6 +14,7 @@ interface EditTodoPageProps {
 }
 
 export default async function EditTodoPage({ params }: EditTodoPageProps) {
+    const user = await requireAuth();
     const { id } = await params;
     const todoId = parseInt(id, 10);
 
@@ -21,8 +23,8 @@ export default async function EditTodoPage({ params }: EditTodoPageProps) {
     }
 
     const [todo, categories] = await Promise.all([
-        getTodoById(todoId),
-        getAllCategories(),
+        getTodoById(todoId, user.id),
+        getAllCategories(user.id),
     ]);
 
     if (!todo) {
@@ -30,9 +32,9 @@ export default async function EditTodoPage({ params }: EditTodoPageProps) {
     }
 
     return (
-        <div className="container mx-auto py-8 max-w-2xl">
+        <>
             <div className="mb-8">
-                <Link href="/todos">
+                <Link href="/dashboard/todos">
                     <Button variant="ghost" className="mb-4">
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Back to Todos
@@ -42,7 +44,7 @@ export default async function EditTodoPage({ params }: EditTodoPageProps) {
                 <p className="text-gray-600 mt-1">Update your task details</p>
             </div>
 
-            <TodoForm categories={categories} initialData={todo} />
-        </div>
+            <TodoForm user={user} categories={categories} initialData={todo} />
+        </>
     );
 }

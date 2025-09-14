@@ -1,6 +1,7 @@
 import { CheckSquare, Home } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import LogoutButton from "./logout-button";
 
 export function Navigation() {
     return (
@@ -14,7 +15,7 @@ export function Navigation() {
                         >
                             TodoApp
                         </Link>
-                        <div className="flex items-center space-x-4">
+                        <div className="items-center space-x-4 hidden md:flex">
                             <Link href="/">
                                 <Button variant="ghost" size="sm">
                                     <Home className="mr-2 h-4 w-4" />
@@ -29,6 +30,7 @@ export function Navigation() {
                             </Link>
                         </div>
                     </div>
+                    <LogoutButton />
                 </div>
             </div>
         </nav>

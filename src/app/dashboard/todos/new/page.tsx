@@ -1,18 +1,20 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { requireAuth } from "@/lib/auth-utils";
 import { getAllCategories } from "@/server/categories.server";
 import { TodoForm } from "../_components/todo-form";
 
 export const dynamic = "force-dynamic";
 
 export default async function NewTodoPage() {
-    const categories = await getAllCategories();
+    const user = await requireAuth();
+    const categories = await getAllCategories(user.id);
 
     return (
-        <div className="container mx-auto py-8 max-w-md">
+        <>
             <div className="mb-8">
-                <Link href="/todos">
+                <Link href="/dashboard/todos">
                     <Button variant="ghost" className="mb-4">
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Back to Todos
@@ -24,7 +26,7 @@ export default async function NewTodoPage() {
                 </p>
             </div>
 
-            <TodoForm categories={categories} />
-        </div>
+            <TodoForm user={user} categories={categories} />
+        </>
     );
 }

@@ -1,11 +1,7 @@
-import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "@/lib/auth";
+import { getSession } from "@/lib/auth-utils";
 
 export default async function HomePage() {
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
-
+    const session = await getSession();
     redirect(session ? "/dashboard" : "/login");
 }

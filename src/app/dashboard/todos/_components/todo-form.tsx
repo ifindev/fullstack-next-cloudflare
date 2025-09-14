@@ -2,11 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, X } from "lucide-react";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -28,6 +27,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import type { AuthUser } from "@/lib/auth-utils";
 import { insertTodoSchema } from "@/lib/db/schemas/todo.schema";
 import {
     TodoPriority,
@@ -35,6 +35,7 @@ import {
     TodoStatus,
     type TodoStatusType,
 } from "@/lib/enums/todo.enum";
+import { AddCategory } from "./add-category";
 
 type Category = {
     id: number;
@@ -59,17 +60,23 @@ interface TodoFormProps {
         status: TodoStatusType;
         priority: TodoPriorityType;
     };
+    user: AuthUser;
 }
 
 type FormData = z.infer<typeof insertTodoSchema>;
 
-export function TodoForm({ categories, initialData }: TodoFormProps) {
+export function TodoForm({
+    user,
+    categories: initialCategories,
+    initialData,
+}: TodoFormProps) {
     const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(
         initialData?.imageUrl || null,
     );
+    const [categories, setCategories] = useState<Category[]>(initialCategories);
 
     const form = useForm<FormData>({
         resolver: zodResolver(insertTodoSchema),
@@ -87,8 +94,15 @@ export function TodoForm({ categories, initialData }: TodoFormProps) {
             dueDate: initialData?.dueDate
                 ? new Date(initialData.dueDate).toISOString().split("T")[0]
                 : "",
+            userId: user.id,
         },
     });
+
+    const handleCategoryAdded = (newCategory: Category) => {
+        setCategories((prev) => [...prev, newCategory]);
+        // Automatically select the newly created category
+        form.setValue("categoryId", newCategory.id);
+    };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -162,7 +176,7 @@ export function TodoForm({ categories, initialData }: TodoFormProps) {
                     throw new Error("Failed to save todo");
                 }
 
-                router.push("/todos");
+                router.push("/dashboard/todos");
             } catch (error) {
                 console.error("Error saving todo:", error);
             }
@@ -179,7 +193,9 @@ export function TodoForm({ categories, initialData }: TodoFormProps) {
             <CardContent>
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(onSubmit)}
+                        onSubmit={(e) => {
+                            form.handleSubmit(onSubmit)(e);
+                        }}
                         className="space-y-6"
                     >
                         <FormField
@@ -226,14 +242,19 @@ export function TodoForm({ categories, initialData }: TodoFormProps) {
                                     <FormItem>
                                         <FormLabel>Category</FormLabel>
                                         <Select
-                                            onValueChange={(value) =>
-                                                field.onChange(
-                                                    value
-                                                        ? parseInt(value)
-                                                        : undefined,
-                                                )
+                                            onValueChange={(value) => {
+                                                if (value === "none") {
+                                                    field.onChange(undefined);
+                                                } else {
+                                                    field.onChange(
+                                                        parseInt(value),
+                                                    );
+                                                }
+                                            }}
+                                            value={
+                                                field.value?.toString() ||
+                                                "none"
                                             }
-                                            value={field.value?.toString()}
                                         >
                                             <FormControl className="w-full">
                                                 <SelectTrigger>
@@ -249,9 +270,27 @@ export function TodoForm({ categories, initialData }: TodoFormProps) {
                                                         key={category.id}
                                                         value={category.id.toString()}
                                                     >
-                                                        {category.name}
+                                                        <div className="flex items-center">
+                                                            {category.color && (
+                                                                <div
+                                                                    className="w-3 h-3 rounded-full mr-2"
+                                                                    style={{
+                                                                        backgroundColor:
+                                                                            category.color,
+                                                                    }}
+                                                                />
+                                                            )}
+                                                            {category.name}
+                                                        </div>
                                                     </SelectItem>
                                                 ))}
+                                                <div className="border-t pt-1 mt-1">
+                                                    <AddCategory
+                                                        onCategoryAdded={
+                                                            handleCategoryAdded
+                                                        }
+                                                    />
+                                                </div>
                                             </SelectContent>
                                         </Select>
                                         <FormMessage />
@@ -467,7 +506,7 @@ export function TodoForm({ categories, initialData }: TodoFormProps) {
                             <Button
                                 type="button"
                                 variant="outline"
-                                onClick={() => router.push("/todos")}
+                                onClick={() => router.push("/dashboard/todos")}
                             >
                                 Cancel
                             </Button>

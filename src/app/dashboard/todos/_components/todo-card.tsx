@@ -81,7 +81,7 @@ export function TodoCard({ todo }: TodoCardProps) {
                         </div>
                     </div>
                     <div className="flex items-center space-x-2 ml-4">
-                        <Link href={`/todos/${todo.id}/edit`}>
+                        <Link href={`/dashboard/todos/${todo.id}/edit`}>
                             <Button variant="ghost" size="sm">
                                 <Edit className="h-4 w-4" />
                             </Button>
