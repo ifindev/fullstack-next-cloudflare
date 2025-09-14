@@ -7,6 +7,7 @@
         "build": "next build",
         "start": "next start",
         "wrangler:dev": " npx wrangler dev",
+        "cf:secret": "npx wrangler secret put",
         "build:cf": "npx @opennextjs/cloudflare build",
         "dev:cf": "npx @opennextjs/cloudflare build && wrangler dev",
         "dev:remote": "npx @opennextjs/cloudflare build && wrangler dev --remote",
