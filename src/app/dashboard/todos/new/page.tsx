@@ -1,11 +1,9 @@
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { requireAuth } from "@/lib/auth-utils";
-import { getAllCategories } from "@/server/categories.server";
+import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import { getAllCategories } from "@/modules/todos/server/categories.server";
 import { TodoForm } from "../_components/todo-form";
-
-export const dynamic = "force-dynamic";
 
 export default async function NewTodoPage() {
     const user = await requireAuth();

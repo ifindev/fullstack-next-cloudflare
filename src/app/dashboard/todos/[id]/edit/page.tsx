@@ -2,9 +2,9 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { requireAuth } from "@/lib/auth-utils";
-import { getAllCategories } from "@/server/categories.server";
-import { getTodoById } from "@/server/todos.server";
+import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import { getAllCategories } from "@/modules/todos/server/categories.server";
+import { getTodoById } from "@/modules/todos/server/todos.server";
 import { TodoForm } from "../../_components/todo-form";
 
 export const dynamic = "force-dynamic";

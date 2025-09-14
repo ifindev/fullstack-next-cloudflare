@@ -1,11 +1,9 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { requireAuth } from "@/lib/auth-utils";
-import { getAllTodos } from "@/server/todos.server";
+import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import { getAllTodos } from "@/modules/todos/server/todos.server";
 import { TodoCard } from "./_components/todo-card";
-
-export const dynamic = "force-dynamic";
 
 export default async function TodosPage() {
     const user = await requireAuth();
