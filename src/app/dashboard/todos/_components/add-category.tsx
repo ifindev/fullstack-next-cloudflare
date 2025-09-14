@@ -110,10 +110,6 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
                     variant="ghost"
                     size="sm"
                     className="w-full justify-start px-2 py-1.5 h-auto font-normal"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                    }}
                 >
                     <Plus className="mr-2 h-4 w-4" />
                     Add new category
@@ -208,7 +204,14 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
                             >
                                 Cancel
                             </Button>
-                            <Button type="submit" disabled={isPending}>
+                            <Button
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }}
+                                type="submit"
+                                disabled={isPending}
+                            >
                                 {isPending ? "Creating..." : "Create Category"}
                             </Button>
                         </div>
