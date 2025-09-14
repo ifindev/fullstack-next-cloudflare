@@ -1,7 +1,7 @@
 import { CheckSquare, Home } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import LogoutButton from "./logout-button";
+import LogoutButton from "../modules/auth/components/logout-button";
 
 export function Navigation() {
     return (
