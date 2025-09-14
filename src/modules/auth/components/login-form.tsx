@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { signUp } from "@/actions/auth.action";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -25,24 +24,24 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import {
-    type SignUpSchema,
-    signUpSchema,
-} from "@/lib/validations/auth.validation";
+    type SignInSchema,
+    signInSchema,
+} from "@/modules/auth/models/auth.model";
+import { authClient } from "@/modules/auth/utils/auth-client";
+import { signIn } from "../actions/auth.action";
 
-export function SignupForm({
+export function LoginForm({
     className,
     ...props
 }: React.ComponentProps<"div">) {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
-    const form = useForm<SignUpSchema>({
-        resolver: zodResolver(signUpSchema),
+    const form = useForm<SignInSchema>({
+        resolver: zodResolver(signInSchema),
         defaultValues: {
-            username: "",
             email: "",
             password: "",
         },
@@ -55,9 +54,9 @@ export function SignupForm({
         });
     };
 
-    async function onSubmit(values: SignUpSchema) {
+    async function onSubmit(values: SignInSchema) {
         setIsLoading(true);
-        const { success, message } = await signUp(values);
+        const { success, message } = await signIn(values);
 
         if (success) {
             toast.success(message.toString());
@@ -72,9 +71,9 @@ export function SignupForm({
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card>
                 <CardHeader className="text-center">
-                    <CardTitle className="text-xl">Welcome</CardTitle>
+                    <CardTitle className="text-xl">Welcome back</CardTitle>
                     <CardDescription>
-                        Sign up with your Google account
+                        Login with your Google account
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -99,7 +98,7 @@ export function SignupForm({
                                             fill="currentColor"
                                         />
                                     </svg>
-                                    Sign up with Google
+                                    Login with Google
                                 </Button>
                                 <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                                     <span className="bg-card text-muted-foreground relative z-10 px-2">
@@ -107,22 +106,6 @@ export function SignupForm({
                                     </span>
                                 </div>
                                 <div className="grid gap-6">
-                                    <FormField
-                                        control={form.control}
-                                        name="username"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Username</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        placeholder="johndoe"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
                                     <FormField
                                         control={form.control}
                                         name="email"
@@ -139,23 +122,33 @@ export function SignupForm({
                                             </FormItem>
                                         )}
                                     />
-                                    <FormField
-                                        control={form.control}
-                                        name="password"
-                                        render={({ field }) => (
-                                            <FormItem>
-                                                <FormLabel>Password</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        placeholder="*********"
-                                                        {...field}
-                                                        type="password"
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
+                                    <div className="flex flex-col gap-2">
+                                        <FormField
+                                            control={form.control}
+                                            name="password"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>
+                                                        Password
+                                                    </FormLabel>
+                                                    <FormControl>
+                                                        <Input
+                                                            placeholder="*********"
+                                                            {...field}
+                                                            type="password"
+                                                        />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <a
+                                            href="#"
+                                            className="ml-auto text-sm underline-offset-4 hover:underline"
+                                        >
+                                            Forgot your password?
+                                        </a>
+                                    </div>
                                     <Button
                                         type="submit"
                                         className="w-full"
@@ -167,17 +160,17 @@ export function SignupForm({
                                                 Loading...
                                             </>
                                         ) : (
-                                            "Sign Up"
+                                            "Login"
                                         )}
                                     </Button>
                                 </div>
                                 <div className="text-center text-sm">
-                                    Already have an account?{" "}
+                                    Don&apos;t have an account?{" "}
                                     <Link
-                                        href="/login"
+                                        href="/signup"
                                         className="underline underline-offset-4"
                                     >
-                                        Sign in
+                                        Sign up
                                     </Link>
                                 </div>
                             </div>

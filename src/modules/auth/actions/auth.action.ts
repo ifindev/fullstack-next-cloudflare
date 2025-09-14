@@ -1,11 +1,11 @@
 "use server";
 
-import { getAuthInstance } from "@/lib/auth-utils";
 import type {
     AuthResponse,
     SignInSchema,
     SignUpSchema,
-} from "@/lib/validations/auth.validation";
+} from "@/modules/auth/models/auth.model";
+import { getAuthInstance } from "@/modules/auth/utils/auth-utils";
 
 // #region SERVER ACTIONS
 

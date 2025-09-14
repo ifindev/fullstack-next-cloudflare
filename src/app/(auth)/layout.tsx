@@ -1,17 +1,11 @@
-import { redirect } from "next/navigation";
-import { getSession } from "@/lib/auth-utils";
+import AuthLayout from "@/modules/auth/auth.layout";
 
-export default async function AuthLayout({
+export const dynamic = "force-dynamic";
+
+export default async function Layout({
     children,
 }: {
     children: React.ReactNode;
 }) {
-    const session = await getSession();
-
-    // If already logged in, redirect to dashboard
-    if (session) {
-        redirect("/dashboard");
-    }
-
-    return <div>{children}</div>;
+    return <AuthLayout>{children}</AuthLayout>;
 }

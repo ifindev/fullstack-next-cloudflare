@@ -4,13 +4,8 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { headers } from "next/headers";
-import { getDb } from "./db";
-
-export interface AuthUser {
-    id: string;
-    name: string;
-    email: string;
-}
+import { getDb } from "@/lib/db";
+import type { AuthUser } from "@/modules/auth/models/user.model";
 
 /**
  * Create auth instance dynamically to avoid top-level async issues
@@ -19,6 +14,7 @@ async function getAuth() {
     const { env } = await getCloudflareContext();
     const db = await getDb();
     return betterAuth({
+        secret: env.BETTER_AUTH_SECRET,
         database: drizzleAdapter(db, {
             provider: "sqlite",
         }),

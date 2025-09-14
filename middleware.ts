@@ -1,9 +1,10 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { auth } from "./src/lib/auth";
+import { getAuth } from "./src/lib/auth";
 
 export async function middleware(request: NextRequest) {
     try {
-        // Validate session, not just checking for cookie
+        // Validate session
+        const auth = await getAuth();
         const session = await auth.api.getSession({
             headers: request.headers,
         });

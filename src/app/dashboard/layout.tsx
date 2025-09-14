@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
 import { Navigation } from "@/components/navigation";
-import { getSession } from "@/lib/auth-utils";
+import { getSession } from "@/modules/auth/utils/auth-utils";
 
-export default async function AuthLayout({
+export default async function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;

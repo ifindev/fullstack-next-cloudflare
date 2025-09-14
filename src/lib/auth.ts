@@ -3,11 +3,19 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { getDb as db } from "./db";
+import { getDb } from "./db";
+
+let authInstance: ReturnType<typeof betterAuth> | null = null;
 
 const createAuth = async () => {
-    const { env } = await getCloudflareContext();
-    return betterAuth({
+    if (authInstance) {
+        return authInstance;
+    }
+
+    const { env } = await getCloudflareContext({ async: true });
+    const db = await getDb();
+    authInstance = betterAuth({
+        secret: env.BETTER_AUTH_SECRET,
         database: drizzleAdapter(db, {
             provider: "sqlite",
         }),
@@ -23,6 +31,10 @@ const createAuth = async () => {
         },
         plugins: [nextCookies()],
     });
+
+    return authInstance;
 };
 
-export const auth = await createAuth();
+export const getAuth = async () => {
+    return await createAuth();
+};

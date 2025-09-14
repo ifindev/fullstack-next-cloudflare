@@ -9,7 +9,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 
-export default function Dashboard() {
+export default async function Dashboard() {
     return (
         <div className="container mx-auto py-12 px-4">
             <div className="text-center mb-12">
