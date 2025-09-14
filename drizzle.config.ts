@@ -8,7 +8,7 @@ config({ path: ".dev.vars" });
 
 export default defineConfig({
     schema: "./src/lib/db/schema.ts",
-    out: "./drizzle/migrations",
+    out: "./src/drizzle",
     dialect: "sqlite",
     driver: "d1-http",
     dbCredentials: {

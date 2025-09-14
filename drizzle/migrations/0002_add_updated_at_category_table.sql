@@ -1,1 +1,0 @@
-ALTER TABLE `categories` ADD `updated_at` text NOT NULL;
