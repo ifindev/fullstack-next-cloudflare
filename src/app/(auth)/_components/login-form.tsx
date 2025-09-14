@@ -48,8 +48,7 @@ export function LoginForm({
     });
 
     const signInWithGoogle = async () => {
-        const { signIn: clientSignIn } = await authClient();
-        await clientSignIn.social({
+        await authClient.signIn.social({
             provider: "google",
             callbackURL: "/dashboard",
         });

@@ -1,4 +1,19 @@
 import { toNextJsHandler } from "better-auth/next-js";
-import { auth } from "@/lib/auth";
+import { getAuthInstance } from "@/lib/auth-utils";
 
-export const { GET, POST } = toNextJsHandler(auth.handler);
+// Create a dynamic handler that gets the auth instance
+const createHandler = async () => {
+    const auth = await getAuthInstance();
+    return toNextJsHandler(auth.handler);
+};
+
+// Export the handlers
+export async function GET(request: Request) {
+    const { GET: handler } = await createHandler();
+    return handler(request);
+}
+
+export async function POST(request: Request) {
+    const { POST: handler } = await createHandler();
+    return handler(request);
+}

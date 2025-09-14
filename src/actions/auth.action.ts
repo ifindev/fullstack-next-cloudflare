@@ -1,16 +1,11 @@
 "use server";
 
-import { auth } from "@/lib/auth";
-import {
-    type AuthResponse,
-    type SignInSchema,
-    type SignUpSchema,
-    signInSchema,
-    signUpSchema,
+import { getAuthInstance } from "@/lib/auth-utils";
+import type {
+    AuthResponse,
+    SignInSchema,
+    SignUpSchema,
 } from "@/lib/validations/auth.validation";
-
-// Re-export schemas for convenience
-export { signInSchema, signUpSchema };
 
 // #region SERVER ACTIONS
 
@@ -19,6 +14,7 @@ export const signIn = async ({
     password,
 }: SignInSchema): Promise<AuthResponse> => {
     try {
+        const auth = await getAuthInstance();
         await auth.api.signInEmail({
             body: {
                 email,
@@ -45,6 +41,7 @@ export const signUp = async ({
     username,
 }: SignUpSchema): Promise<AuthResponse> => {
     try {
+        const auth = await getAuthInstance();
         await auth.api.signUpEmail({
             body: {
                 email,
@@ -62,6 +59,25 @@ export const signUp = async ({
         return {
             success: false,
             message: err.message || "An unknown error occured.",
+        };
+    }
+};
+export const signOut = async (): Promise<AuthResponse> => {
+    try {
+        const auth = await getAuthInstance();
+        await auth.api.signOut({
+            headers: await import("next/headers").then((m) => m.headers()),
+        });
+
+        return {
+            success: true,
+            message: "Signed out successfully",
+        };
+    } catch (error) {
+        const err = error as Error;
+        return {
+            success: false,
+            message: err.message || "An unknown error occurred.",
         };
     }
 };
