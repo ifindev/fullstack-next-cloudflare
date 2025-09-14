@@ -124,7 +124,11 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
                 </DialogHeader>
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit(onSubmit)}
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            form.handleSubmit(onSubmit)(e);
+                        }}
                         className="space-y-4"
                     >
                         <FormField
@@ -204,14 +208,7 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
                             >
                                 Cancel
                             </Button>
-                            <Button
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                }}
-                                type="submit"
-                                disabled={isPending}
-                            >
+                            <Button type="submit" disabled={isPending}>
                                 {isPending ? "Creating..." : "Create Category"}
                             </Button>
                         </div>
