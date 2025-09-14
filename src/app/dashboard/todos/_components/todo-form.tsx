@@ -35,7 +35,7 @@ import {
     TodoStatus,
     type TodoStatusType,
 } from "@/lib/enums/todo.enum";
-import type { AuthUser } from "@/modules/auth/utils/auth-utils";
+import type { AuthUser } from "@/modules/auth/models/user.model";
 import { AddCategory } from "./add-category";
 
 type Category = {
