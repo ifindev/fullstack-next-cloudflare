@@ -3,8 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import { getTodoById } from "@/modules/todos/actions/get-todo-by-id.action";
 import { getAllCategories } from "@/modules/todos/server/categories.server";
-import { getTodoById } from "@/modules/todos/server/todos.server";
 import { TodoForm } from "./components/todo-form";
 import todosRoutes from "./todos.route";
 
@@ -21,7 +21,7 @@ export default async function EditTodoPage({ id }: EditTodoPageProps) {
     }
 
     const [todo, categories] = await Promise.all([
-        getTodoById(todoId, user.id),
+        getTodoById(todoId),
         getAllCategories(user.id),
     ]);
 

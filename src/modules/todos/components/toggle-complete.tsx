@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { updateTodoFieldAction } from "../actions/update-todo.action";
 
 interface ToggleCompleteProps {
     todoId: number;
@@ -17,26 +18,22 @@ export function ToggleComplete({ todoId, completed }: ToggleCompleteProps) {
 
         startTransition(async () => {
             try {
-                const response = await fetch(`/api/todos/${todoId}`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        completed: checked,
-                    }),
+                const result = await updateTodoFieldAction(todoId, {
+                    completed: checked,
                 });
 
-                if (!response.ok) {
-                    throw new Error("Failed to update todo");
+                if (!result.success) {
+                    throw new Error(result.error || "Failed to update todo");
                 }
 
-                // Refresh the page to show updated data
-                window.location.reload();
+                // No need to refresh - server action handles revalidation
             } catch (error) {
                 console.error("Error updating todo:", error);
                 // Revert the optimistic update
                 setIsCompleted(!checked);
+                alert(
+                    `Error updating todo: ${error instanceof Error ? error.message : "Unknown error"}`,
+                );
             }
         });
     };

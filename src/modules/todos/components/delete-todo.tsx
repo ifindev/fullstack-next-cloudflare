@@ -14,6 +14,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { deleteTodoAction } from "../actions/delete-todo.action";
 
 interface DeleteTodoProps {
     todoId: number;
@@ -26,19 +27,19 @@ export function DeleteTodo({ todoId }: DeleteTodoProps) {
     const handleDelete = () => {
         startTransition(async () => {
             try {
-                const response = await fetch(`/api/todos/${todoId}`, {
-                    method: "DELETE",
-                });
+                const result = await deleteTodoAction(todoId);
 
-                if (!response.ok) {
-                    throw new Error("Failed to delete todo");
+                if (!result.success) {
+                    throw new Error(result.error || "Failed to delete todo");
                 }
 
-                // Close dialog and refresh page
+                // Close dialog - no need to refresh since server action handles revalidation
                 setIsOpen(false);
-                window.location.reload();
             } catch (error) {
                 console.error("Error deleting todo:", error);
+                alert(
+                    `Error deleting todo: ${error instanceof Error ? error.message : "Unknown error"}`,
+                );
             }
         });
     };

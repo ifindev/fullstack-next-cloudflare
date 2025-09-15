@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
@@ -36,7 +35,8 @@ import {
     type TodoStatusType,
 } from "@/lib/enums/todo.enum";
 import type { AuthUser } from "@/modules/auth/models/user.model";
-import todosRoutes from "../todos.route";
+import { createTodoAction } from "../actions/create-todo.action";
+import { updateTodoAction } from "../actions/update-todo.action";
 import { AddCategory } from "./add-category";
 
 type Category = {
@@ -72,7 +72,6 @@ export function TodoForm({
     categories: initialCategories,
     initialData,
 }: TodoFormProps) {
-    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(
@@ -163,22 +162,11 @@ export function TodoForm({
                     formData.append("image", imageFile);
                 }
 
-                const url = initialData
-                    ? `/api/todos/${initialData.id}`
-                    : "/api/todos";
-
-                const method = initialData ? "PUT" : "POST";
-
-                const response = await fetch(url, {
-                    method,
-                    body: formData,
-                });
-
-                if (!response.ok) {
-                    throw new Error("Failed to save todo");
+                if (initialData) {
+                    await updateTodoAction(initialData.id, formData);
+                } else {
+                    await createTodoAction(formData);
                 }
-
-                router.push(todosRoutes.list);
             } catch (error) {
                 console.error("Error saving todo:", error);
             }
@@ -510,7 +498,7 @@ export function TodoForm({
                             <Button
                                 type="button"
                                 variant="outline"
-                                onClick={() => router.push("/dashboard/todos")}
+                                onClick={() => window.history.back()}
                             >
                                 Cancel
                             </Button>
