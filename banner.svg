@@ -1,0 +1,67 @@
+<svg width="1200" height="600" viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f97316;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ea580c;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  
+  <!-- Grid Pattern -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="1" opacity="0.3"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="600" fill="url(#grid)"/>
+  
+  <!-- Main Title -->
+  <text x="600" y="180" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="bold" text-anchor="middle" fill="#f1f5f9">
+    Full-Stack Next.js + Cloudflare
+  </text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="230" font-family="system-ui, -apple-system, sans-serif" font-size="24" text-anchor="middle" fill="#94a3b8">
+    Production-ready template with modern architecture
+  </text>
+  
+  <!-- Features -->
+  <g transform="translate(200, 320)">
+    <text x="100" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#f1f5f9">⚡ Server Actions</text>
+    <text x="300" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#f1f5f9">🗄️ D1 Database</text>
+    <text x="500" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#f1f5f9">🔐 Better Auth</text>
+    <text x="700" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#f1f5f9">🚀 Auto Deploy</text>
+  </g>
+  
+  <!-- Call to Action -->
+  <g transform="translate(400, 420)">
+    <rect x="0" y="0" width="400" height="80" rx="16" fill="url(#accent)" filter="url(#glow)"/>
+    <text x="200" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" text-anchor="middle" fill="#ffffff">Ready for Production</text>
+    <text x="200" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="16" text-anchor="middle" fill="#fed7aa">Edge computing • Type-safe • Scalable</text>
+  </g>
+  
+  <!-- Decorative Elements -->
+  <circle cx="100" cy="100" r="3" fill="#f97316" opacity="0.6">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1100" cy="500" r="4" fill="#06b6d4" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.9;0.5" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1050" cy="150" r="2" fill="#c3f53c" opacity="0.7">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+</svg>
