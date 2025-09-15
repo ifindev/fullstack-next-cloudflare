@@ -51,6 +51,13 @@ jobs:
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
           GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
 
+      - name: Verify build output
+        run: |
+          echo "Checking build output..."
+          ls -la .open-next/ || echo "No .open-next directory found"
+          ls -la .next/ || echo "No .next directory found"
+          echo "Build verification complete"
+
       - name: Run database migrations (Preview)
         uses: cloudflare/wrangler-action@v3
         with:
