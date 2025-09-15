@@ -1,10 +1,12 @@
 ![Banner](banner.svg)
 
-# 🚀 Full-Stack Next.js + Cloudflare Template
+# ⚡ Full-Stack Next.js + Cloudflare Template
 
 A production-ready template for building full-stack applications with Next.js 15 and Cloudflare's powerful edge infrastructure. Perfect for MVPs with generous free tiers and seamless scaling to enterprise-level applications.
 
 **Inspired by the [Cloudflare SaaS Stack](https://github.com/supermemoryai/cloudflare-saas-stack)** - the same stack powering [Supermemory.ai](https://git.new/memory), which serves 20k+ users on just $5/month. This template modernizes that approach with Cloudflare Workers (vs Pages), includes comprehensive D1 and R2 examples, and provides a complete development workflow.
+
+You can read detail explanations and code architecture of this template from Devin AI on [Deepwiki](https://deepwiki.com/ifindev/fullstack-next-cloudflare).
 
 ## 🌟 Why Cloudflare + Next.js?
 
@@ -568,6 +570,13 @@ pnpm run deploy
 # Deploy to preview environment
 pnpm run deploy:preview
 ```
+
+## ✍️ Todos
+
+- [ ] Implement email sending with [Resend](https://resend.com/) & [Cloudflare Email Routing](https://www.cloudflare.com/developer-platform/products/email-routing/)
+- [ ] Implement international payment gateway with [Polar.sh](https://polar.sh/)
+- [ ] Implement Indonesian payment gateway either with [Xendit](https://www.xendit.co/en-id/), [Midtrans](https://midtrans.com/en), or [Duitku](https://www.duitku.com/)
+
 
 
 ## 🤝 Contributing
