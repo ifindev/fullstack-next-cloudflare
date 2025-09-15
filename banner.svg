@@ -30,27 +30,37 @@
   <rect width="1200" height="600" fill="url(#grid)"/>
   
   <!-- Main Title -->
-  <text x="600" y="180" font-family="system-ui, -apple-system, sans-serif" font-size="56" font-weight="bold" text-anchor="middle" fill="#f1f5f9">
+  <text x="600" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="52" font-weight="bold" text-anchor="middle" fill="#f1f5f9">
     Full-Stack Next.js + Cloudflare
   </text>
   
   <!-- Subtitle -->
-  <text x="600" y="230" font-family="system-ui, -apple-system, sans-serif" font-size="24" text-anchor="middle" fill="#94a3b8">
+  <text x="600" y="180" font-family="system-ui, -apple-system, sans-serif" font-size="22" text-anchor="middle" fill="#94a3b8">
     Production-ready template with modern architecture
   </text>
   
-  <!-- Features -->
-  <g transform="translate(200, 320)">
-    <text x="100" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#f1f5f9">⚡ Server Actions</text>
-    <text x="300" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#f1f5f9">🗄️ D1 Database</text>
-    <text x="500" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#f1f5f9">🔐 Better Auth</text>
-    <text x="700" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#f1f5f9">🚀 Auto Deploy</text>
+  <!-- Features Grid - Row 1 -->
+  <g transform="translate(80, 250)">
+    <text x="120" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">⚡ Server Actions</text>
+    <text x="280" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">☁️ CF Workers</text>
+    <text x="440" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">🗄️ D1 Database</text>
+    <text x="600" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">📦 R2 Storage</text>
+    <text x="760" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">🔐 Better Auth</text>
+    <text x="920" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">🚀 Auto Deploy</text>
+  </g>
+  
+  <!-- Features Grid - Row 2 -->
+  <g transform="translate(180, 290)">
+    <text x="120" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">🛠️ Drizzle ORM</text>
+    <text x="280" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">🎨 TailwindCSS</text>
+    <text x="440" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">📘 TypeScript</text>
+    <text x="600" y="0" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" text-anchor="middle" fill="#f1f5f9">⚛️ React 19</text>
   </g>
   
   <!-- Call to Action -->
-  <g transform="translate(400, 420)">
+  <g transform="translate(400, 380)">
     <rect x="0" y="0" width="400" height="80" rx="16" fill="url(#accent)" filter="url(#glow)"/>
-    <text x="200" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" text-anchor="middle" fill="#ffffff">Ready for Production</text>
+    <text x="200" y="35" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="600" text-anchor="middle" fill="#ffffff">Ready for Production</text>
     <text x="200" y="60" font-family="system-ui, -apple-system, sans-serif" font-size="16" text-anchor="middle" fill="#fed7aa">Edge computing • Type-safe • Scalable</text>
   </g>
   
