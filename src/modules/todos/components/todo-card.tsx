@@ -1,9 +1,10 @@
-import { Calendar, Edit, Image as ImageIcon, Trash2 } from "lucide-react";
+import { Calendar, Edit, Image as ImageIcon } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { TodoPriority, TodoStatus } from "@/lib/enums/todo.enum";
+import todosRoutes from "../todos.route";
 import { DeleteTodo } from "./delete-todo";
 import { ToggleComplete } from "./toggle-complete";
 
@@ -81,7 +82,7 @@ export function TodoCard({ todo }: TodoCardProps) {
                         </div>
                     </div>
                     <div className="flex items-center space-x-2 ml-4">
-                        <Link href={`/dashboard/todos/${todo.id}/edit`}>
+                        <Link href={todosRoutes.edit(todo.id)}>
                             <Button variant="ghost" size="sm">
                                 <Edit className="h-4 w-4" />
                             </Button>
@@ -142,7 +143,7 @@ export function TodoCard({ todo }: TodoCardProps) {
 
                 {todo.imageUrl && (
                     <div className="mt-3">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        {/** biome-ignore lint/performance/noImgElement: <it's okay to use img element> */}
                         <img
                             src={todo.imageUrl}
                             alt={todo.imageAlt || "Todo image"}

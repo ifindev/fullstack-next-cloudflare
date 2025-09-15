@@ -36,6 +36,7 @@ import {
     type TodoStatusType,
 } from "@/lib/enums/todo.enum";
 import type { AuthUser } from "@/modules/auth/models/user.model";
+import todosRoutes from "../todos.route";
 import { AddCategory } from "./add-category";
 
 type Category = {
@@ -177,7 +178,7 @@ export function TodoForm({
                     throw new Error("Failed to save todo");
                 }
 
-                router.push("/dashboard/todos");
+                router.push(todosRoutes.list);
             } catch (error) {
                 console.error("Error saving todo:", error);
             }
