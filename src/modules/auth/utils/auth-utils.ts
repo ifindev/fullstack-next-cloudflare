@@ -8,12 +8,22 @@ import { getDb } from "@/lib/db";
 import type { AuthUser } from "@/modules/auth/models/user.model";
 
 /**
+ * Cached auth instance singleton so we don't create a new instance every time
+ */
+let cachedAuth: ReturnType<typeof betterAuth> | null = null;
+
+/**
  * Create auth instance dynamically to avoid top-level async issues
  */
 async function getAuth() {
+    if (cachedAuth) {
+        return cachedAuth;
+    }
+
     const { env } = await getCloudflareContext();
     const db = await getDb();
-    return betterAuth({
+
+    cachedAuth = betterAuth({
         secret: env.BETTER_AUTH_SECRET,
         database: drizzleAdapter(db, {
             provider: "sqlite",
@@ -30,8 +40,9 @@ async function getAuth() {
         },
         plugins: [nextCookies()],
     });
-}
 
+    return cachedAuth;
+}
 /**
  * Get the current authenticated user from the session
  * Returns null if no user is authenticated
