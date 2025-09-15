@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { insertCategorySchema } from "@/lib/db/schemas/category.schema";
+import { createCategory } from "../actions/create-category.action";
 
 // Create a client-side schema without userId (will be added server-side)
 const addCategorySchema = insertCategorySchema.omit({ userId: true });
@@ -58,46 +60,22 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
     const onSubmit = (data: AddCategoryFormData) => {
         startTransition(async () => {
             try {
-                const response = await fetch("/api/categories", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                });
+                const newCategory = await createCategory(data);
+                onCategoryAdded(newCategory);
 
-                if (!response.ok) {
-                    const errorData = (await response.json()) as {
-                        error?: string;
-                    };
-                    throw new Error(
-                        errorData.error || "Failed to create category",
-                    );
-                }
-
-                const result = (await response.json()) as {
-                    data: {
-                        id: number;
-                        name: string;
-                        color: string | null;
-                        description: string | null;
-                        createdAt: string;
-                        updatedAt: string;
-                    };
-                };
-
-                // Call the callback to update the parent component
-                onCategoryAdded(result.data);
-
-                // Reset form and close dialog
                 form.reset();
                 setOpen(false);
+
+                toast.success("Category created successfully!");
             } catch (error) {
                 console.error("Error creating category:", error);
-                // You might want to show a toast notification here
-                alert(
-                    `Error creating category: ${error instanceof Error ? error.message : "Unknown error"}`,
-                );
+
+                const errorMessage =
+                    error instanceof Error
+                        ? error.message
+                        : "Failed to create category";
+
+                toast.error(errorMessage);
             }
         });
     };

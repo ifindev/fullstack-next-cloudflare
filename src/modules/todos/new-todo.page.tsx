@@ -2,7 +2,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { requireAuth } from "@/modules/auth/utils/auth-utils";
-import { getAllCategories } from "@/modules/todos/server/categories.server";
+import { getAllCategories } from "@/modules/todos/actions/get-categories.action";
 import { TodoForm } from "./components/todo-form";
 import todosRoutes from "./todos.route";
 
