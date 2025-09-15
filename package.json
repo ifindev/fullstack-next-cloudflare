@@ -6,24 +6,34 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "wrangler:dev": " npx wrangler dev",
-        "cf:secret": "npx wrangler secret put",
-        "build:cf": "npx @opennextjs/cloudflare build",
+
+        "wrangler:dev": "npx wrangler dev",
         "dev:cf": "npx @opennextjs/cloudflare build && wrangler dev",
         "dev:remote": "npx @opennextjs/cloudflare build && wrangler dev --remote",
-        "lint": "npx biome format --write",
-        "deploy": "wrangler d1 migrations apply next-cf-app --remote && npx @opennextjs/cloudflare build && npx @opennextjs/cloudflare deploy",
-        "preview": "npx @opennextjs/cloudflare build && npx @opennextjs/cloudflare preview",
+
+        "build:cf": "npx @opennextjs/cloudflare build",
+        "deploy:cf": "npx @opennextjs/cloudflare deploy",
+        "preview:cf": "npx @opennextjs/cloudflare preview",
+
+        "deploy": "npx @opennextjs/cloudflare deploy",
+        "deploy:preview": "npx @opennextjs/cloudflare deploy --env preview",
+
         "db:generate": "drizzle-kit generate",
         "db:generate:named": "drizzle-kit generate --name",
         "db:migrate:local": "wrangler d1 migrations apply next-cf-app --local",
+        "db:migrate:preview": "wrangler d1 migrations apply next-cf-app --env preview",
         "db:migrate:prod": "wrangler d1 migrations apply next-cf-app --remote",
-        "db:inspect:local": "wrangler d1 execute next-cf-app --local --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
-        "db:inspect:prod": "wrangler d1 execute next-cf-app --remote --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
-        "db:reset:local": "wrangler d1 execute next-cf-app --local --command=\"DROP TABLE IF EXISTS todos;\" && pnpm run db:migrate:local",
         "db:studio": "drizzle-kit studio",
         "db:studio:local": "drizzle-kit studio --config=drizzle.local.config.ts",
-        "cf-typegen": " pnpm exec wrangler types  && pnpm exec wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
+
+        "db:inspect:local": "wrangler d1 execute next-cf-app --local --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
+        "db:inspect:preview": "wrangler d1 execute next-cf-app --env preview --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
+        "db:inspect:prod": "wrangler d1 execute next-cf-app --remote --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
+        "db:reset:local": "wrangler d1 execute next-cf-app --local --command=\"DROP TABLE IF EXISTS todos;\" && pnpm run db:migrate:local",
+
+        "cf:secret": "npx wrangler secret put",
+        "cf-typegen": "pnpm exec wrangler types && pnpm exec wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
+        "lint": "npx biome format --write"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.2.1",

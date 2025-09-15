@@ -12,7 +12,6 @@ env:
   PNPM_VERSION: '8'
 
 jobs:
-
   # Deploy preview for pull requests
   deploy-preview:
     name: Deploy Preview
@@ -37,37 +36,36 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Generate Cloudflare types
-        run: pnpm run cf-typegen
+      - name: Build application
+        run: pnpm run build
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
-      - name: Check for pending migrations
-        run: |
-          echo "Checking migration status..."
-          pnpm exec wrangler d1 migrations list next-cf-app --env preview || echo "No migration table found, first deployment"
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
 
       - name: Run database migrations (Preview)
-        run: |
-          echo "Applying database migrations to preview environment..."
-          pnpm run db:migrate:local
-          pnpm exec wrangler d1 migrations apply next-cf-app --env preview || {
-            echo "Migration failed, checking if tables already exist..."
-            pnpm exec wrangler d1 execute next-cf-app --env preview --command="SELECT name FROM sqlite_master WHERE type='table';" || echo "Database not initialized"
-            exit 0
-          }
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          environment: preview
+          command: d1 migrations apply next-cf-app --env preview
 
       - name: Deploy to Preview
-        run: |
-          echo "Deploying to preview environment..."
-          pnpm run deploy --env preview
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          environment: preview
+          secrets: |
+            BETTER_AUTH_SECRET
+            GOOGLE_CLIENT_ID
+            GOOGLE_CLIENT_SECRET
+            CLOUDFLARE_R2_URL
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
           CLOUDFLARE_R2_URL: ${{ secrets.CLOUDFLARE_R2_URL }}
 
       - name: Comment PR with preview URL
@@ -105,123 +103,64 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Generate Cloudflare types
-        run: pnpm run cf-typegen
+      - name: Build application
+        run: pnpm run build
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
-      - name: Pre-deployment checks
-        run: |
-          echo "Running pre-deployment checks..."
-          # Check if Cloudflare services are accessible
-          pnpm exec wrangler d1 execute next-cf-app --command="SELECT 1;" || {
-            echo "Cannot connect to production database!"
-            exit 1
-          }
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
 
       - name: Backup production database
-        run: |
-          echo "Creating backup of production database..."
-          timestamp=$(date +%Y%m%d_%H%M%S)
-          pnpm exec wrangler d1 export next-cf-app --output "backup_prod_${timestamp}.sql"
-          echo "Backup created: backup_prod_${timestamp}.sql"
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-
-      - name: Check migration status
-        id: migration-check
-        run: |
-          echo "Checking for pending migrations..."
-          
-          # List current migrations in database
-          echo "Current applied migrations:"
-          pnpm exec wrangler d1 execute next-cf-app --command="SELECT name FROM d1_migrations ORDER BY applied_at;" || echo "No migrations table found"
-          
-          # Check if there are pending migrations
-          if pnpm exec wrangler d1 migrations list next-cf-app | grep -q "No migrations"; then
-            echo "No pending migrations found"
-            echo "has_migrations=false" >> $GITHUB_OUTPUT
-          else
-            echo "Pending migrations found"
-            echo "has_migrations=true" >> $GITHUB_OUTPUT
-            pnpm exec wrangler d1 migrations list next-cf-app
-          fi
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: |
+            timestamp=$(date +%Y%m%d_%H%M%S)
+            d1 export next-cf-app --output "backup_prod_${timestamp}.sql"
+            echo "Backup created: backup_prod_${timestamp}.sql"
 
       - name: Run database migrations (Production)
-        if: steps.migration-check.outputs.has_migrations == 'true'
-        run: |
-          echo "Applying database migrations to production..."
-          echo "⚠️ Database may be temporarily unavailable during migration"
-          
-          # Apply migrations with error handling
-          if ! pnpm exec wrangler d1 migrations apply next-cf-app; then
-            echo "❌ Migration failed! Checking database state..."
-            
-            # Check what went wrong
-            pnpm exec wrangler d1 execute next-cf-app --command="SELECT name, applied_at FROM d1_migrations ORDER BY applied_at DESC LIMIT 5;" || echo "Cannot read migration status"
-            
-            # Exit with error to stop deployment
-            exit 1
-          fi
-          
-          echo "✅ Migrations completed successfully"
-          
-          # Verify migration status
-          echo "Final migration status:"
-          pnpm exec wrangler d1 execute next-cf-app --command="SELECT COUNT(*) as total_migrations FROM d1_migrations;"
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: d1 migrations apply next-cf-app
 
       - name: Deploy to Production
-        run: |
-          echo "Deploying to production environment..."
-          pnpm run deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          secrets: |
+            BETTER_AUTH_SECRET
+            GOOGLE_CLIENT_ID
+            GOOGLE_CLIENT_SECRET
+            CLOUDFLARE_R2_URL
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+          CLOUDFLARE_R2_URL: ${{ secrets.CLOUDFLARE_R2_URL }}
 
       - name: Post-deployment verification
-        run: |
-          echo "Verifying production deployment..."
-          
-          # Wait a moment for deployment to propagate
-          sleep 10
-          
-          # Check if the app is responding
-          if curl -f https://next-cf-app.effendi-official.workers.dev/api/todos; then
-            echo "✅ Production deployment verified successfully"
-          else
-            echo "❌ Production deployment verification failed"
-            exit 1
-          fi
-          
-          # Check database connectivity
-          pnpm exec wrangler d1 execute next-cf-app --command="SELECT COUNT(*) FROM todos;" || {
-            echo "⚠️ Database connectivity issue detected"
-            exit 1
-          }
-          
-          echo "✅ All post-deployment checks passed"
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_R2_URL: ${{ secrets.CLOUDFLARE_R2_URL }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: |
+            echo "Verifying deployment..."
+            sleep 10
+            curl -f https://next-cf-app.effendi-official.workers.dev/api/todos || {
+              echo "❌ Health check failed"
+              exit 1
+            }
+            echo "✅ Deployment verified successfully"
 
       - name: Notify deployment success
         if: success()
         run: |
           echo "🎉 Production deployment completed successfully!"
-          echo "App URL: https://next-cf-app.effendi-official.workers.dev"
-          
-      - name: Rollback on failure
-        if: failure()
-        run: |
-          echo "🚨 Deployment failed! Consider manual rollback if necessary"
-          echo "Database backup available: check previous step outputs"
-          echo "Check Cloudflare dashboard for worker status"
 
   # Cleanup job
   cleanup:
@@ -231,6 +170,4 @@ jobs:
     if: always()
     steps:
       - name: Cleanup artifacts
-        run: |
-          echo "Cleaning up temporary files and caches..."
-          # Any cleanup tasks you need
+        run: echo "Cleaning up temporary files and caches..."
