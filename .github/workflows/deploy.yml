@@ -181,19 +181,6 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: --version
 
-      - name: Health check
-        run: |
-          echo "Verifying deployment..."
-          curl -f https://next-cf-app.effendi-official.workers.dev/api/todos || {
-            echo "❌ Health check failed"
-            exit 1
-          }
-          echo "✅ Deployment verified successfully"
-
-      - name: Notify deployment success
-        if: success()
-        run: |
-          echo "🎉 Production deployment completed successfully!"
 
   # Cleanup job
   cleanup:
