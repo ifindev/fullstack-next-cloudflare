@@ -4,6 +4,7 @@ import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { signOut } from "@/modules/auth/actions/auth.action";
+import authRoutes from "../auth.route";
 
 export default function LogoutButton() {
     const router = useRouter();
@@ -12,7 +13,7 @@ export default function LogoutButton() {
         try {
             const result = await signOut();
             if (result.success) {
-                router.push("/login");
+                router.push(authRoutes.login);
                 router.refresh(); // Refresh to clear any cached data
             } else {
                 console.error("Logout failed:", result.message);

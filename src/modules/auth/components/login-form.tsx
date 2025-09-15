@@ -30,7 +30,9 @@ import {
     signInSchema,
 } from "@/modules/auth/models/auth.model";
 import { authClient } from "@/modules/auth/utils/auth-client";
+import dashboardRoutes from "@/modules/dashboard/dashboard.route";
 import { signIn } from "../actions/auth.action";
+import authRoutes from "../auth.route";
 
 export function LoginForm({
     className,
@@ -50,7 +52,7 @@ export function LoginForm({
     const signInWithGoogle = async () => {
         await authClient.signIn.social({
             provider: "google",
-            callbackURL: "/dashboard",
+            callbackURL: dashboardRoutes.dashboard,
         });
     };
 
@@ -60,7 +62,7 @@ export function LoginForm({
 
         if (success) {
             toast.success(message.toString());
-            router.push("/dashboard");
+            router.push(dashboardRoutes.dashboard);
         } else {
             toast.error(message.toString());
         }
@@ -167,7 +169,7 @@ export function LoginForm({
                                 <div className="text-center text-sm">
                                     Don&apos;t have an account?{" "}
                                     <Link
-                                        href="/signup"
+                                        href={authRoutes.signup}
                                         className="underline underline-offset-4"
                                     >
                                         Sign up

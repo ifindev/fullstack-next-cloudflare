@@ -1,6 +1,6 @@
 const authRoutes = {
-    Login: "/login",
-    Signup: "/signup",
+    login: "/login",
+    signup: "/signup",
 } as const;
 
 export default authRoutes;
