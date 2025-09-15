@@ -1,32 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { requireAuth } from "@/modules/auth/utils/auth-utils";
-import { createTodo, getAllTodos } from "@/modules/todos/server/todos.server";
-
-export async function GET() {
-    try {
-        const user = await requireAuth();
-        const allTodos = await getAllTodos(user.id);
-        return NextResponse.json({
-            success: true,
-            data: allTodos,
-            message: "Todos fetched successfully",
-        });
-    } catch (error: any) {
-        console.error("Error fetching todos:", error);
-
-        if (error.message === "Authentication required") {
-            return NextResponse.json(
-                { success: false, error: "Authentication required" },
-                { status: 401 },
-            );
-        }
-
-        return NextResponse.json(
-            { success: false, error: "Failed to fetch todos" },
-            { status: 500 },
-        );
-    }
-}
+import { createTodo } from "@/modules/todos/server/todos.server";
 
 export async function POST(request: NextRequest) {
     try {

@@ -1,14 +1,12 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import getAllTodos from "@/modules/todos/actions/get-todos.action";
 import { TodoCard } from "@/modules/todos/components/todo-card";
-import { getAllTodos } from "@/modules/todos/server/todos.server";
 import todosRoutes from "./todos.route";
 
 export default async function TodoListPage() {
-    const user = await requireAuth();
-    const todos = await getAllTodos(user.id);
+    const todos = await getAllTodos();
 
     return (
         <>
