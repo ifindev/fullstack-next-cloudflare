@@ -2,9 +2,9 @@
 
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { getDb } from "@/lib/db";
-import { todos } from "@/lib/db/schemas/todo.schema";
+import { getDb } from "@/db";
 import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import { todos } from "@/modules/todos/schemas/todo.schema";
 import todosRoutes from "../todos.route";
 
 export async function deleteTodoAction(todoId: number) {

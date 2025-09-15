@@ -1,8 +1,11 @@
 "use server";
 
 import { eq } from "drizzle-orm";
-import { getDb } from "@/lib/db";
-import { type Category, categories } from "@/lib/db/schemas/category.schema";
+import { getDb } from "@/db";
+import {
+    type Category,
+    categories,
+} from "@/modules/todos/schemas/category.schema";
 
 export async function getAllCategories(userId: string): Promise<Category[]> {
     try {

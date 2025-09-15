@@ -1,13 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getDb } from "@/lib/db";
+import { getDb } from "@/db";
+import { requireAuth } from "@/modules/auth/utils/auth-utils";
 import {
     type Category,
     categories,
     insertCategorySchema,
-} from "@/lib/db/schemas/category.schema";
-import { requireAuth } from "@/modules/auth/utils/auth-utils";
+} from "@/modules/todos/schemas/category.schema";
 import todosRoutes from "../todos.route";
 
 export async function createCategory(data: unknown): Promise<Category> {

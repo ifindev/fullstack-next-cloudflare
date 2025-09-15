@@ -27,14 +27,14 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { insertTodoSchema } from "@/lib/db/schemas/todo.schema";
+import type { AuthUser } from "@/modules/auth/models/user.model";
 import {
     TodoPriority,
     type TodoPriorityType,
     TodoStatus,
     type TodoStatusType,
-} from "@/lib/enums/todo.enum";
-import type { AuthUser } from "@/modules/auth/models/user.model";
+} from "@/modules/todos/models/todo.enum";
+import { insertTodoSchema } from "@/modules/todos/schemas/todo.schema";
 import { createTodoAction } from "../actions/create-todo.action";
 import { updateTodoAction } from "../actions/update-todo.action";
 import { AddCategory } from "./add-category";

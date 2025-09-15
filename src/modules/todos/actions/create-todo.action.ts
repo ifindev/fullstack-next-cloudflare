@@ -2,11 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { getDb } from "@/lib/db";
-import { insertTodoSchema, todos } from "@/lib/db/schemas/todo.schema";
-import { TodoPriority, TodoStatus } from "@/lib/enums/todo.enum";
+import { getDb } from "@/db";
 import { type UploadResult, uploadToR2 } from "@/lib/r2";
 import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import { TodoPriority, TodoStatus } from "@/modules/todos/models/todo.enum";
+import { insertTodoSchema, todos } from "@/modules/todos/schemas/todo.schema";
 import todosRoutes from "../todos.route";
 
 export async function createTodoAction(formData: FormData) {

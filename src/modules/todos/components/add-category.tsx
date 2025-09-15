@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { insertCategorySchema } from "@/lib/db/schemas/category.schema";
+import { insertCategorySchema } from "@/modules/todos/schemas/category.schema";
 import { createCategory } from "../actions/create-category.action";
 
 // Create a client-side schema without userId (will be added server-side)

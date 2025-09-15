@@ -1,14 +1,14 @@
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
-import { TODO_VALIDATION_MESSAGES } from "../../constants/validation.constant";
+import { TODO_VALIDATION_MESSAGES } from "@/constants/validation.constant";
+import { user } from "@/modules/auth/schemas/auth.schema";
 import {
     TodoPriority,
     type TodoPriorityType,
     TodoStatus,
     type TodoStatusType,
-} from "../../enums/todo.enum";
-import { user } from "./auth.schema";
+} from "@/modules/todos/models/todo.enum";
 import { categories } from "./category.schema";
 
 export const todos = sqliteTable("todos", {

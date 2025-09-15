@@ -1,9 +1,9 @@
 "use server";
 
 import { and, eq } from "drizzle-orm";
-import { categories, getDb } from "@/lib/db";
-import { type Todo, todos } from "@/lib/db/schemas/todo.schema";
+import { categories, getDb } from "@/db";
 import { requireAuth } from "@/modules/auth/utils/auth-utils";
+import { type Todo, todos } from "@/modules/todos/schemas/todo.schema";
 
 export async function getTodoById(id: number): Promise<Todo | null> {
     try {
