@@ -25,7 +25,7 @@ Combined with **Next.js 15**, you get modern React features, Server Components, 
 - ⚛️ **Next.js 15** - App Router with React Server Components (RSC)
 - 🎨 **TailwindCSS 4** - Utility-first CSS framework
 - 📘 **TypeScript** - Full type safety throughout
-- 🧩 **Radix UI** - Unstyled, accessible components
+- 🧩 **Shadcn UI** - Unstyled, accessible components
 - 📋 **React Hook Form + Zod** - Type-safe form handling
 
 ### ☁️ **Backend & Infrastructure**
