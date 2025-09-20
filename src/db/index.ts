@@ -4,7 +4,7 @@ import * as schema from "./schema";
 
 export async function getDb() {
     const { env } = await getCloudflareContext();
-    return drizzle(env.next_cf_app, { schema });
+    return drizzle(env.terrastories_dev_db, { schema });
 }
 
 export * from "./schema";
