@@ -22,7 +22,7 @@ export function Navigation() {
                                     Home
                                 </Button>
                             </Link>
-                            <Link href="/todos">
+                            <Link href="/dashboard/todos">
                                 <Button variant="ghost" size="sm">
                                     <CheckSquare className="mr-2 h-4 w-4" />
                                     Todos
