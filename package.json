@@ -32,6 +32,9 @@
         "db:reset:local": "wrangler d1 execute terrastories-dev --local --command=\"DROP TABLE IF EXISTS todos;\" && pnpm run db:migrate:local",
 
         "cf:secret": "npx wrangler secret put",
+        "sync-secrets": "node scripts/sync-secrets.js",
+        "sync-secrets:preview": "node scripts/sync-secrets.js --preview-only",
+        "sync-secrets:prod": "node scripts/sync-secrets.js --production-only",
         "cf-typegen": "pnpm exec wrangler types && pnpm exec wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
         "lint": "npx biome format --write"
     },
