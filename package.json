@@ -36,7 +36,8 @@
         "sync-secrets:preview": "node scripts/sync-secrets.js --preview-only",
         "sync-secrets:prod": "node scripts/sync-secrets.js --production-only",
         "cf-typegen": "pnpm exec wrangler types && pnpm exec wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
-        "lint": "npx biome format --write"
+        "lint": "npx biome format --write",
+        "typecheck": "npx tsc --noEmit"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.2.2",

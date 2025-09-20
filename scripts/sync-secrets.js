@@ -64,10 +64,10 @@ async function main() {
 
     // List of secrets to sync (includes some configuration that needs to be in Workers env)
     const secrets = [
-        "BETTER_AUTH_SECRET",        // Secret: Better Auth JWT secret
-        "GOOGLE_CLIENT_ID",          // Secret: Google OAuth client ID
-        "GOOGLE_CLIENT_SECRET",      // Secret: Google OAuth client secret
-        "CLOUDFLARE_R2_URL",         // Config: R2 bucket URL (not secret but needs to be in env)
+        "BETTER_AUTH_SECRET", // Secret: Better Auth JWT secret
+        "GOOGLE_CLIENT_ID", // Secret: Google OAuth client ID
+        "GOOGLE_CLIENT_SECRET", // Secret: Google OAuth client secret
+        "CLOUDFLARE_R2_URL", // Config: R2 bucket URL (not secret but needs to be in env)
     ];
 
     console.log("\n📋 Found secrets to sync:");
