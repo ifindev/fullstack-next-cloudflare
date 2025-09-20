@@ -99,10 +99,10 @@ async function main() {
 
     // Get worker names from command line args or use defaults
     const workers = process.argv.includes("--preview-only")
-        ? ["terrastories-dev-preview"]
+        ? ["next-cf-app-preview"]
         : process.argv.includes("--production-only")
-          ? ["terrastories-dev"]
-          : ["terrastories-dev", "terrastories-dev-preview"];
+          ? ["next-cf-app"]
+          : ["next-cf-app", "next-cf-app-preview"];
 
     console.log(`\n📋 Syncing to workers: ${workers.join(", ")}`);
 

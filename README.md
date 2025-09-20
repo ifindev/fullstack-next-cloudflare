@@ -137,7 +137,7 @@ GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=GOCSPX-your-google-client-secret
 
 # Storage (auto-configured, update if you have custom bucket)
-CLOUDFLARE_R2_URL=https://your-account-id.r2.cloudflarestorage.com/terrastories-dev
+CLOUDFLARE_R2_URL=https://your-account-id.r2.cloudflarestorage.com/next-cf-app
 ```
 
 **Generate auth secret:**
@@ -587,8 +587,8 @@ src/
 **Schema-First Design**: Database schemas defined with Drizzle ORM, exported from `src/db/schema.ts`.
 
 **Cloudflare Integration**: 
-- Database via D1 binding (`terrastories_dev_db`)
-- Storage via R2 binding (`terrastoties_dev_bucket`)
+- Database via D1 binding (`next_cf_app`)
+- Storage via R2 binding (`next_cf_app_bucket`)
 - Secrets via Cloudflare Workers environment
 
 ### Data Flow

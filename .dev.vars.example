@@ -5,7 +5,7 @@ CLOUDFLARE_ACCOUNT_ID=your-account-id-here
 CLOUDFLARE_API_TOKEN=your-api-token-here
 
 # Storage (auto-configured, update if you have custom bucket)
-CLOUDFLARE_R2_URL=https://your-account-id.r2.cloudflarestorage.com/terrastories-dev
+CLOUDFLARE_R2_URL=https://your-account-id.r2.cloudflarestorage.com/next-cf-app
 
 # Authentication Secrets (deployed to Cloudflare Workers)
 BETTER_AUTH_SECRET=your-better-auth-secret-generate-with-openssl
