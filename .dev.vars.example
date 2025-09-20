@@ -1,18 +1,14 @@
-# Load .env.development* files when running `wrangler dev`
-NEXTJS_ENV=development
-
-# Drizzle Kit credentials for D1
+# Cloudflare Configuration
 # Get your Account ID from: https://dash.cloudflare.com/ (right sidebar)
-# Get your API Token from: https://dash.cloudflare.com/profile/api-tokens
+# Get your API Token from: https://dash.cloudflare.com/profile/api-tokens (needs Workers + D1 permissions)
 CLOUDFLARE_ACCOUNT_ID=your-account-id-here
-CLOUDFLARE_D1_TOKEN=your-api-token-here
-CLOUDFLARE_R2_URL=your-r2-url-here
 CLOUDFLARE_API_TOKEN=your-api-token-here
 
-# Authentication
-BETTER_AUTH_SECRET=your-better-auth-secret # see https://www.better-auth.com/docs/installation
-BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app - should use the deployed URL in Workers for prod
+# Storage (auto-configured, update if you have custom bucket)
+CLOUDFLARE_R2_URL=https://your-account-id.r2.cloudflarestorage.com/terrastories-dev
 
-# Google Auth : see https://www.better-auth.com/docs/authentication/google
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
+# Authentication Secrets (deployed to Cloudflare Workers)
+BETTER_AUTH_SECRET=your-better-auth-secret-generate-with-openssl
+GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com  
+GOOGLE_CLIENT_SECRET=GOCSPX-your-google-client-secret
+
