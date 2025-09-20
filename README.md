@@ -6,75 +6,96 @@ A production-ready template for building full-stack applications with Next.js 15
 
 **Inspired by the [Cloudflare SaaS Stack](https://github.com/supermemoryai/cloudflare-saas-stack)** - the same stack powering [Supermemory.ai](https://git.new/memory), which serves 20k+ users on just $5/month. This template modernizes that approach with Cloudflare Workers (vs Pages), includes comprehensive D1 and R2 examples, and provides a complete development workflow.
 
-You can read detail explanations and code architecture of this template from Devin AI on [Deepwiki](https://deepwiki.com/ifindev/fullstack-next-cloudflare).
+## 🎯 What You Get
 
-## 🌟 Why Cloudflare + Next.js?
+- **⚡ Ultra-fast edge deployment** - 300+ locations worldwide with <100ms latency
+- **💰 Generous free tiers** - Build MVPs without upfront costs
+- **🔐 Complete authentication** - Google OAuth with Better Auth
+- **🗃️ Edge database** - SQLite at the edge with Drizzle ORM
+- **📦 Object storage** - S3-compatible R2 storage
+- **🚀 Full DevOps pipeline** - GitHub Actions, preview deployments, automated migrations
 
-**Cloudflare's Edge Network** provides unparalleled performance and reliability:
-- ⚡ **Ultra-low latency** - Deploy to 300+ locations worldwide
-- 💰 **Generous free tiers** - Perfect for MVPs and side projects
-- 📈 **Effortless scaling** - From zero to millions of users automatically
-- 🔒 **Built-in security** - DDoS protection, WAF, and more
-- 🌍 **Global by default** - Your app runs close to every user
+### 🛠️ Tech Stack
+- **Frontend**: Next.js 15 + React 19 + TypeScript + TailwindCSS 4 + Shadcn UI
+- **Backend**: Cloudflare Workers + D1 Database + R2 Storage + Better Auth
+- **DevOps**: Wrangler + GitHub Actions + Automated migrations
 
-Combined with **Next.js 15**, you get modern React features, Server Components, and Server Actions for optimal performance and developer experience.
+---
 
-## 🛠️ Tech Stack
+## 🚀 Quick Start
 
-### 🎯 **Frontend**
-- ⚛️ **Next.js 15** - App Router with React Server Components (RSC)
-- 🎨 **TailwindCSS 4** - Utility-first CSS framework
-- 📘 **TypeScript** - Full type safety throughout
-- 🧩 **Shadcn UI** - Unstyled, accessible components
-- 📋 **React Hook Form + Zod** - Type-safe form handling
+> **For experienced developers** - Get running in 5 minutes
 
-### ☁️ **Backend & Infrastructure**
-- 🌐 **Cloudflare Workers** - Serverless edge compute platform
-- 🗃️ **Cloudflare D1** - Distributed SQLite database at the edge
-- 📦 **Cloudflare R2** - S3-compatible object storage
-- 🔑 **Better Auth** - Modern authentication with Google OAuth
-- 🛠️ **Drizzle ORM** - TypeScript-first database toolkit
+### Prerequisites ✅
+- [ ] [Cloudflare account](https://dash.cloudflare.com/sign-up) (free)
+- [ ] Node.js 20+ and pnpm installed
+- [ ] [Google OAuth app](https://console.cloud.google.com/) created
 
-### 🚀 **DevOps & Deployment**
-- ⚙️ **GitHub Actions** - Automated CI/CD pipeline
-- 🔧 **Wrangler** - Cloudflare's CLI tool
-- 👁️ **Preview Deployments** - Test changes before production
-- 🔄 **Database Migrations** - Version-controlled schema changes
-- 💾 **Automated Backups** - Production database safety
+### Setup ⚡
+```bash
+# 1. Clone and install
+git clone https://github.com/ifindev/fullstack-next-cloudflare.git
+cd fullstack-next-cloudflare
+pnpm install
 
-### 📊 **Data Flow Architecture**
-- **Fetching**: Server Actions + React Server Components for optimal performance
-- **Mutations**: Server Actions with automatic revalidation
-- **Type Safety**: End-to-end TypeScript from database to UI
-- **Caching**: Built-in Next.js caching with Cloudflare edge caching
+# 2. Configure environment
+cp .dev.vars.example .dev.vars
+# Edit .dev.vars with your Cloudflare Account ID, API token, and Google OAuth credentials
 
-## 🚀 Getting Started
+# 3. Setup database and secrets
+pnpm run cf-typegen              # Generate Cloudflare types
+pnpm run db:migrate:local        # Setup local database
+pnpm run sync-secrets            # Sync secrets to Cloudflare Workers
+pnpm run db:migrate:prod         # Setup production database
 
-### 1. Prerequisites
+# 4. Start development
+# Terminal 1:
+pnpm run wrangler:dev
+# Terminal 2:
+pnpm dev
+```
 
-- **Cloudflare Account** - [Sign up for free](https://dash.cloudflare.com/sign-up)
-- **Node.js 20+** and **pnpm** installed
-- **Google OAuth App** - For authentication setup
+### Verify ✅
+- [ ] App running at `http://localhost:3000`
+- [ ] Google OAuth working
+- [ ] Can create/edit todos
+- [ ] Database visible in `pnpm run db:studio:local`
 
-### 2. Create Cloudflare API Token
+**Need help?** See [detailed setup guide](#-initial-project-setup) below.
 
-Create an API token for Wrangler authentication:
+---
 
-1. In the Cloudflare dashboard, go to the **Account API tokens** page
-2. Select **Create Token** > find **Edit Cloudflare Workers** > select **Use Template**
-3. Customize your token name (e.g., "Next.js Cloudflare Template")
-4. Scope your token to your account and zones (if using custom domains)
-5. **Add additional permissions** for D1 database access:
-   - Account - D1:Edit
-   - Account - D1:Read
+## 📋 Prerequisites & Requirements
 
-**Final Token Permissions:**
-- All permissions from "Edit Cloudflare Workers" template
-- Account - D1:Edit (for database operations)
-- Account - D1:Read (for database queries)
+### Required Accounts
+- [ ] **Cloudflare Account** - [Sign up for free](https://dash.cloudflare.com/sign-up)
+  - Need: Account ID and API token with Workers + D1 permissions
+- [ ] **Google Cloud Account** - [Console access](https://console.cloud.google.com/)
+  - Need: OAuth 2.0 Client ID and Secret
+- [ ] **GitHub Account** - For deployment automation (optional)
 
-### 3. Clone and Setup
+### Required Tools
+- [ ] **Node.js 20+** - [Download](https://nodejs.org/)
+- [ ] **pnpm** - `npm install -g pnpm`
+- [ ] **Git** - For version control
 
+### Tool Verification
+```bash
+# Verify installations
+node --version    # Should be 20+
+pnpm --version    # Should be 8+
+git --version     # Any recent version
+```
+
+---
+
+## 🔧 Initial Project Setup
+
+Complete step-by-step setup guide with verification steps.
+
+### Phase 1: Project & Environment Setup
+
+#### Step 1: Clone and Install
 ```bash
 # Clone the repository
 git clone https://github.com/ifindev/fullstack-next-cloudflare.git
@@ -83,501 +104,596 @@ cd fullstack-next-cloudflare
 # Install dependencies
 pnpm install
 ```
+**✅ Verify**: `node_modules` folder created and no errors shown.
 
-### 4. Environment Configuration
+#### Step 2: Create Cloudflare API Token
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → **My Profile** → **API Tokens**
+2. Click **Create Token** → **Edit Cloudflare Workers** → **Use template**
+3. **Add additional permissions**:
+   - Account - D1:Edit
+   - Account - D1:Read
+   - Account - R2:Edit (optional, for storage)
+4. Copy the generated token
 
-Create your environment file:
+# **📝 Note**: This token is used throughout the application for all Cloudflare operations - local development (Drizzle Studio), deployment (GitHub Actions), and CLI operations.
 
+**✅ Verify**: Token starts with your account ID and contains proper permissions.
+
+#### Step 3: Environment Configuration
 ```bash
-# Copy example environment file
+# Copy environment template
 cp .dev.vars.example .dev.vars
 ```
 
 Edit `.dev.vars` with your credentials:
-
 ```bash
-# Cloudflare Configuration
-CLOUDFLARE_ACCOUNT_ID=your-account-id
-CLOUDFLARE_D1_TOKEN=your-api-token
+# Cloudflare Configuration (required)
+CLOUDFLARE_ACCOUNT_ID=your-account-id-here
+CLOUDFLARE_API_TOKEN=your-api-token-here
 
-# Authentication Secrets
-BETTER_AUTH_SECRET=your-random-secret-here
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-
-# Storage
-CLOUDFLARE_R2_URL=your-r2-bucket-url
-```
-
-### 5. Authentication Setup
-
-**Better Auth Secret:**
-```bash
-# Generate a random secret
-openssl rand -base64 32
-# Add to BETTER_AUTH_SECRET in .dev.vars
-```
-
-**Google OAuth Setup:**
-Follow the [Better Auth Google documentation](https://www.better-auth.com/docs/authentication/google) to:
-1. Create a Google OAuth 2.0 application
-2. Get your Client ID and Client Secret
-3. Add authorized redirect URIs
-
-### 6. Storage Setup
-
-**For Local Development:**
-```bash
-# Create R2 bucket for local development
-wrangler r2 bucket create next-cf-app-bucket-dev
-
-# Get the bucket URL and add to .dev.vars as CLOUDFLARE_R2_URL
-```
-
-**For Production:**
-The GitHub Actions workflow will create the production bucket automatically. After deployment, update your production secrets with the R2 URL.
-
-## 🛠️ Manual Setup (Detailed)
-
-If you prefer to set everything up manually or want to understand each step in detail, follow this comprehensive guide.
-
-### Step 1: Create Cloudflare Resources
-
-**Create D1 Database:**
-```bash
-# Create a new SQLite database at the edge
-wrangler d1 create your-app-name
-
-# Output will show:
-# database_name = "your-app-name"
-# database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-```
-
-**Create R2 Bucket:**
-```bash
-# Create object storage bucket
-wrangler r2 bucket create your-app-bucket
-
-# List buckets to confirm
-wrangler r2 bucket list
-```
-
-### Step 2: Configure Wrangler
-
-Update `wrangler.jsonc` with your resource IDs:
-
-```jsonc
-{
-    "name": "your-app-name",
-    "d1_databases": [
-        {
-            "binding": "DB",
-            "database_name": "your-app-name",
-            "database_id": "your-database-id-from-step-1",
-            "migrations_dir": "./src/drizzle"
-        }
-    ],
-    "r2_buckets": [
-        {
-            "bucket_name": "your-app-bucket",
-            "binding": "FILES"
-        }
-    ]
-}
-```
-
-### Step 3: Set Up Authentication
-
-**Generate Better Auth Secret:**
-```bash
-# On macOS/Linux
-openssl rand -base64 32
-
-# On Windows (PowerShell)
-[System.Convert]::ToBase64String([System.Security.Cryptography.RandomNumberGenerator]::GetBytes(32))
-
-# Or use online generator: https://generate-secret.vercel.app/32
-```
-
-**Configure Google OAuth:**
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select existing one
-3. Enable Google+ API
-4. Create OAuth 2.0 credentials
-5. Add authorized redirect URIs:
-   - `http://localhost:3000/api/auth/callback/google` (development)
-   - `https://your-app.your-subdomain.workers.dev/api/auth/callback/google` (production)
-
-### Step 4: Environment Configuration
-
-**Create Local Environment File:**
-```bash
-# .dev.vars for local development
-CLOUDFLARE_ACCOUNT_ID=your-account-id
-CLOUDFLARE_D1_TOKEN=your-api-token
-BETTER_AUTH_SECRET=your-generated-secret
+# Authentication Secrets (required for Google OAuth)
+BETTER_AUTH_SECRET=generate-with-openssl-rand-base64-32
 GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-CLOUDFLARE_R2_URL=https://your-bucket.your-account-id.r2.cloudflarestorage.com
+GOOGLE_CLIENT_SECRET=GOCSPX-your-google-client-secret
+
+# Storage (auto-configured, update if you have custom bucket)
+CLOUDFLARE_R2_URL=https://your-account-id.r2.cloudflarestorage.com/terrastories-dev
 ```
 
-**Set Production Secrets:**
+**Generate auth secret:**
 ```bash
-# Add each secret to Cloudflare Workers
-echo "your-secret-here" | wrangler secret put BETTER_AUTH_SECRET
-echo "your-client-id" | wrangler secret put GOOGLE_CLIENT_ID
-echo "your-client-secret" | wrangler secret put GOOGLE_CLIENT_SECRET
-echo "your-r2-url" | wrangler secret put CLOUDFLARE_R2_URL
+openssl rand -base64 32
+# Copy output to BETTER_AUTH_SECRET in .dev.vars
 ```
 
-### Step 5: Database Setup
+**✅ Verify**: All required environment variables have real values (no placeholders).
 
-**Generate TypeScript Types:**
+### Phase 2: Google OAuth Setup
+
+#### Step 4: Configure Google OAuth
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create new project or select existing one
+3. **APIs & Services** → **Credentials** → **Create Credentials** → **OAuth 2.0 Client ID**
+4. Choose **Web application**
+5. Add authorized redirect URIs:
+   ```
+   http://localhost:3000/api/auth/callback/google
+   https://your-worker-name.your-subdomain.workers.dev/api/auth/callback/google
+   ```
+6. Copy Client ID and Client Secret to `.dev.vars`
+
+**✅ Verify**: Google OAuth credentials added to `.dev.vars` and URIs configured.
+
+### Phase 3: Cloudflare Resources & Database
+
+#### Step 5: Generate TypeScript Types
 ```bash
-# Generate Cloudflare bindings for TypeScript
+# Generate Cloudflare environment types
 pnpm run cf-typegen
 ```
+**✅ Verify**: `cloudflare-env.d.ts` file updated with your bindings.
 
-**Initialize Database:**
+#### Step 6: Database Setup
 ```bash
-# Generate initial migration from schema
-pnpm run db:generate
-
-# Apply migrations to local database
+# Initialize local database
 pnpm run db:migrate:local
 
 # Verify database structure
 pnpm run db:inspect:local
 ```
+**✅ Verify**: Shows tables: `account`, `session`, `user`, `verification`, `todos`, `categories`.
 
-**Optional: Seed Sample Data**
+#### Step 7: Deploy Secrets to Cloudflare
 ```bash
-# Create and run a seed script
-wrangler d1 execute your-app-name --local --command="
-INSERT INTO todos (id, title, description, completed, created_at, updated_at) VALUES
-('1', 'Welcome to your app', 'This is a sample todo item', false, datetime('now'), datetime('now')),
-('2', 'Set up authentication', 'Configure Google OAuth', true, datetime('now'), datetime('now'));
-"
+# Sync all secrets from .dev.vars to Workers (both prod and preview)
+pnpm run sync-secrets
+
+# Verify secrets were uploaded
+wrangler secret list
 ```
+**✅ Verify**: Shows `BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `CLOUDFLARE_R2_URL`.
 
-### Step 6: Test Your Setup
-
-**Start Development Servers:**
+#### Step 8: Production Database Setup
 ```bash
-# Terminal 1: Start Wrangler (provides D1 access)
-pnpm run wrangler:dev
-
-# Terminal 2: Start Next.js (provides HMR)
-pnpm run dev
-
-# Alternative: Single command (no HMR)
-pnpm run dev:cf
-```
-
-**Verify Everything Works:**
-1. Open `http://localhost:3000`
-2. Test authentication flow
-3. Create a todo item
-4. Check database: `pnpm run db:studio:local`
-
-### Step 7: Set Up GitHub Actions (Optional)
-
-**Add Repository Secrets:**
-Go to your GitHub repository → Settings → Secrets and add:
-
-- `CLOUDFLARE_API_TOKEN` - Your API token from Step 2
-- `CLOUDFLARE_ACCOUNT_ID` - Your account ID
-- `BETTER_AUTH_SECRET` - Your auth secret
-- `GOOGLE_CLIENT_ID` - Your Google client ID
-- `GOOGLE_CLIENT_SECRET` - Your Google client secret
-- `CLOUDFLARE_R2_URL` - Your R2 bucket URL
-
-**Deploy Production Database:**
-```bash
-# Apply migrations to production
+# Setup production database
 pnpm run db:migrate:prod
 
 # Verify production database
 pnpm run db:inspect:prod
 ```
+**✅ Verify**: Production database has same tables as local.
 
-## 🔧 Advanced Manual Configuration
+### Phase 4: Development Environment
 
-### Custom Domain Setup
-
-**Add Custom Domain:**
-1. Go to Cloudflare dashboard → Workers & Pages
-2. Select your worker → Settings → Triggers
-3. Click "Add Custom Domain"
-4. Enter your domain (must be in your Cloudflare account)
-
-**Update OAuth Redirect URLs:**
-Add your custom domain to Google OAuth settings:
-- `https://yourdomain.com/api/auth/callback/google`
-
-### Database Optimization
-
-**Add Indexes for Performance:**
-```sql
--- Create indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_todos_user_id ON todos(user_id);
-CREATE INDEX IF NOT EXISTS idx_todos_created_at ON todos(created_at);
-CREATE INDEX IF NOT EXISTS idx_todos_completed ON todos(completed);
-```
-
-**Monitor Database Performance:**
+#### Step 9: Start Development Servers
 ```bash
-# View database insights
-wrangler d1 insights your-app-name --since 1h
-
-# Export data for analysis
-wrangler d1 export your-app-name --output backup.sql
-```
-
-### R2 Storage Configuration
-
-**Configure CORS for Direct Uploads:**
-```bash
-# Create CORS policy file
-echo '[
-  {
-    "AllowedOrigins": ["https://yourdomain.com", "http://localhost:3000"],
-    "AllowedMethods": ["GET", "PUT", "POST", "DELETE"],
-    "AllowedHeaders": ["*"],
-    "ExposeHeaders": [],
-    "MaxAgeSeconds": 3000
-  }
-]' > cors.json
-
-# Apply CORS policy
-wrangler r2 bucket cors put your-app-bucket --file cors.json
-```
-
-### Performance Monitoring
-
-**Enable Advanced Analytics:**
-```jsonc
-// Add to wrangler.jsonc
-{
-  "observability": {
-    "enabled": true,
-    "head_sampling_rate": 1
-  },
-  "analytics_engine_datasets": [
-    {
-      "binding": "ANALYTICS",
-      "dataset": "your-analytics-dataset"
-    }
-  ]
-}
-```
-
-## 🏃‍♂️ Development Workflow
-
-### Initial Setup
-```bash
-# 1. Generate Cloudflare types (run after any wrangler.jsonc changes)
-pnpm run cf-typegen
-
-# 2. Apply database migrations
-pnpm run db:migrate:local
-
-# 3. Build the application for Cloudflare
-pnpm run build:cf
-```
-
-### Daily Development
-```bash
-# Terminal 1: Start Wrangler for D1 database access
+# Terminal 1: Start Wrangler (D1 database access)
 pnpm run wrangler:dev
 
-# Terminal 2: Start Next.js development server with HMR
-pnpm run dev
+# Terminal 2: Start Next.js (hot reload)
+pnpm dev
 ```
+**✅ Verify**: 
+- Terminal 1: Shows "Ready on localhost:8787"
+- Terminal 2: Shows "Ready on localhost:3000"
 
-**Development URLs:**
-- 🌐 **Next.js with HMR**: `http://localhost:3000` (recommended)
-- ⚙️ **Wrangler Dev Server**: `http://localhost:8787`
+#### Step 10: Test Everything Works
+1. Open `http://localhost:3000`
+2. Click **Sign in with Google**
+3. Complete OAuth flow
+4. Create a todo item
+5. Check database: `pnpm run db:studio:local`
 
-### Alternative Development Options
+**✅ Verify**: 
+- [ ] App loads without errors
+- [ ] Google OAuth completes successfully  
+- [ ] Can create and edit todos
+- [ ] Database shows user and todo records
+
+> **🎉 Success!** Your development environment is ready. Skip to [Development Workflow](#-development-workflow).
+
+---
+
+## 💻 Development Workflow
+
+Daily development patterns and common tasks.
+
+### Daily Development Setup
 ```bash
-# Single command - Cloudflare runtime (no HMR)
-pnpm run dev:cf
+# Terminal 1: Database access (keep running)
+pnpm run wrangler:dev
 
-# Test with remote Cloudflare resources
-pnpm run dev:remote
+# Terminal 2: Next.js with hot reload (keep running)  
+pnpm dev
 ```
+**Access**: App at `http://localhost:3000`, Database studio: `pnpm run db:studio:local`
 
-## 📜 Available Scripts
-
-### **Core Development**
-| Script | Description |
-|--------|-------------|
-| `pnpm dev` | Start Next.js with HMR |
-| `pnpm run build:cf` | Build for Cloudflare Workers |
-| `pnpm run wrangler:dev` | Start Wrangler for local D1 access |
-| `pnpm run dev:cf` | Combined build + Cloudflare dev server |
-
-### **Database Operations**
-| Script | Description |
-|--------|-------------|
-| `pnpm run db:generate` | Generate new migration |
-| `pnpm run db:generate:named "migration_name"` | Generate named migration |
-| `pnpm run db:migrate:local` | Apply migrations to local D1 |
-| `pnpm run db:migrate:preview` | Apply migrations to preview |
-| `pnpm run db:migrate:prod` | Apply migrations to production |
-| `pnpm run db:studio:local` | Open Drizzle Studio for local DB |
-| `pnpm run db:inspect:local` | List local database tables |
-| `pnpm run db:reset:local` | Reset local database |
-
-### **Deployment & Production**
-| Script | Description |
-|--------|-------------|
-| `pnpm run deploy` | Deploy to production |
-| `pnpm run deploy:preview` | Deploy to preview environment |
-| `pnpm run cf-typegen` | Generate Cloudflare TypeScript types |
-| `pnpm run cf:secret` | Add secrets to Cloudflare Workers |
-
-### **Development Order**
-
-**First-time setup:**
-1. `pnpm run cf-typegen` - Generate types
-2. `pnpm run db:migrate:local` - Setup database
-3. `pnpm run build:cf` - Build application
-
-**Daily development:**
-1. `pnpm run wrangler:dev` - Start D1 access (Terminal 1)
-2. `pnpm run dev` - Start Next.js with HMR (Terminal 2)
-
-**After schema changes:**
-1. `pnpm run db:generate` - Generate migration
-2. `pnpm run db:migrate:local` - Apply to local DB
-
-**After wrangler.jsonc changes:**
-1. `pnpm run cf-typegen` - Regenerate types
-
-## 🏗️ Project Structure
-
-This template uses a **feature-based/module-sliced architecture** for better maintainability and scalability:
-
-```
-src/
-├── app/                    # Next.js App Router
-│   ├── (auth)/            # Auth-related pages
-│   ├── api/               # API routes (for external access)
-│   ├── dashboard/         # Dashboard pages
-│   └── globals.css        # Global styles
-├── components/            # Shared UI components
-├── constants/             # App constants
-├── db/                    # Database configuration
-│   ├── index.ts          # DB connection
-│   └── schema.ts         # Database schemas
-├── lib/                   # Shared utilities
-├── modules/               # Feature modules
-│   ├── auth/             # Authentication module
-│   │   ├── actions/      # Auth server actions
-│   │   ├── components/   # Auth components
-│   │   ├── hooks/        # Auth hooks
-│   │   ├── models/       # Auth models
-│   │   ├── schemas/      # Auth schemas
-│   │   └── utils/        # Auth utilities
-│   ├── dashboard/        # Dashboard module
-│   └── todos/            # Todo module
-│       ├── actions/      # Todo server actions
-│       ├── components/   # Todo components
-│       ├── models/       # Todo models
-│       └── schemas/      # Todo schemas
-└── drizzle/              # Database migrations
-```
-
-**Key Architecture Benefits:**
-- 🎯 **Feature Isolation** - Each module contains its own actions, components, and logic
-- 🔄 **Server Actions** - Modern data mutations with automatic revalidation
-- 📊 **React Server Components** - Optimal performance with server-side rendering
-- 🛡️ **Type Safety** - End-to-end TypeScript from database to UI
-- 🧪 **Testable** - Clear separation of concerns makes testing easier
-
-## 🔧 Advanced Configuration
-
-### Database Schema Changes
+### Making Database Changes
 ```bash
-# 1. Modify schema files in src/db/schemas/
+# 1. Modify schema files in src/modules/*/schemas/
 # 2. Generate migration
-pnpm run db:generate:named "add_user_table"
+pnpm run db:generate:named "add_new_feature"
+
 # 3. Apply to local database
 pnpm run db:migrate:local
-# 4. Test your changes
-# 5. Commit and deploy (migrations run automatically)
+
+# 4. Test your changes locally
+# 5. Apply to production (after testing)
+pnpm run db:migrate:prod
 ```
 
-### Adding New Cloudflare Resources
+### Testing Different Environments
 ```bash
-# 1. Update wrangler.jsonc with new resources
-# 2. Regenerate types
+# Local development (recommended)
+pnpm dev                    # Next.js with HMR
+pnpm run wrangler:dev      # D1 access
+
+# Cloudflare Workers runtime (for testing)
+pnpm run dev:cf            # No HMR, but exact production environment
+
+# Test with remote resources
+pnpm run dev:remote        # Use production D1 and R2
+```
+
+### Code Quality
+```bash
+# Format and lint (run before commits)
+pnpm run lint
+
+# Regenerate types (after wrangler.jsonc changes)
 pnpm run cf-typegen
-# 3. Update your code to use new bindings
 ```
 
-### Production Secrets Management
+---
+
+## 🧪 Preview Deployment
+
+Test your changes in a production-like environment before going live.
+
+### Deploy to Preview
 ```bash
-# Add secrets to production environment
-pnpm run cf:secret BETTER_AUTH_SECRET
-pnpm run cf:secret GOOGLE_CLIENT_ID
-pnpm run cf:secret GOOGLE_CLIENT_SECRET
+# Deploy to preview environment
+pnpm run deploy:preview
 ```
+**✅ Verify**: Deployment succeeds and returns preview URL.
 
-## 📊 Performance & Monitoring
+### Essential Preview Testing
+- [ ] **Authentication**: Test Google OAuth flow
+- [ ] **Database**: Verify database queries work
+- [ ] **Features**: Test all main app functionality
+- [ ] **Performance**: Check loading times
 
-**Built-in Observability:**
-- ✅ Cloudflare Analytics (enabled by default)
-- ✅ Real User Monitoring (RUM)
-- ✅ Error tracking and logging
-- ✅ Performance metrics
-
-**Database Monitoring:**
+### Preview Environment Secrets
+Preview deployments use separate workers, ensure secrets are synced:
 ```bash
-# Monitor database performance
-wrangler d1 insights next-cf-app
+# Sync secrets to both production and preview
+pnpm run sync-secrets
 
-# View database metrics in Cloudflare Dashboard
-# Navigate to Workers & Pages → D1 → next-cf-app → Metrics
+# Or sync to preview only
+pnpm run sync-secrets:preview
+
+# Verify preview worker has secrets
+wrangler secret list --name your-app-name-preview
 ```
 
-## 🚀 Deployment
+### Common Preview Issues
+- **Authentication fails**: Check secrets synced with `pnpm run sync-secrets`
+- **Database errors**: Verify migrations with `pnpm run db:migrate:prod` 
+- **404 errors**: Ensure routes are properly configured
 
-### Automatic Deployment (Recommended)
+---
 
-Push to `main` branch triggers automatic deployment via GitHub Actions:
+## 🚀 Production Deployment
 
+Deploy your application to production.
+
+### Pre-Deployment Checklist
+- [ ] All tests passing locally
+- [ ] Database migrations applied: `pnpm run db:migrate:prod`
+- [ ] Secrets synced: `pnpm run sync-secrets`
+- [ ] Google OAuth redirect URIs include production domain
+- [ ] Preview deployment tested successfully
+
+### Deploy to Production
+```bash
+# Deploy to production
+pnpm run deploy
+```
+
+### Post-Deployment Verification
+- [ ] Production URL accessible
+- [ ] Google OAuth working
+- [ ] Database connections successful
+- [ ] All features working as expected
+
+### Automatic Deployment (GitHub Actions)
+Push to `main` branch triggers automatic deployment:
 ```bash
 git add .
 git commit -m "feat: add new feature"
 git push origin main
 ```
 
-**Deployment Pipeline:**
-1. ✅ Install dependencies
-2. ✅ Build application
-3. ✅ Run database migrations
-4. ✅ Deploy to Cloudflare Workers
+**Pipeline steps**: Install dependencies → Build → Apply migrations → Deploy → Verify
 
-### Manual Deployment
-
+### Production Monitoring
 ```bash
-# Deploy to production
-pnpm run deploy
+# View database performance
+wrangler d1 insights your-app-name --since 1h
 
-# Deploy to preview environment
-pnpm run deploy:preview
+# View application logs  
+wrangler tail your-app-name
+
+# View deployment status
+wrangler deployments list
 ```
 
-## ✍️ Todos
+---
 
-- [ ] Implement email sending with [Resend](https://resend.com/) & [Cloudflare Email Routing](https://www.cloudflare.com/developer-platform/products/email-routing/)
-- [ ] Implement international payment gateway with [Polar.sh](https://polar.sh/)
-- [ ] Implement Indonesian payment gateway either with [Xendit](https://www.xendit.co/en-id/), [Midtrans](https://midtrans.com/en), or [Duitku](https://www.duitku.com/)
+## 📚 Command Reference
 
+Complete reference of all available commands.
 
+### Core Development
+| Command | Description | When to Use |
+|---------|-------------|-------------|
+| `pnpm dev` | Next.js development server with HMR | Daily development |
+| `pnpm run wrangler:dev` | Wrangler dev server for D1 access | Daily development (Terminal 1) |
+| `pnpm run dev:cf` | Cloudflare Workers runtime (no HMR) | Testing production environment |
+| `pnpm run dev:remote` | Use remote D1/R2 resources | Testing with production data |
+| `pnpm build` | Build for production | Local production testing |
+| `pnpm start` | Serve production build locally | Local production testing |
+
+### Database Operations
+| Command | Description | When to Use |
+|---------|-------------|-------------|
+| `pnpm run db:generate` | Generate migration from schema changes | After modifying schemas |
+| `pnpm run db:generate:named "name"` | Generate named migration | Descriptive migration names |
+| `pnpm run db:migrate:local` | Apply migrations to local database | Local development |
+| `pnpm run db:migrate:prod` | Apply migrations to production | Before deployment |
+| `pnpm run db:studio:local` | Open Drizzle Studio for local DB | Visual database management |
+| `pnpm run db:studio` | Open Drizzle Studio for production | Production database management |
+| `pnpm run db:inspect:local` | List local database tables | Verify local schema |
+| `pnpm run db:inspect:prod` | List production database tables | Verify production schema |
+| `pnpm run db:reset:local` | Reset and reinitialize local database | Start fresh locally |
+
+### Deployment & Secrets
+| Command | Description | When to Use |
+|---------|-------------|-------------|
+| `pnpm run deploy` | Deploy to production | Production deployment |
+| `pnpm run deploy:preview` | Deploy to preview environment | Preview testing |
+| `pnpm run sync-secrets` | Sync secrets to all environments | Before any deployment |
+| `pnpm run sync-secrets:prod` | Sync secrets to production only | Production-specific updates |
+| `pnpm run sync-secrets:preview` | Sync secrets to preview only | Preview-specific updates |
+| `pnpm run cf:secret NAME` | Manually add single secret | Individual secret updates |
+
+### Development Tools
+| Command | Description | When to Use |
+|---------|-------------|-------------|
+| `pnpm run cf-typegen` | Generate Cloudflare TypeScript types | After wrangler.jsonc changes |
+| `pnpm run lint` | Format and lint code | Before commits |
+| `wrangler secret list` | List all secrets | Verify secret configuration |
+| `wrangler whoami` | Check Cloudflare auth status | Verify authentication |
+
+### Development Workflow Commands
+```bash
+# Complete first-time setup
+pnpm run cf-typegen && pnpm run db:migrate:local && pnpm run sync-secrets && pnpm run db:migrate:prod
+
+# Daily development startup
+# Terminal 1: pnpm run wrangler:dev
+# Terminal 2: pnpm dev
+
+# After schema changes
+pnpm run db:generate && pnpm run db:migrate:local && pnpm run db:migrate:prod
+
+# Before deployment
+pnpm run lint && pnpm run sync-secrets && pnpm run deploy:preview
+
+# Production deployment
+pnpm run deploy
+```
+
+---
+
+## 🐛 Troubleshooting
+
+Common issues and their solutions.
+
+### Authentication Issues
+
+**Problem**: "CLIENT_ID_AND_SECRET_REQUIRED" error
+**Cause**: Google OAuth secrets not synced to Cloudflare Workers
+**Solution**:
+```bash
+# Sync secrets to all environments
+pnpm run sync-secrets
+
+# Verify secrets exist
+wrangler secret list
+wrangler secret list --name your-app-name-preview
+```
+
+**Problem**: Google OAuth redirect URI mismatch
+**Cause**: Google OAuth app not configured for your domain
+**Solution**: Add redirect URIs in [Google Cloud Console](https://console.cloud.google.com/):
+- `http://localhost:3000/api/auth/callback/google`
+- `https://your-worker.your-account.workers.dev/api/auth/callback/google`
+
+### Database Issues
+
+**Problem**: "Table does not exist" errors
+**Cause**: Database migrations not applied
+**Solution**:
+```bash
+# Apply migrations to the affected environment
+pnpm run db:migrate:local    # For local development
+pnpm run db:migrate:prod     # For production/preview
+
+# Verify tables exist
+pnpm run db:inspect:local    # Check local
+pnpm run db:inspect:prod     # Check production
+```
+
+**Problem**: Local D1 database not accessible
+**Cause**: Wrangler dev server not running
+**Solution**:
+```bash
+# Start Wrangler dev server (Terminal 1)
+pnpm run wrangler:dev
+
+# Keep running and start Next.js in another terminal
+pnpm dev
+```
+
+### Deployment Issues
+
+**Problem**: Preview/production deployment authentication fails
+**Cause**: Secrets not synced to specific worker environment
+**Solution**:
+```bash
+# Check which workers exist
+wrangler secret list                                    # Main worker
+wrangler secret list --name your-app-name-preview      # Preview worker
+
+# Sync secrets to all environments
+pnpm run sync-secrets
+```
+
+**Problem**: Build failures
+**Cause**: TypeScript errors or missing dependencies
+**Solution**:
+```bash
+# Regenerate Cloudflare types
+pnpm run cf-typegen
+
+# Check for TypeScript errors
+pnpm run lint
+
+# Verify all dependencies installed
+pnpm install
+```
+
+### Development Issues
+
+**Problem**: Hot reload not working
+**Cause**: Using `pnpm run dev:cf` instead of `pnpm dev`
+**Solution**: Use two terminals:
+```bash
+# Terminal 1: For D1 access
+pnpm run wrangler:dev
+
+# Terminal 2: For hot reload
+pnpm dev
+```
+
+**Problem**: Environment variables not loading
+**Cause**: `.dev.vars` file missing or malformed
+**Solution**:
+```bash
+# Verify file exists and has correct format
+cat .dev.vars
+
+# Copy from template if missing
+cp .dev.vars.example .dev.vars
+```
+
+### Getting Help
+
+1. **Check logs**: `wrangler tail your-app-name`
+2. **Verify setup**: Follow [verification steps](#verify-) in setup
+3. **Check GitHub Issues**: [Project issues](https://github.com/ifindev/fullstack-next-cloudflare/issues)
+4. **Cloudflare Docs**: [Workers documentation](https://developers.cloudflare.com/workers/)
+
+---
+
+## 🏗️ Project Architecture
+
+Understanding the codebase structure for effective development.
+
+### Module-Based Architecture
+```
+src/
+├── app/                    # Next.js App Router (routes + global styles)
+│   ├── (auth)/            # Auth-related pages  
+│   ├── dashboard/         # Dashboard pages
+│   └── api/               # API routes
+├── components/             # Shared UI components
+│   └── ui/                # Shadcn UI primitives
+├── constants/             # App constants
+├── db/                    # Database configuration
+├── lib/                   # Shared utilities (auth, R2, utils)
+├── modules/               # Feature modules (self-contained)
+│   ├── auth/             # Authentication module
+│   │   ├── actions/      # Server actions
+│   │   ├── components/   # Auth components  
+│   │   ├── schemas/      # Database schemas
+│   │   └── utils/        # Auth utilities
+│   ├── dashboard/        # Dashboard module
+│   └── todos/            # Todo management module
+│       ├── actions/      # Todo server actions
+│       ├── components/   # Todo components
+│       ├── schemas/      # Todo schemas
+│       └── models/       # Type definitions
+└── drizzle/              # Database migrations
+```
+
+### Key Architectural Patterns
+
+**Module-Based Organization**: Each feature is self-contained with its own actions, components, schemas, and utilities.
+
+**Server Actions Pattern**: All data mutations use Next.js Server Actions for type-safe server-side operations.
+
+**Schema-First Design**: Database schemas defined with Drizzle ORM, exported from `src/db/schema.ts`.
+
+**Cloudflare Integration**: 
+- Database via D1 binding (`terrastories_dev_db`)
+- Storage via R2 binding (`terrastoties_dev_bucket`)
+- Secrets via Cloudflare Workers environment
+
+### Data Flow
+1. **UI Components** → Server Actions → Database
+2. **Authentication** → Better Auth + D1 storage
+3. **File Storage** → R2 with signed URLs
+4. **Type Safety** → End-to-end TypeScript from DB to UI
+
+---
+
+## 🔧 Advanced Configuration
+
+Advanced setup options and customizations.
+
+### Custom Domain Setup
+1. **Cloudflare Dashboard** → **Workers & Pages** → Select your worker
+2. **Settings** → **Triggers** → **Add Custom Domain**
+3. Enter your domain (must be in your Cloudflare account)
+4. **Update Google OAuth** redirect URIs to include custom domain
+
+### Database Optimization
+```sql
+-- Add indexes for better performance
+CREATE INDEX IF NOT EXISTS idx_todos_user_id ON todos(user_id);
+CREATE INDEX IF NOT EXISTS idx_todos_created_at ON todos(created_at);
+CREATE INDEX IF NOT EXISTS idx_todos_completed ON todos(completed);
+```
+
+### R2 Storage Configuration
+```bash
+# Configure CORS for direct uploads
+echo '[{
+  "AllowedOrigins": ["https://yourdomain.com", "http://localhost:3000"],
+  "AllowedMethods": ["GET", "PUT", "POST", "DELETE"],
+  "AllowedHeaders": ["*"],
+  "MaxAgeSeconds": 3000
+}]' > cors.json
+
+wrangler r2 bucket cors put your-bucket --file cors.json
+```
+
+### Performance Monitoring
+Enable advanced analytics in `wrangler.jsonc`:
+```jsonc
+{
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}
+```
+
+### Environment-Specific Configuration
+Create environment-specific configurations:
+```jsonc
+// wrangler.jsonc
+{
+  "env": {
+    "staging": {
+      "name": "your-app-staging",
+      "vars": { "ENVIRONMENT": "staging" }
+    },
+    "production": {
+      "name": "your-app-production", 
+      "vars": { "ENVIRONMENT": "production" }
+    }
+  }
+}
+```
+
+---
+
+## 📊 Performance & Monitoring
+
+### Built-in Observability
+- ✅ Cloudflare Analytics (enabled by default)
+- ✅ Real User Monitoring (RUM)
+- ✅ Error tracking and logging
+- ✅ Performance metrics
+
+### Database Monitoring
+```bash
+# Monitor database performance
+wrangler d1 insights your-app-name --since 1h
+
+# Export data for analysis
+wrangler d1 export your-app-name --output backup.sql
+
+# View metrics in Cloudflare Dashboard
+# Navigate to Workers & Pages → D1 → your-database → Metrics
+```
+
+### Application Monitoring
+```bash
+# View real-time logs
+wrangler tail your-app-name
+
+# View deployment history
+wrangler deployments list
+
+# View worker analytics
+# Cloudflare Dashboard → Workers & Pages → your-worker → Analytics
+```
+
+---
 
 ## 🤝 Contributing
 
