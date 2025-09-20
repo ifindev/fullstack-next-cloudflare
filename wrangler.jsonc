@@ -4,7 +4,7 @@
  */
 {
     "$schema": "node_modules/wrangler/config-schema.json",
-    "name": "terrastories-dev",
+    "name": "next-cf-app",
     "main": ".open-next/worker.js",
     "compatibility_date": "2025-03-01",
     "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
@@ -17,16 +17,16 @@
     },
     "d1_databases": [
         {
-            "binding": "terrastories_dev_db",
-            "database_name": "terrastories-dev",
-            "database_id": "00e20d6b-6949-438e-8b96-16371d58dde5",
+            "binding": "next_cf_app",
+            "database_name": "next-cf-app",
+            "database_id": "757a32d1-5779-4f09-bcf3-b268013395d4",
             "migrations_dir": "./src/drizzle"
         }
     ],
     "r2_buckets": [
         {
-            "bucket_name": "terrastories-dev",
-            "binding": "terrastoties_dev_bucket"
+            "bucket_name": "next-cf-app-bucket",
+            "binding": "next_cf_app_bucket"
         }
     ]
     /**

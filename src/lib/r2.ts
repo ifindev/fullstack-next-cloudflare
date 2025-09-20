@@ -24,7 +24,7 @@ export async function uploadToR2(
         const arrayBuffer = await file.arrayBuffer();
 
         // Upload to R2
-        const result = await env.terrastoties_dev_bucket.put(key, arrayBuffer, {
+        const result = await env.next_cf_app_bucket.put(key, arrayBuffer, {
             httpMetadata: {
                 contentType: file.type,
                 cacheControl: "public, max-age=31536000", // 1 year
@@ -63,7 +63,7 @@ export async function uploadToR2(
 export async function getFromR2(key: string): Promise<R2Object | null> {
     try {
         const { env } = await getCloudflareContext();
-        return env.terrastoties_dev_bucket.get(key);
+        return env.next_cf_app_bucket.get(key);
     } catch (error) {
         console.error("Error getting data from R2", error);
         return null;

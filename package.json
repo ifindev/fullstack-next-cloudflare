@@ -1,5 +1,5 @@
 {
-    "name": "terrastories-dev",
+    "name": "next-cf-app",
     "version": "0.1.0",
     "private": true,
     "scripts": {
@@ -20,16 +20,16 @@
 
         "db:generate": "drizzle-kit generate",
         "db:generate:named": "drizzle-kit generate --name",
-        "db:migrate:local": "wrangler d1 migrations apply terrastories-dev --local",
-        "db:migrate:preview": "wrangler d1 migrations apply terrastories-dev --env preview",
-        "db:migrate:prod": "wrangler d1 migrations apply terrastories-dev --remote",
+        "db:migrate:local": "wrangler d1 migrations apply next-cf-app --local",
+        "db:migrate:preview": "wrangler d1 migrations apply next-cf-app --env preview",
+        "db:migrate:prod": "wrangler d1 migrations apply next-cf-app --remote",
         "db:studio": "drizzle-kit studio",
         "db:studio:local": "drizzle-kit studio --config=drizzle.local.config.ts",
 
-        "db:inspect:local": "wrangler d1 execute terrastories-dev --local --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
-        "db:inspect:preview": "wrangler d1 execute terrastories-dev --env preview --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
-        "db:inspect:prod": "wrangler d1 execute terrastories-dev --remote --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
-        "db:reset:local": "wrangler d1 execute terrastories-dev --local --command=\"DROP TABLE IF EXISTS todos;\" && pnpm run db:migrate:local",
+        "db:inspect:local": "wrangler d1 execute next-cf-app --local --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
+        "db:inspect:preview": "wrangler d1 execute next-cf-app --env preview --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
+        "db:inspect:prod": "wrangler d1 execute next-cf-app --remote --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
+        "db:reset:local": "wrangler d1 execute next-cf-app --local --command=\"DROP TABLE IF EXISTS todos;\" && pnpm run db:migrate:local",
 
         "cf:secret": "npx wrangler secret put",
         "sync-secrets": "node scripts/sync-secrets.js",
