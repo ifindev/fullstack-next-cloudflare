@@ -33,7 +33,8 @@
 
         "cf:secret": "npx wrangler secret put",
         "cf-typegen": "pnpm exec wrangler types && pnpm exec wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
-        "lint": "npx biome format --write"
+        "lint": "npx biome format --write",
+        "typecheck": "npx tsc --noEmit"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.2.1",
