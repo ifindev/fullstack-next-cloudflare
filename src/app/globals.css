@@ -119,4 +119,14 @@
   body {
     @apply bg-background text-foreground;
   }
+  a {
+    @apply cursor-pointer transition-colors duration-200;
+  }
+  label {
+    @apply cursor-pointer;
+  }
+  /* Improve focus visibility for better accessibility */
+  *:focus-visible {
+    @apply outline-offset-2;
+  }
 }
