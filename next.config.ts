@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
 };
 
 // Only run during `next dev`, not during `next build`
-if (process.argv.includes("dev")) {
+if (process.argv.includes("dev") || process.env.NODE_ENV === "development") {
     import("@opennextjs/cloudflare").then(
         ({ initOpenNextCloudflareForDev }) => {
             initOpenNextCloudflareForDev();
