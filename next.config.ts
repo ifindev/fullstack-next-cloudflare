@@ -1,16 +1,12 @@
-import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
-const nextConfig: NextConfig = {
+/** @type {import("next").NextConfig} */
+const nextConfig = {
     /* config options here */
 };
 
-// Only run during `next dev`, not during `next build`
-if (process.argv.includes("dev")) {
-    import("@opennextjs/cloudflare").then(
-        ({ initOpenNextCloudflareForDev }) => {
-            initOpenNextCloudflareForDev();
-        },
-    );
+if (process.env.NODE_ENV === "development") {
+    initOpenNextCloudflareForDev();
 }
 
 export default nextConfig;
