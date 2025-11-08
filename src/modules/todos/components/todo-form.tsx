@@ -443,12 +443,12 @@ export function TodoForm({
                                             </Button>
                                         </div>
                                     ) : (
-                                        <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                                            <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                                        <div className="border-2 border-dashed border-border rounded-md p-6 text-center">
+                                            <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
                                             <div className="mt-2">
                                                 <label
                                                     htmlFor="image-upload"
-                                                    className="cursor-pointer text-blue-600 hover:text-blue-500"
+                                                    className="cursor-pointer text-primary hover:text-primary/80"
                                                 >
                                                     Upload an image
                                                 </label>
@@ -460,7 +460,7 @@ export function TodoForm({
                                                     onChange={handleImageChange}
                                                 />
                                             </div>
-                                            <p className="text-xs text-gray-500 mt-1">
+                                            <p className="text-xs text-muted-foreground mt-1">
                                                 PNG, JPG up to 5MB
                                             </p>
                                         </div>

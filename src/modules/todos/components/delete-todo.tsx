@@ -50,7 +50,7 @@ export function DeleteTodo({ todoId }: DeleteTodoProps) {
                 <Button
                     variant="ghost"
                     size="sm"
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10"
                 >
                     <Trash2 className="h-4 w-4" />
                 </Button>
@@ -68,7 +68,7 @@ export function DeleteTodo({ todoId }: DeleteTodoProps) {
                     <AlertDialogAction
                         onClick={handleDelete}
                         disabled={isPending}
-                        className="bg-red-600 hover:bg-red-700"
+                        className="bg-destructive hover:bg-destructive/90"
                     >
                         {isPending ? "Deleting..." : "Delete"}
                     </AlertDialogAction>

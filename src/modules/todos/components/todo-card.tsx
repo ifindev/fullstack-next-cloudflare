@@ -68,13 +68,13 @@ export function TodoCard({ todo }: TodoCardProps) {
                         </div>
                         <div className="flex-1 min-w-0">
                             <h3
-                                className={`font-semibold text-lg leading-tight ${todo.completed ? "line-through text-gray-500" : ""}`}
+                                className={`font-semibold text-lg leading-tight ${todo.completed ? "line-through text-muted-foreground" : ""}`}
                             >
                                 {todo.title}
                             </h3>
                             {todo.description && (
                                 <p
-                                    className={`text-sm mt-1 ${todo.completed ? "text-gray-400" : "text-gray-600"}`}
+                                    className={`text-sm mt-1 ${todo.completed ? "text-muted-foreground/70" : "text-muted-foreground"}`}
                                 >
                                     {todo.description}
                                 </p>
@@ -120,7 +120,7 @@ export function TodoCard({ todo }: TodoCardProps) {
                         <Badge variant="secondary">{todo.categoryName}</Badge>
                     )}
                     {todo.imageUrl && (
-                        <Badge variant="outline" className="text-blue-600">
+                        <Badge variant="outline" className="text-primary">
                             <ImageIcon className="h-3 w-3 mr-1" />
                             Image
                         </Badge>
@@ -129,12 +129,12 @@ export function TodoCard({ todo }: TodoCardProps) {
 
                 {todo.dueDate && (
                     <div
-                        className={`flex items-center text-sm ${isOverdue ? "text-red-600" : "text-gray-500"}`}
+                        className={`flex items-center text-sm ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}
                     >
                         <Calendar className="h-4 w-4 mr-1" />
                         Due: {formatDate(todo.dueDate)}
                         {isOverdue && (
-                            <span className="ml-2 text-red-600 font-semibold">
+                            <span className="ml-2 text-destructive font-semibold">
                                 (Overdue)
                             </span>
                         )}
