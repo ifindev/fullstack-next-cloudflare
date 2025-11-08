@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import type { z } from "zod";
 import { Button } from "@/components/ui/button";
+import { ColorPicker } from "@/components/ui/color-picker";
 import {
     Dialog,
     DialogContent,
@@ -59,23 +60,18 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
 
     const onSubmit = (data: AddCategoryFormData) => {
         startTransition(async () => {
-            try {
-                const newCategory = await createCategory(data);
-                onCategoryAdded(newCategory);
+            const result = await createCategory(data);
 
+            if (!result.success) {
+                toast.error(result.error || "Failed to create category");
+                return;
+            }
+
+            if (result.data) {
+                onCategoryAdded(result.data);
                 form.reset();
                 setOpen(false);
-
                 toast.success("Category created successfully!");
-            } catch (error) {
-                console.error("Error creating category:", error);
-
-                const errorMessage =
-                    error instanceof Error
-                        ? error.message
-                        : "Failed to create category";
-
-                toast.error(errorMessage);
             }
         });
     };
@@ -133,19 +129,10 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
                                 <FormItem>
                                     <FormLabel>Color</FormLabel>
                                     <FormControl>
-                                        <div className="flex items-center space-x-2">
-                                            <Input
-                                                type="color"
-                                                className="w-16 h-10 p-1 rounded cursor-pointer"
-                                                {...field}
-                                            />
-                                            <Input
-                                                type="text"
-                                                placeholder="#6366f1"
-                                                className="flex-1"
-                                                {...field}
-                                            />
-                                        </div>
+                                        <ColorPicker
+                                            value={field.value || "#6366f1"}
+                                            onChange={field.onChange}
+                                        />
                                     </FormControl>
                                     <FormDescription>
                                         Choose a color to identify this category

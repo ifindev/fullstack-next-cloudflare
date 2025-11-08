@@ -16,6 +16,7 @@ interface TodoCardProps {
         completed: boolean;
         categoryId: number | null;
         categoryName?: string | null;
+        categoryColor?: string | null;
         dueDate: string | null;
         imageUrl: string | null;
         imageAlt: string | null;
@@ -27,17 +28,17 @@ interface TodoCardProps {
 }
 
 const priorityColors = {
-    [TodoPriority.LOW]: "bg-green-100 text-green-800 border-green-200",
-    [TodoPriority.MEDIUM]: "bg-yellow-100 text-yellow-800 border-yellow-200",
-    [TodoPriority.HIGH]: "bg-orange-100 text-orange-800 border-orange-200",
-    [TodoPriority.URGENT]: "bg-red-100 text-red-800 border-red-200",
+    [TodoPriority.LOW]: "bg-muted text-muted-foreground border-border",
+    [TodoPriority.MEDIUM]: "bg-accent text-accent-foreground border-border",
+    [TodoPriority.HIGH]: "bg-secondary text-secondary-foreground border-border",
+    [TodoPriority.URGENT]: "bg-destructive/10 text-destructive border-destructive/30",
 };
 
 const statusColors = {
-    [TodoStatus.PENDING]: "bg-gray-100 text-gray-800 border-gray-200",
-    [TodoStatus.IN_PROGRESS]: "bg-blue-100 text-blue-800 border-blue-200",
-    [TodoStatus.COMPLETED]: "bg-green-100 text-green-800 border-green-200",
-    [TodoStatus.ARCHIVED]: "bg-purple-100 text-purple-800 border-purple-200",
+    [TodoStatus.PENDING]: "bg-muted text-muted-foreground border-border",
+    [TodoStatus.IN_PROGRESS]: "bg-accent text-accent-foreground border-border",
+    [TodoStatus.COMPLETED]: "bg-primary/10 text-primary border-primary/30",
+    [TodoStatus.ARCHIVED]: "bg-secondary text-secondary-foreground border-border",
 };
 
 export function TodoCard({ todo }: TodoCardProps) {
@@ -68,13 +69,13 @@ export function TodoCard({ todo }: TodoCardProps) {
                         </div>
                         <div className="flex-1 min-w-0">
                             <h3
-                                className={`font-semibold text-lg leading-tight ${todo.completed ? "line-through text-gray-500" : ""}`}
+                                className={`font-semibold text-lg leading-tight ${todo.completed ? "line-through text-muted-foreground" : ""}`}
                             >
                                 {todo.title}
                             </h3>
                             {todo.description && (
                                 <p
-                                    className={`text-sm mt-1 ${todo.completed ? "text-gray-400" : "text-gray-600"}`}
+                                    className={`text-sm mt-1 ${todo.completed ? "text-muted-foreground/70" : "text-muted-foreground"}`}
                                 >
                                     {todo.description}
                                 </p>
@@ -117,10 +118,20 @@ export function TodoCard({ todo }: TodoCardProps) {
                             .replace(/\b\w/g, (l) => l.toUpperCase())}
                     </Badge>
                     {todo.categoryName && (
-                        <Badge variant="secondary">{todo.categoryName}</Badge>
+                        <Badge
+                            variant="outline"
+                            className="border-2"
+                            style={todo.categoryColor ? {
+                                backgroundColor: `${todo.categoryColor}15`,
+                                borderColor: todo.categoryColor,
+                                color: todo.categoryColor
+                            } : undefined}
+                        >
+                            {todo.categoryName}
+                        </Badge>
                     )}
                     {todo.imageUrl && (
-                        <Badge variant="outline" className="text-blue-600">
+                        <Badge variant="outline" className="text-primary">
                             <ImageIcon className="h-3 w-3 mr-1" />
                             Image
                         </Badge>
@@ -129,12 +140,12 @@ export function TodoCard({ todo }: TodoCardProps) {
 
                 {todo.dueDate && (
                     <div
-                        className={`flex items-center text-sm ${isOverdue ? "text-red-600" : "text-gray-500"}`}
+                        className={`flex items-center text-sm ${isOverdue ? "text-destructive" : "text-muted-foreground"}`}
                     >
                         <Calendar className="h-4 w-4 mr-1" />
                         Due: {formatDate(todo.dueDate)}
                         {isOverdue && (
-                            <span className="ml-2 text-red-600 font-semibold">
+                            <span className="ml-2 text-destructive font-semibold">
                                 (Overdue)
                             </span>
                         )}

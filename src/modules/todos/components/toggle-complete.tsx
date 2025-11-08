@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import toast from "react-hot-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import { updateTodoFieldAction } from "../actions/update-todo.action";
 
@@ -31,8 +32,8 @@ export function ToggleComplete({ todoId, completed }: ToggleCompleteProps) {
                 console.error("Error updating todo:", error);
                 // Revert the optimistic update
                 setIsCompleted(!checked);
-                alert(
-                    `Error updating todo: ${error instanceof Error ? error.message : "Unknown error"}`,
+                toast.error(
+                    error instanceof Error ? error.message : "Failed to update todo",
                 );
             }
         });

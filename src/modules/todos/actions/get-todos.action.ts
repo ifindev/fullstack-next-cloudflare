@@ -17,6 +17,7 @@ export default async function getAllTodos(): Promise<Todo[]> {
                 completed: todos.completed,
                 categoryId: todos.categoryId,
                 categoryName: categories.name,
+                categoryColor: categories.color,
                 dueDate: todos.dueDate,
                 imageUrl: todos.imageUrl,
                 imageAlt: todos.imageAlt,
