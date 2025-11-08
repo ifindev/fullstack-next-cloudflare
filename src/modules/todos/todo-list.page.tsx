@@ -1,19 +1,32 @@
 import { Plus } from "lucide-react";
 import Link from "next/link";
+import { cookies } from "next/headers";
 import { Button } from "@/components/ui/button";
 import getAllTodos from "@/modules/todos/actions/get-todos.action";
 import { TodoCard } from "@/modules/todos/components/todo-card";
+import { WarningToast } from "@/modules/todos/components/warning-toast";
 import todosRoutes from "./todos.route";
 
 export default async function TodoListPage() {
     const todos = await getAllTodos();
 
+    // Check for warning cookie
+    const cookieStore = await cookies();
+    const warningCookie = cookieStore.get("todo-warning");
+    const warning = warningCookie?.value || null;
+
+    // Clear the cookie after reading
+    if (warningCookie) {
+        cookieStore.delete("todo-warning");
+    }
+
     return (
         <>
+            <WarningToast warning={warning} />
             <div className="flex justify-between items-center mb-8 w-full">
                 <div>
                     <h1 className="text-3xl font-bold">Todos</h1>
-                    <p className="text-gray-600 mt-1">
+                    <p className="text-muted-foreground mt-1">
                         Manage your tasks and stay organized
                     </p>
                 </div>
@@ -27,11 +40,11 @@ export default async function TodoListPage() {
 
             {todos.length === 0 ? (
                 <div className="text-center py-12 w-full">
-                    <div className="text-gray-400 text-6xl mb-4">📝</div>
-                    <h3 className="text-xl font-semibold text-gray-600 mb-2">
+                    <div className="text-muted-foreground/40 text-6xl mb-4">📝</div>
+                    <h3 className="text-xl font-semibold text-muted-foreground mb-2">
                         No todos yet
                     </h3>
-                    <p className="text-gray-500 mb-6">
+                    <p className="text-muted-foreground/80 mb-6">
                         Create your first todo to get started
                     </p>
                     <Link href={todosRoutes.new}>

@@ -44,7 +44,7 @@ export class SummarizerService {
             language = "English",
         } = config || {};
 
-        const systemPrompt = this.buildSystenPrompt(maxLength, style, language);
+        const systemPrompt = this.buildSystemPrompt(maxLength, style, language);
 
         // Estimate tokens (rough calculation: 1 token ≈ 4 characters)
         const inputTokens = Math.ceil((systemPrompt.length + text.length) / 4);
@@ -73,12 +73,12 @@ export class SummarizerService {
         };
     }
 
-    private buildSystenPrompt(
+    private buildSystemPrompt(
         maxLength: number,
         style: string,
         language: string,
     ): string {
-        const styleInstructructions: Record<SummaryStyles, string> = {
+        const styleInstructions: Record<SummaryStyles, string> = {
             concise:
                 "Create a brief, concise summary focusing on the main points.",
             detailed:
@@ -87,7 +87,7 @@ export class SummarizerService {
                 "Create a summary using bullet points to highlight key information.",
         };
 
-        return `You are a professional text summarizer. ${styleInstructructions[style as keyof typeof styleInstructructions]}
+        return `You are a professional text summarizer. ${styleInstructions[style as keyof typeof styleInstructions]}
         
                 Instructions:
                     - Summarize in ${language}

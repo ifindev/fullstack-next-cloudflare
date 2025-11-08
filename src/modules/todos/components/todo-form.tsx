@@ -3,8 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -72,6 +74,7 @@ export function TodoForm({
     categories: initialCategories,
     initialData,
 }: TodoFormProps) {
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(
@@ -108,6 +111,22 @@ export function TodoForm({
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            // Validate file size (5MB = 5 * 1024 * 1024 bytes)
+            const maxSize = 5 * 1024 * 1024;
+            if (file.size > maxSize) {
+                toast.error("Image must be less than 5MB");
+                e.target.value = ""; // Reset input
+                return;
+            }
+
+            // Validate file type
+            const validTypes = ["image/png", "image/jpeg", "image/jpg"];
+            if (!validTypes.includes(file.type)) {
+                toast.error("Only PNG and JPG images are allowed");
+                e.target.value = ""; // Reset input
+                return;
+            }
+
             setImageFile(file);
             const reader = new FileReader();
             reader.onloadend = () => {
@@ -162,12 +181,26 @@ export function TodoForm({
                     formData.append("image", imageFile);
                 }
 
-                if (initialData) {
-                    await updateTodoAction(initialData.id, formData);
-                } else {
-                    await createTodoAction(formData);
-                }
+                // Show success feedback before redirect
+                const actionPromise = initialData
+                    ? updateTodoAction(initialData.id, formData)
+                    : createTodoAction(formData);
+
+                await toast.promise(actionPromise, {
+                    loading: initialData ? "Updating todo..." : "Creating todo...",
+                    success: initialData
+                        ? "Todo updated successfully!"
+                        : "Todo created successfully!",
+                    error: (err) => {
+                        // Don't show toast for Next.js redirects (flow control, not errors)
+                        if (err instanceof Error && err.message === "NEXT_REDIRECT") {
+                            return null;
+                        }
+                        return err instanceof Error ? err.message : "Failed to save todo";
+                    },
+                });
             } catch (error) {
+                // Error already shown by toast.promise
                 console.error("Error saving todo:", error);
             }
         });
@@ -443,12 +476,12 @@ export function TodoForm({
                                             </Button>
                                         </div>
                                     ) : (
-                                        <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                                            <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                                        <div className="border-2 border-dashed border-border rounded-md p-6 text-center">
+                                            <Upload className="mx-auto h-12 w-12 text-muted-foreground" />
                                             <div className="mt-2">
                                                 <label
                                                     htmlFor="image-upload"
-                                                    className="cursor-pointer text-blue-600 hover:text-blue-500"
+                                                    className="cursor-pointer text-primary hover:text-primary/80"
                                                 >
                                                     Upload an image
                                                 </label>
@@ -460,7 +493,7 @@ export function TodoForm({
                                                     onChange={handleImageChange}
                                                 />
                                             </div>
-                                            <p className="text-xs text-gray-500 mt-1">
+                                            <p className="text-xs text-muted-foreground mt-1">
                                                 PNG, JPG up to 5MB
                                             </p>
                                         </div>
@@ -499,17 +532,46 @@ export function TodoForm({
                                 type="button"
                                 variant="outline"
                                 onClick={() => window.history.back()}
+                                disabled={isPending}
                             >
                                 Cancel
                             </Button>
                             <Button type="submit" disabled={isPending}>
-                                {isPending
-                                    ? initialData
-                                        ? "Updating..."
-                                        : "Creating..."
-                                    : initialData
-                                      ? "Update Todo"
-                                      : "Create Todo"}
+                                {isPending ? (
+                                    <span className="flex items-center gap-2">
+                                        <svg
+                                            className="animate-spin h-4 w-4"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            />
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                            />
+                                        </svg>
+                                        {imageFile
+                                            ? initialData
+                                                ? "Updating with image..."
+                                                : "Creating with image..."
+                                            : initialData
+                                              ? "Updating..."
+                                              : "Creating..."}
+                                    </span>
+                                ) : initialData ? (
+                                    "Update Todo"
+                                ) : (
+                                    "Create Todo"
+                                )}
                             </Button>
                         </div>
                     </form>

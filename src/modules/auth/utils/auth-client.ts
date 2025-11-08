@@ -4,9 +4,7 @@ import { createAuthClient } from "better-auth/react";
 // The baseURL will be automatically determined from the current origin
 export const authClient = createAuthClient({
     baseURL:
-        process.env.NODE_ENV === "development"
-            ? "http://localhost:3000"
-            : typeof window !== "undefined"
-              ? window.location.origin
-              : "",
+        typeof window !== "undefined"
+            ? window.location.origin // Auto-detect from browser URL (works for any port)
+            : process.env.NEXT_PUBLIC_AUTH_URL || "http://localhost:3000", // Fallback for SSR
 });

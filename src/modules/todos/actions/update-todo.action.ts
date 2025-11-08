@@ -1,6 +1,7 @@
 "use server";
 
 import { and, eq } from "drizzle-orm";
+import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { getDb } from "@/db";
@@ -52,6 +53,12 @@ export async function updateTodoAction(todoId: number, formData: FormData) {
                 imageAlt = validatedData.imageAlt || file.name;
             } else {
                 console.error("Image upload failed:", uploadResult.error);
+                // Set a cookie to notify the client about the upload failure
+                const cookieStore = await cookies();
+                cookieStore.set("todo-warning", "Image upload failed, but todo was updated successfully", {
+                    path: "/",
+                    maxAge: 10, // 10 seconds - just enough for redirect
+                });
             }
         }
 
@@ -86,6 +93,11 @@ export async function updateTodoAction(todoId: number, formData: FormData) {
         revalidatePath(todosRoutes.list);
         redirect(todosRoutes.list);
     } catch (error) {
+        // Handle Next.js redirect errors - these are not actual errors
+        if (error instanceof Error && error.message === "NEXT_REDIRECT") {
+            throw error; // Re-throw redirect errors as-is
+        }
+
         console.error("Error updating todo:", error);
 
         if (
