@@ -149,6 +149,7 @@ Edit `.dev.vars` with your credentials:
 ```bash
 # Cloudflare Configuration
 CLOUDFLARE_ACCOUNT_ID=your-account-id
+CLOUDFLARE_D1_DATABASE_ID=your-database-id
 CLOUDFLARE_D1_TOKEN=your-api-token
 
 # Authentication Secrets
@@ -263,6 +264,10 @@ wrangler d1 create your-app-name
 # Output will show:
 # database_name = "your-app-name"
 # database_id = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+#
+# Copy the database_id - you'll need it for:
+# - wrangler.jsonc (d1_databases.database_id)
+# - .dev.vars (CLOUDFLARE_D1_DATABASE_ID)
 ```
 
 **Create R2 Bucket:**
@@ -329,6 +334,7 @@ openssl rand -base64 32
 ```bash
 # .dev.vars for local development
 CLOUDFLARE_ACCOUNT_ID=your-account-id
+CLOUDFLARE_D1_DATABASE_ID=your-database-id
 CLOUDFLARE_D1_TOKEN=your-api-token
 BETTER_AUTH_SECRET=your-generated-secret
 GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
@@ -403,6 +409,7 @@ Go to your GitHub repository → Settings → Secrets and add:
 
 - `CLOUDFLARE_API_TOKEN` - Your API token from Step 2
 - `CLOUDFLARE_ACCOUNT_ID` - Your account ID
+- `CLOUDFLARE_D1_DATABASE_ID` - Your D1 database ID (from `wrangler d1 create` output)
 - `BETTER_AUTH_SECRET` - Your auth secret
 - `GOOGLE_CLIENT_ID` - Your Google client ID
 - `GOOGLE_CLIENT_SECRET` - Your Google client secret
