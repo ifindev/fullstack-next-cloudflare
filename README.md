@@ -619,6 +619,145 @@ Cloudflare Workers AI supports various models:
 - **@cf/baai/bge-base-en-v1.5** - Text embeddings
 - **@cf/microsoft/resnet-50** - Image classification
 
+## 📊 CRM Features
+
+This template has been extended with a full-featured CRM system for managing contacts and sales pipelines.
+
+### Core CRM Modules
+
+**Contacts Management:**
+- ✅ Full CRUD operations (Create, Read, Update, Delete)
+- ✅ Search by name, email, company (case-insensitive)
+- ✅ Tag system with many-to-many relationships
+- ✅ Custom user-defined tags with color coding
+- ✅ Ownership verification and data isolation
+- ✅ Responsive grid layout
+
+**Deals Pipeline:**
+- ✅ Kanban-style pipeline board with 6 stages
+  - Prospecting → Qualification → Proposal → Negotiation → Closed Won → Closed Lost
+- ✅ Link deals to contacts (optional)
+- ✅ Multi-currency support (AUD, USD, EUR, GBP)
+- ✅ Expected close date tracking
+- ✅ Pipeline value calculation (excludes closed deals)
+- ✅ Stage-specific color badges
+
+**Dashboard Metrics:**
+- ✅ Total contacts count
+- ✅ New contacts this month (with trend indicator)
+- ✅ Active deals count
+- ✅ Pipeline value (formatted currency)
+- ✅ Deals won this month
+- ✅ Win rate percentage
+- ✅ Quick action cards (New Contact, New Deal, View Pipeline)
+- ✅ Responsive 3-column metrics grid
+
+### CRM Database Schema
+
+**4 New Tables:**
+1. **contacts** - Contact profiles with name, email, phone, company, job title, notes
+2. **contact_tags** - User-defined tags for organizing contacts
+3. **contacts_to_tags** - Junction table for many-to-many tag relationships
+4. **deals** - Sales pipeline deals with stage tracking and value management
+
+**Key Relationships:**
+- User → Contacts (CASCADE delete)
+- User → Tags (CASCADE delete)
+- User → Deals (CASCADE delete)
+- Contact → Deals (SET NULL on contact delete - keeps deals)
+- Contacts ↔ Tags (Many-to-many via junction table)
+
+See `docs/DATABASE_SCHEMA.md` for complete schema documentation.
+
+### CRM Development Commands
+
+```bash
+# Seed the database with sample CRM data
+pnpm run db:seed
+
+# Run the test suite
+# See docs/TESTING.md for manual testing checklist
+
+# Access database studio
+pnpm run db:studio:local
+```
+
+### CRM Module Structure
+
+```
+src/modules/
+├── contacts/
+│   ├── actions/              # Server actions
+│   │   ├── create-contact.action.ts
+│   │   ├── get-contacts.action.ts
+│   │   ├── update-contact.action.ts
+│   │   ├── delete-contact.action.ts
+│   │   └── tag-management.actions.ts
+│   ├── components/          # UI components
+│   │   ├── contact-form.tsx
+│   │   ├── contact-card.tsx
+│   │   └── delete-contact.tsx
+│   ├── schemas/            # Database schemas
+│   │   └── contact.schema.ts
+│   └── contacts.route.ts   # Route constants
+├── deals/
+│   ├── actions/
+│   │   ├── create-deal.action.ts
+│   │   ├── get-deals.action.ts
+│   │   ├── update-deal.action.ts
+│   │   └── delete-deal.action.ts
+│   ├── components/
+│   │   ├── deal-form.tsx
+│   │   ├── deal-card.tsx
+│   │   └── delete-deal.tsx
+│   ├── schemas/
+│   │   └── deal.schema.ts
+│   ├── models/
+│   │   └── deal.enum.ts
+│   └── deals.route.ts
+└── dashboard/
+    ├── actions/
+    │   └── get-dashboard-metrics.action.ts
+    ├── components/
+    │   ├── stat-card.tsx
+    │   └── quick-action-card.tsx
+    └── dashboard.page.tsx
+```
+
+### CRM Implementation Highlights
+
+**Server Actions Pattern:**
+- All mutations use Next.js Server Actions
+- Automatic revalidation with `revalidatePath()`
+- Type-safe with Zod validation
+- Ownership verification on all updates/deletes
+
+**Type Safety:**
+- End-to-end TypeScript from database to UI
+- Drizzle ORM for type-safe queries
+- Zod schemas for runtime validation
+- Inferred types from database schema
+
+**Performance:**
+- Optimized SQL queries with proper indexes
+- LEFT JOIN for fetching related data
+- Prevents N+1 queries
+- Uses semantic colors (no raw Tailwind colors)
+
+**Security:**
+- User data isolation (filter by userId on all queries)
+- Ownership verification before mutations
+- SQL injection prevention (Drizzle ORM parameterization)
+- Authentication required for all CRM routes
+
+### CRM Documentation
+
+- **Implementation Guide**: `docs/IMPLEMENTATION_PHASES.md`
+- **Database Schema**: `docs/DATABASE_SCHEMA.md`
+- **Testing Checklist**: `docs/TESTING.md`
+
+---
+
 ## 🔧 Advanced Configuration
 
 ### Database Schema Changes

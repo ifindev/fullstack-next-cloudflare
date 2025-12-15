@@ -18,8 +18,8 @@
     "d1_databases": [
         {
             "binding": "next_cf_app",
-            "database_name": "next-cf-app",
-            "database_id": "757a32d1-5779-4f09-bcf3-b268013395d4",
+            "database_name": "fullstack-crm",
+            "database_id": "a1d231c7-b7e7-4e7a-aa0e-78a56c2e123a",
             "migrations_dir": "./src/drizzle"
         }
     ],

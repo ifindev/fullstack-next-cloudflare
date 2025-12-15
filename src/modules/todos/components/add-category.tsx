@@ -59,23 +59,18 @@ export function AddCategory({ onCategoryAdded }: AddCategoryProps) {
 
     const onSubmit = (data: AddCategoryFormData) => {
         startTransition(async () => {
-            try {
-                const newCategory = await createCategory(data);
-                onCategoryAdded(newCategory);
+            const result = await createCategory(data);
 
+            if (!result.success) {
+                toast.error(result.error || "Failed to create category");
+                return;
+            }
+
+            if (result.data) {
+                onCategoryAdded(result.data);
                 form.reset();
                 setOpen(false);
-
                 toast.success("Category created successfully!");
-            } catch (error) {
-                console.error("Error creating category:", error);
-
-                const errorMessage =
-                    error instanceof Error
-                        ? error.message
-                        : "Failed to create category";
-
-                toast.error(errorMessage);
             }
         });
     };

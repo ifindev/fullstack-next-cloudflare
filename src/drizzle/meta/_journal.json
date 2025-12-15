@@ -8,6 +8,13 @@
       "when": 1757850562913,
       "tag": "0000_initial_schemas_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1762599280475,
+      "tag": "0001_fantastic_captain_flint",
+      "breakpoints": true
     }
   ]
 }

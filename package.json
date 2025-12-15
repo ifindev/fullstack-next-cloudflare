@@ -25,6 +25,7 @@
         "db:inspect:preview": "wrangler d1 execute next-cf-app --env preview --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
         "db:inspect:prod": "wrangler d1 execute next-cf-app --remote --command=\"SELECT name FROM sqlite_master WHERE type='table';\"",
         "db:reset:local": "wrangler d1 execute next-cf-app --local --command=\"DROP TABLE IF EXISTS todos;\" && pnpm run db:migrate:local",
+        "db:seed": "tsx src/lib/seed.ts",
         "cf:secret": "npx wrangler secret put",
         "cf-typegen": "pnpm exec wrangler types && pnpm exec wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
         "lint": "npx biome format --write"

@@ -1,4 +1,4 @@
-import { CheckSquare, Home } from "lucide-react";
+import { CheckSquare, Home, TrendingUp, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import LogoutButton from "../modules/auth/components/logout-button";
@@ -13,7 +13,7 @@ export function Navigation() {
                             href="/"
                             className="text-xl font-bold text-gray-900"
                         >
-                            TodoApp
+                            CRM
                         </Link>
                         <div className="items-center space-x-4 hidden md:flex">
                             <Link href="/">
@@ -26,6 +26,18 @@ export function Navigation() {
                                 <Button variant="ghost" size="sm">
                                     <CheckSquare className="mr-2 h-4 w-4" />
                                     Todos
+                                </Button>
+                            </Link>
+                            <Link href="/dashboard/contacts">
+                                <Button variant="ghost" size="sm">
+                                    <Users className="mr-2 h-4 w-4" />
+                                    Contacts
+                                </Button>
+                            </Link>
+                            <Link href="/dashboard/deals">
+                                <Button variant="ghost" size="sm">
+                                    <TrendingUp className="mr-2 h-4 w-4" />
+                                    Deals
                                 </Button>
                             </Link>
                         </div>
