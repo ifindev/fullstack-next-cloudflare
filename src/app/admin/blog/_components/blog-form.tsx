@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Eye } from "lucide-react";
 import Link from "next/link";
+import { ImageUpload } from "@/components/image-upload";
 
 interface BlogFormData {
     title: string;
@@ -187,14 +188,9 @@ export default function BlogForm({ initialData, mode, postId }: BlogFormProps) {
                             <label className="block text-sm font-medium text-light-text-primary dark:text-dark-text-primary mb-1.5">
                                 封面图片（可选）
                             </label>
-                            <input
-                                type="url"
+                            <ImageUpload
                                 value={formData.coverImage}
-                                onChange={(e) =>
-                                    handleChange("coverImage", e.target.value)
-                                }
-                                placeholder="https://..."
-                                className="w-full px-4 py-2 rounded-md border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-secondary text-light-text-primary dark:text-dark-text-primary placeholder:text-light-text-tertiary dark:placeholder:text-dark-text-tertiary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                onChange={(url) => handleChange("coverImage", url)}
                             />
                         </div>
                     </div>

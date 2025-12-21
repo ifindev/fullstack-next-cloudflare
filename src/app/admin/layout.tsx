@@ -1,4 +1,4 @@
-import { redirect } from "next/server";
+import { redirect } from "next/navigation";
 import { getAuth } from "@/lib/auth";
 import AdminSidebar from "./_components/admin-sidebar";
 import AdminHeader from "./_components/admin-header";
@@ -15,7 +15,7 @@ export default async function AdminLayout({
     });
 
     // 未登录或非管理员，重定向到登录页
-    if (!session || session.user.role !== "admin") {
+    if (!session || (session.user as any).role !== "admin") {
         redirect("/auth/login");
     }
 

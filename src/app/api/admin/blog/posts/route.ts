@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
             return validation.error;
         }
 
-        const data = validation.data;
+        const data = validation.data as any;
 
         // Check if slug already exists
         const [existing] = await db

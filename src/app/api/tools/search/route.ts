@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { drizzle } from "drizzle-orm/d1";
 import { tools, categories } from "@/db/schema";
 import { eq, like, or, desc } from "drizzle-orm";
@@ -9,7 +9,6 @@ import { eq, like, or, desc } from "drizzle-orm";
  * GET /api/tools/search?q=query
  * Searches for tools by name or description
  */
-export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
     try {
@@ -26,8 +25,8 @@ export async function GET(request: NextRequest) {
         }
 
         // Get D1 database from Cloudflare context
-        const { env } = getRequestContext();
-        const db = drizzle(env.DB);
+        const { env } = await getCloudflareContext();
+        const db = drizzle(env.next_cf_app);
 
         // Search tools
         const searchResults = await db

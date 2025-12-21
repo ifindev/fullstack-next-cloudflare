@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 import { apiError } from "@/lib/api-utils";
 
 /**
@@ -7,6 +7,9 @@ import { apiError } from "@/lib/api-utils";
  */
 export async function getSession(request: NextRequest) {
     try {
+        const auth = await getAuth();
+        if (!auth) return null;
+        
         const session = await auth.api.getSession({
             headers: request.headers,
         });
@@ -35,7 +38,7 @@ export async function requireAuth(request: NextRequest) {
 export async function requireAdmin(request: NextRequest) {
     const session = await requireAuth(request);
 
-    if (session.user.role !== "admin") {
+    if ((session.user as any).role !== "admin") {
         throw apiError("Admin access required", "FORBIDDEN", 403, {
             requiredRole: "admin",
         });

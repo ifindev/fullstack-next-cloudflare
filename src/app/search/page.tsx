@@ -130,17 +130,17 @@ export default function SearchPage() {
     return (
         <div className="w-full">
             {/* Search Header */}
-            <section className="bg-white dark:bg-gray-950 border-b py-8">
+            <section className="bg-light-bg-primary dark:bg-dark-bg-primary border-b border-light-border dark:border-dark-border py-8">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-3xl mx-auto">
-                        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                        <h1 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary mb-6">
                             Search Tools
                         </h1>
 
                         {/* Search Form */}
                         <form onSubmit={handleSearch}>
                             <div className="relative">
-                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-light-text-tertiary dark:text-dark-text-tertiary" />
                                 <input
                                     type="text"
                                     value={searchQuery}
@@ -148,16 +148,16 @@ export default function SearchPage() {
                                         setSearchQuery(e.target.value)
                                     }
                                     placeholder="Search for tools..."
-                                    className="w-full pl-12 pr-12 py-3 rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary focus:border-transparent text-base"
+                                    className="w-full pl-12 pr-12 py-3 rounded-lg border-2 border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary focus:border-transparent text-base"
                                     autoFocus
                                 />
                                 {searchQuery && (
                                     <button
                                         type="button"
                                         onClick={clearSearch}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-gray-100 dark:hover:bg-gray-800 rounded transition-colors"
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 p-1 hover:bg-light-bg-secondary dark:hover:bg-dark-bg-secondary rounded transition-colors"
                                     >
-                                        <X className="w-5 h-5 text-gray-400" />
+                                        <X className="w-5 h-5 text-light-text-tertiary dark:text-dark-text-tertiary" />
                                     </button>
                                 )}
                             </div>
@@ -167,14 +167,14 @@ export default function SearchPage() {
             </section>
 
             {/* Search Results */}
-            <section className="py-12 bg-gray-50 dark:bg-gray-900">
+            <section className="py-12 bg-light-bg-secondary dark:bg-dark-bg-secondary">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     {searchQuery && searchResults.length > 0 && (
                         <>
                             <div className="mb-6">
-                                <p className="text-gray-600 dark:text-gray-400">
+                                <p className="text-light-text-secondary dark:text-dark-text-secondary">
                                     Found {searchResults.length} results for "
-                                    <span className="font-semibold text-gray-900 dark:text-white">
+                                    <span className="font-semibold text-light-text-primary dark:text-dark-text-primary">
                                         {searchQuery}
                                     </span>
                                     "
@@ -192,10 +192,10 @@ export default function SearchPage() {
                     {searchQuery && searchResults.length === 0 && (
                         <div className="text-center py-16">
                             <div className="max-w-md mx-auto">
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                <h2 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary mb-2">
                                     No tools found
                                 </h2>
-                                <p className="text-gray-600 dark:text-gray-400 mb-8">
+                                <p className="text-light-text-secondary dark:text-dark-text-secondary mb-8">
                                     We couldn't find any tools matching "
                                     <span className="font-semibold">
                                         {searchQuery}
@@ -205,7 +205,7 @@ export default function SearchPage() {
 
                                 {/* Popular Tools */}
                                 <div className="mt-12">
-                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">
+                                    <h3 className="text-lg font-semibold text-light-text-primary dark:text-dark-text-primary mb-6">
                                         Popular Tools
                                     </h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -213,12 +213,12 @@ export default function SearchPage() {
                                             <a
                                                 key={tool.id}
                                                 href={`/tools/${tool.id}`}
-                                                className="p-4 bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 hover:border-light-text-primary dark:hover:border-dark-text-primary transition-colors text-left"
+                                                className="p-4 bg-light-bg-primary dark:bg-dark-bg-primary rounded-lg border border-light-border dark:border-dark-border hover:border-light-text-primary dark:hover:border-dark-text-primary transition-colors text-left"
                                             >
-                                                <div className="font-medium text-gray-900 dark:text-white mb-1">
+                                                <div className="font-medium text-light-text-primary dark:text-dark-text-primary mb-1">
                                                     {tool.name}
                                                 </div>
-                                                <div className="text-sm text-gray-600 dark:text-gray-400">
+                                                <div className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
                                                     {tool.category.name}
                                                 </div>
                                             </a>
@@ -233,11 +233,11 @@ export default function SearchPage() {
                     {!searchQuery && (
                         <div className="text-center py-16">
                             <div className="max-w-md mx-auto">
-                                <Search className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                                <Search className="w-16 h-16 text-light-text-tertiary dark:text-dark-text-tertiary mx-auto mb-4" />
+                                <h2 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary mb-2">
                                     Start searching
                                 </h2>
-                                <p className="text-gray-600 dark:text-gray-400 mb-8">
+                                <p className="text-light-text-secondary dark:text-dark-text-secondary mb-8">
                                     Enter a keyword to find the perfect tool for
                                     your needs
                                 </p>
@@ -254,7 +254,7 @@ export default function SearchPage() {
                                         <button
                                             key={term}
                                             onClick={() => setSearchQuery(term)}
-                                            className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-sm"
+                                            className="px-4 py-2 bg-light-bg-tertiary dark:bg-dark-bg-tertiary text-light-text-secondary dark:text-dark-text-secondary rounded-lg hover:bg-light-bg-secondary dark:hover:bg-dark-bg-secondary transition-colors text-sm"
                                         >
                                             {term}
                                         </button>

@@ -4,6 +4,9 @@ import { Breadcrumb } from "@/components/breadcrumb";
 import { PricingBadge, CategoryBadge } from "@/components/tool-card";
 import { ToolCard } from "@/components/tool-card";
 import { ExternalLink, Share2, Star } from "lucide-react";
+import { use } from "react";
+import { JsonLd, generateProductSchema, generateBreadcrumbSchema } from "@/lib/seo-utils";
+import type { Metadata } from "next";
 
 // Mock data - will be replaced with real database queries
 const mockTool = {
@@ -78,12 +81,58 @@ const relatedTools = [
 ];
 
 /**
+ * Generate dynamic metadata for tool detail pages
+ * Provides SEO-optimized title, description, Open Graph, and Twitter Cards
+ */
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+    const { id } = await params;
+    // In a real app, fetch tool data based on ID
+    const tool = mockTool; // Replace with: await getToolById(id)
+    
+    const baseUrl = "https://next-cf-app.lindalu125.workers.dev";
+    const toolUrl = `${baseUrl}/tools/${id}`;
+    
+    return {
+        title: `${tool.name} - ${tool.description}`,
+        description: tool.description + (tool.longDescription ? " " + tool.longDescription.slice(0, 100) + "..." : ""),
+        keywords: [tool.name, tool.category.name, tool.pricing, "AI tools", "productivity"],
+        openGraph: {
+            type: "website",
+            url: toolUrl,
+            title: tool.name,
+            description: tool.description,
+            images: [
+                {
+                    url: tool.logo || `${baseUrl}/default-og.png`,
+                    width: 1200,
+                    height: 630,
+                    alt: tool.name
+                }
+            ],
+            siteName: "Toolsail"
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: tool.name,
+            description: tool.description,
+            images: [tool.logo || `${baseUrl}/default-og.png`]
+        },
+        alternates: {
+            canonical: toolUrl
+        }
+    };
+}
+
+/**
  * Tool Detail Page
  * Displays complete information about a single tool
  * Route: /tools/[id]
  * Based on DESIGN_LAYOUT.md Section 3
  */
-export default function ToolDetailPage({ params }: { params: { id: string } }) {
+export default function ToolDetailPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params);
+    // In a real app, fetch tool data based on ID
+    // const tool = await getToolById(id);
     const tool = mockTool;
 
     const breadcrumbItems = [
@@ -204,7 +253,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
                                 .map((paragraph, i) => (
                                     <div key={i} className="mb-4">
                                         {paragraph.startsWith("##") ? (
-                                            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mt-8 mb-4">
+                                            <h2 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary mt-8 mb-4">
                                                 {paragraph.replace("## ", "")}
                                             </h2>
                                         ) : paragraph.startsWith("-") ? (
@@ -214,7 +263,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
                                                     .map((item, j) => (
                                                         <li
                                                             key={j}
-                                                            className="text-gray-700 dark:text-gray-300"
+                                                            className="text-light-text-secondary dark:text-dark-text-secondary"
                                                         >
                                                             {item.replace(
                                                                 /^- \*\*(.+?)\*\*:/,
@@ -224,7 +273,7 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
                                                     ))}
                                             </ul>
                                         ) : (
-                                            <p className="text-gray-700 dark:text-gray-300">
+                                            <p className="text-light-text-secondary dark:text-dark-text-secondary">
                                                 {paragraph}
                                             </p>
                                         )}
@@ -248,6 +297,22 @@ export default function ToolDetailPage({ params }: { params: { id: string } }) {
                     </div>
                 </div>
             </section>
+            
+            {/* JSON-LD Structured Data for SEO */}
+            <JsonLd data={generateProductSchema({
+                name: tool.name,
+                description: tool.description,
+                url: tool.url,
+                logoUrl: tool.logo,
+                viewCount: tool.viewCount,
+                category: tool.category
+            })} />
+            <JsonLd data={generateBreadcrumbSchema([
+                { name: "Home", url: "https://next-cf-app.lindalu125.workers.dev" },
+                { name: tool.parentCategory.name, url: `https://next-cf-app.lindalu125.workers.dev/${tool.parentCategory.id}` },
+                { name: tool.category.name },
+                { name: tool.name }
+            ])} />
         </div>
     );
 }

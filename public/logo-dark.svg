@@ -1,0 +1,22 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- 外框 - 圆角方形容器 (白色版本) -->
+  <rect x="40" y="40" width="120" height="120" rx="24" 
+        fill="none" stroke="#ffffff" stroke-width="8"/>
+  
+  <!-- 工具箱把手 -->
+  <path d="M 80 40 Q 80 55 100 55 Q 120 55 120 40" 
+        fill="none" stroke="#ffffff" stroke-width="6" stroke-linecap="round"/>
+  
+  <!-- 扳手符号（简化几何） -->
+  <g transform="translate(100, 115)">
+    <!-- 扳手主体 - 垂直线 -->
+    <rect x="-4" y="-25" width="8" height="35" rx="2" fill="#ffffff"/>
+    
+    <!-- 扳手开口 - 横向开口 -->
+    <rect x="-12" y="-28" width="24" height="6" rx="1" fill="#ffffff"/>
+    <rect x="-12" y="-35" width="24" height="4" rx="1" fill="#ffffff"/>
+  </g>
+  
+  <!-- 向上箭头装饰（轻量，表示提升/优化） -->
+  <polygon points="100,75 95,85 105,85" fill="#ffffff" opacity="0.4"/>
+</svg>

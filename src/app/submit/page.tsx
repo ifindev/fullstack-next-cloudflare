@@ -111,27 +111,27 @@ export default function SubmitToolPage() {
 
     if (isSubmitted) {
         return (
-            <div className="w-full min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+            <div className="w-full min-h-screen flex items-center justify-center bg-light-bg-secondary dark:bg-dark-bg-secondary">
                 <div className="max-w-md w-full mx-auto px-4">
-                    <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-8 text-center">
+                    <div className="bg-light-bg-primary dark:bg-dark-bg-primary rounded-lg shadow-lg p-8 text-center border border-light-border dark:border-dark-border">
                         <CheckCircle className="w-16 h-16 text-light-text-primary dark:text-dark-text-primary mx-auto mb-4" />
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                        <h2 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary mb-2">
                             Thank you for your submission!
                         </h2>
-                        <p className="text-gray-600 dark:text-gray-400 mb-6">
+                        <p className="text-light-text-secondary dark:text-dark-text-secondary mb-6">
                             We will review your tool within 48 hours. You can
                             check the submission status in your dashboard.
                         </p>
                         <div className="flex gap-4 justify-center">
                             <Link
                                 href="/"
-                                className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                                className="px-6 py-3 bg-light-bg-tertiary dark:bg-dark-bg-tertiary text-light-text-secondary dark:text-dark-text-secondary rounded-lg hover:opacity-80 transition-opacity"
                             >
                                 Back to Home
                             </Link>
                             <button
                                 onClick={handleReset}
-                                className="px-6 py-3 bg-light-text-primary dark:bg-dark-text-primary text-white rounded-lg hover:opacity-90 transition-colors"
+                                className="px-6 py-3 bg-light-text-primary dark:bg-dark-text-primary text-light-bg-primary dark:text-dark-bg-primary rounded-lg hover:opacity-90 transition-colors"
                             >
                                 Submit Another
                             </button>
@@ -148,10 +148,10 @@ export default function SubmitToolPage() {
             <section className="bg-gradient-to-b from-light-bg-secondary dark:from-dark-bg-secondary to-light-bg-primary dark:to-dark-bg-primary py-12">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-2xl mx-auto">
-                        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                        <h1 className="text-3xl sm:text-4xl font-bold text-light-text-primary dark:text-dark-text-primary mb-4">
                             Submit Your Tool
                         </h1>
-                        <p className="text-lg text-gray-600 dark:text-gray-400">
+                        <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary">
                             Help others discover your amazing tool
                         </p>
                     </div>
@@ -159,7 +159,7 @@ export default function SubmitToolPage() {
             </section>
 
             {/* Form Section */}
-            <section className="py-12 bg-white dark:bg-gray-950">
+            <section className="py-12 bg-light-bg-secondary dark:bg-dark-bg-secondary">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="max-w-2xl mx-auto">
                         <form
@@ -168,13 +168,13 @@ export default function SubmitToolPage() {
                         >
                             {/* Tool Information */}
                             <div>
-                                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                <h2 className="text-xl font-semibold text-light-text-primary dark:text-dark-text-primary mb-6 pb-3 border-b border-light-border dark:border-dark-border">
                                     Tool Information
                                 </h2>
 
                                 {/* Tool Name */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                         Tool Name{" "}
                                         <span className="text-red-500">*</span>
                                     </label>
@@ -182,7 +182,7 @@ export default function SubmitToolPage() {
                                         {...register("toolName")}
                                         type="text"
                                         placeholder="e.g., ChatGPT"
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                        className="w-full px-4 py-3 rounded-lg border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-primary dark:text-dark-text-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
                                     />
                                     {errors.toolName && (
                                         <p className="mt-1 text-sm text-red-500">
@@ -193,7 +193,7 @@ export default function SubmitToolPage() {
 
                                 {/* Tool URL */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                         Tool Website{" "}
                                         <span className="text-red-500">*</span>
                                     </label>
@@ -201,7 +201,7 @@ export default function SubmitToolPage() {
                                         {...register("toolUrl")}
                                         type="url"
                                         placeholder="https://example.com"
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                        className="w-full px-4 py-3 rounded-lg border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-primary dark:text-dark-text-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
                                     />
                                     {errors.toolUrl && (
                                         <p className="mt-1 text-sm text-red-500">
@@ -212,18 +212,18 @@ export default function SubmitToolPage() {
 
                                 {/* Logo URL */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                         Logo URL (Optional)
                                     </label>
                                     <input
                                         {...register("logoUrl")}
                                         type="url"
                                         placeholder="Paste logo URL"
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                        className="w-full px-4 py-3 rounded-lg border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-primary dark:text-dark-text-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
                                     />
                                     {logoPreview && (
                                         <div className="mt-3 flex items-center gap-3">
-                                            <span className="text-sm text-gray-600 dark:text-gray-400">
+                                            <span className="text-sm text-light-text-secondary dark:text-dark-text-secondary">
                                                 📷 Preview:
                                             </span>
                                             <Image
@@ -244,7 +244,7 @@ export default function SubmitToolPage() {
 
                                 {/* Description */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                         Description{" "}
                                         <span className="text-red-500">*</span>
                                     </label>
@@ -252,7 +252,7 @@ export default function SubmitToolPage() {
                                         {...register("description")}
                                         rows={4}
                                         placeholder="Briefly describe what your tool does..."
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary resize-none"
+                                        className="w-full px-4 py-3 rounded-lg border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-primary dark:text-dark-text-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary resize-none"
                                     />
                                     <div className="mt-1 flex justify-between items-center">
                                         {errors.description ? (
@@ -262,7 +262,7 @@ export default function SubmitToolPage() {
                                         ) : (
                                             <span />
                                         )}
-                                        <span className="text-sm text-gray-500">
+                                        <span className="text-sm text-light-text-tertiary dark:text-dark-text-tertiary">
                                             {description?.length || 0}/200
                                         </span>
                                     </div>
@@ -271,7 +271,7 @@ export default function SubmitToolPage() {
                                 {/* Categories */}
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                             Parent Category{" "}
                                             <span className="text-red-500">
                                                 *
@@ -279,7 +279,7 @@ export default function SubmitToolPage() {
                                         </label>
                                         <select
                                             {...register("parentCategory")}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                            className="w-full px-4 py-3 rounded-lg border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-primary dark:text-dark-text-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
                                         >
                                             <option value="">Select...</option>
                                             <option value="ai-tools">
@@ -297,7 +297,7 @@ export default function SubmitToolPage() {
                                     </div>
 
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                        <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                             Category{" "}
                                             <span className="text-red-500">
                                                 *
@@ -305,7 +305,7 @@ export default function SubmitToolPage() {
                                         </label>
                                         <select
                                             {...register("category")}
-                                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                            className="w-full px-4 py-3 rounded-lg border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-primary dark:text-dark-text-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
                                         >
                                             <option value="">Select...</option>
                                             <option value="ai-writing">
@@ -334,7 +334,7 @@ export default function SubmitToolPage() {
 
                                 {/* Pricing */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                         Pricing Type{" "}
                                         <span className="text-red-500">*</span>
                                     </label>
@@ -354,9 +354,9 @@ export default function SubmitToolPage() {
                                                     {...register("pricing")}
                                                     type="radio"
                                                     value={type}
-                                                    className="w-4 h-4 text-light-text-primary focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                                    className="w-4 h-4 text-light-text-primary focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary border-light-border dark:border-dark-border"
                                                 />
-                                                <span className="ml-2 text-gray-700 dark:text-gray-300">
+                                                <span className="ml-2 text-light-text-secondary dark:text-dark-text-secondary">
                                                     {type}
                                                 </span>
                                             </label>
@@ -367,13 +367,13 @@ export default function SubmitToolPage() {
 
                             {/* Submitter Information */}
                             <div>
-                                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 pb-3 border-b border-gray-200 dark:border-gray-800">
+                                <h2 className="text-xl font-semibold text-light-text-primary dark:text-dark-text-primary mb-6 pb-3 border-b border-light-border dark:border-dark-border">
                                     Submitter Information
                                 </h2>
 
                                 {/* Email */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                         Email Address{" "}
                                         <span className="text-red-500">*</span>
                                     </label>
@@ -381,7 +381,7 @@ export default function SubmitToolPage() {
                                         {...register("email")}
                                         type="email"
                                         placeholder="your@email.com"
-                                        className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                        className="w-full px-4 py-3 rounded-lg border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-primary dark:text-dark-text-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
                                     />
                                     {errors.email && (
                                         <p className="mt-1 text-sm text-red-500">
@@ -392,7 +392,7 @@ export default function SubmitToolPage() {
 
                                 {/* Verification Code */}
                                 <div className="mb-6">
-                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    <label className="block text-sm font-medium text-light-text-secondary dark:text-dark-text-secondary mb-2">
                                         Verification Code{" "}
                                         <span className="text-red-500">*</span>
                                     </label>
@@ -401,13 +401,13 @@ export default function SubmitToolPage() {
                                             {...register("verificationCode")}
                                             type="text"
                                             placeholder="Enter code"
-                                            className="flex-1 px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
+                                            className="flex-1 px-4 py-3 rounded-lg border border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-primary dark:text-dark-text-primary focus:outline-none focus:ring-2 focus:ring-light-text-primary dark:focus:ring-dark-text-primary"
                                         />
                                         <button
                                             type="button"
                                             onClick={sendVerificationCode}
                                             disabled={codeSent && countdown > 0}
-                                            className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                            className="px-6 py-3 bg-light-bg-tertiary dark:bg-dark-bg-tertiary text-light-text-secondary dark:text-dark-text-secondary rounded-lg hover:opacity-80 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
                                             {codeSent && countdown > 0
                                                 ? `Resend (${Math.floor(countdown / 60)}:${String(countdown % 60).padStart(2, "0")})`
@@ -415,7 +415,7 @@ export default function SubmitToolPage() {
                                         </button>
                                     </div>
                                     {codeSent && (
-                                        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                                        <p className="mt-2 text-sm text-light-text-secondary dark:text-dark-text-secondary">
                                             Verification code sent to your
                                             email. Valid for 10 minutes.
                                         </p>
@@ -433,7 +433,7 @@ export default function SubmitToolPage() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="flex-1 px-6 py-3 bg-light-text-primary dark:bg-dark-text-primary text-white rounded-lg hover:opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                    className="flex-1 px-6 py-3 bg-light-text-primary dark:bg-dark-text-primary text-light-bg-primary dark:text-dark-bg-primary rounded-lg hover:opacity-90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                 >
                                     {isSubmitting && (
                                         <Loader2 className="w-5 h-5 animate-spin" />
@@ -442,7 +442,7 @@ export default function SubmitToolPage() {
                                 </button>
                                 <Link
                                     href="/"
-                                    className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors text-center"
+                                    className="px-6 py-3 bg-light-bg-tertiary dark:bg-dark-bg-tertiary text-light-text-secondary dark:text-dark-text-secondary rounded-lg hover:opacity-80 transition-opacity text-center"
                                 >
                                     Cancel
                                 </Link>

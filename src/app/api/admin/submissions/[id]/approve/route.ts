@@ -19,11 +19,11 @@ import { nanoid } from "nanoid";
  */
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } },
+    { params }: { params: Promise<{ id: string }> },
 ) {
     try {
         const session = await requireAdmin(request);
-        const { id } = params;
+        const { id } = await params;
         const db = await getDb();
 
         // Validate request body
@@ -35,7 +35,7 @@ export async function POST(
             return validation.error;
         }
 
-        const { isFeatured, isPublished } = validation.data;
+        const { isFeatured, isPublished } = validation.data as any;
 
         // Get submission
         const [submission] = await db

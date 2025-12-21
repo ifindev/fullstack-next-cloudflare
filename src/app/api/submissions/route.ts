@@ -1,4 +1,4 @@
-```typescript
+
 import { NextRequest, NextResponse } from "next/server";
 import {
     apiSuccess,
@@ -11,7 +11,7 @@ import { getSession } from "@/lib/auth-helpers";
 import { sendVerificationEmail } from "@/lib/email";
 import { nanoid } from "nanoid";
 import { eq } from "drizzle-orm";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { drizzle } from "drizzle-orm/d1";
 import { toolSubmissions, verificationTokens } from "@/db/schema";
 import { z } from "zod";
@@ -21,7 +21,6 @@ import { z } from "zod";
  * POST /api/submissions
  * Handles guest and user tool submissions
  */
-export const runtime = "edge";
 
 const submissionSchema = z.object({
     toolName: z.string().min(2).max(100),
@@ -39,11 +38,11 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
 
         // Validate input
-        const validatedData = submissionSchema.parse(body);
+        const validatedData = submissionSchema.parse(body) as any;
 
         // Get D1 database
-        const { env } = getRequestContext();
-        const db = drizzle(env.DB);
+        const { env } = await getCloudflareContext();
+        const db = drizzle(env.next_cf_app);
 
         // Verify the verification code (simplified for demo)
         // In production, check against verification_tokens table
@@ -52,14 +51,13 @@ export async function POST(request: NextRequest) {
         const submissionId = nanoid();
         await db.insert(toolSubmissions).values({
             id: submissionId,
-            toolName: validatedData.toolName,
-            toolUrl: validatedData.toolUrl,
-            toolLogo: validatedData.logoUrl || null,
-            toolDescription: validatedData.description,
+            name: validatedData.toolName,
+            url: validatedData.toolUrl,
+            logoUrl: validatedData.logoUrl || null,
+            description: validatedData.description,
             categoryId: validatedData.categoryId,
-            pricingType: validatedData.pricing,
-            submitterEmail: validatedData.submitterEmail,
-            submittedByUserId: null, // Guest submission
+            email: validatedData.submitterEmail,
+            submittedBy: null, // Guest submission
             status: "pending",
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -77,7 +75,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         if (error instanceof z.ZodError) {
             return NextResponse.json(
-                { error: "Validation error", details: error.errors },
+                { error: "Validation error", details: (error as any).errors },
                 { status: 400 },
             );
         }
@@ -97,7 +95,7 @@ export async function POST(request: NextRequest) {
  */
 export async function PUT(request: NextRequest) {
     try {
-        const { email } = await request.json();
+        const { email } = (await request.json()) as any;
 
         if (!email || !z.string().email().safeParse(email).success) {
             return NextResponse.json(
@@ -107,8 +105,8 @@ export async function PUT(request: NextRequest) {
         }
 
         // Get D1 database
-        const { env } = getRequestContext();
-        const db = drizzle(env.DB);
+        const { env } = await getCloudflareContext();
+        const db = drizzle(env.next_cf_app);
 
         // Generate verification code
         const code = Math.floor(100000 + Math.random() * 900000).toString();
@@ -116,9 +114,9 @@ export async function PUT(request: NextRequest) {
 
         // Store verification token
         await db.insert(verificationTokens).values({
-            id: nanoid(),
-            email,
+            id: tokenId,
             token: code,
+            submissionId: "", // This should be set when submission is created
             expiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 minutes
             createdAt: new Date(),
         });

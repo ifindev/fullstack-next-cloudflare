@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
         
         // Check cache
         const cacheKey = `tools:${request.url}`;
-        const cachedResult = getCached(cacheKey);
+        const cachedResult = getCached<{ data: any; meta: any }>(cacheKey);
         if (cachedResult) {
             return apiSuccess(cachedResult.data, cachedResult.meta);
         }

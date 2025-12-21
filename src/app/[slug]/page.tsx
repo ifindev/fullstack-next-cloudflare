@@ -141,7 +141,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     href={`#${subcat.slug}`}
                                     className="px-4 py-2 rounded-full text-sm font-medium transition-all bg-light-bg-primary dark:bg-dark-bg-primary text-light-text-secondary dark:text-dark-text-secondary border border-light-border dark:border-dark-border hover:border-light-text-primary dark:hover:border-dark-text-primary whitespace-nowrap"
                                 >
-                                    {subcat.icon && <span className="mr-2">{subcat.icon}</span>}
                                     {subcat.name}
                                 </Link>
                             ))}
@@ -160,7 +159,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                     {/* Subcategory Title */}
                                     <div className="mb-6">
                                         <h2 className="text-2xl md:text-3xl font-bold text-light-text-primary dark:text-dark-text-primary flex items-center gap-3">
-                                            {subcat.icon && <span className="text-3xl">{subcat.icon}</span>}
                                             {subcat.name}
                                         </h2>
                                         {subcat.description && (
@@ -185,6 +183,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
                                                 }}
                                                 url={tool.url}
                                                 isFeatured={tool.isFeatured}
+                                                pricing={tool.pricing as "Free" | "Freemium" | "Paid"}
                                             />
                                         ))}
                                     </div>

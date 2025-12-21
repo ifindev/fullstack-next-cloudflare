@@ -10,14 +10,11 @@ export function PricingBadge({
     pricing,
     size = "sm",
 }: {
-    pricing: "Free" | "Freemium" | "Paid";
+    pricing: "Free" | "Freemium" | "Paid" | string;
     size?: "sm" | "md";
 }) {
-    const labels = {
-        Free: "免费",
-        Freemium: "免费试用",
-        Paid: "付费",
-    };
+    // Display pricing as-is in English
+    const displayLabel = pricing || "Free";
 
     // Apple-style: No colors, only black/white/gray with border
     const borderStyle =
@@ -27,7 +24,7 @@ export function PricingBadge({
         <span
             className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-md ${borderStyle} ${size === "md" ? "text-sm px-3 py-1.5" : ""}`}
         >
-            {labels[pricing]}
+            {displayLabel}
         </span>
     );
 }

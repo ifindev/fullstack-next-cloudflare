@@ -17,11 +17,11 @@ import { eq } from "drizzle-orm";
  */
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } },
+    { params }: { params: Promise<{ id: string }> },
 ) {
     try {
         await requireAdmin(request);
-        const { id } = params;
+        const { id } = await params;
         const db = await getDb();
 
         // Validate request body
@@ -30,7 +30,7 @@ export async function PUT(
             return validation.error;
         }
 
-        const data = validation.data;
+        const data = validation.data as any;
 
         // Check post exists
         const [existing] = await db
@@ -45,7 +45,7 @@ export async function PUT(
 
         // Prepare update data
         const updateData: any = {
-            ...data,
+            ...(data as any),
             updatedAt: new Date(),
         };
 
@@ -81,11 +81,11 @@ export async function PUT(
  */
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } },
+    { params }: { params: Promise<{ id: string }> },
 ) {
     try {
         await requireAdmin(request);
-        const { id } = params;
+        const { id } = await params;
         const db = await getDb();
 
         // Check post exists

@@ -13,9 +13,10 @@ const mockTool = {
     isPublished: true,
 };
 
-export default function EditToolPage({ params }: { params: { id: string } }) {
-    // TODO: 从 API 获取工具数据
-    const toolId = params.id;
+import { use } from "react";
 
-    return <ToolForm mode="edit" toolId={toolId} initialData={mockTool} />;
+export default function EditToolPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params);
+
+    return <ToolForm mode="edit" toolId={id} initialData={mockTool} />;
 }

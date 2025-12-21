@@ -34,8 +34,8 @@ async function getAuth() {
         socialProviders: {
             google: {
                 enabled: true,
-                clientId: env.GOOGLE_CLIENT_ID!,
-                clientSecret: env.GOOGLE_CLIENT_SECRET!,
+                clientId: (env as any).GOOGLE_CLIENT_ID!,
+                clientSecret: (env as any).GOOGLE_CLIENT_SECRET!,
             },
         },
         plugins: [nextCookies()],

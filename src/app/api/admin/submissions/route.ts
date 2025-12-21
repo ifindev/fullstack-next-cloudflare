@@ -8,7 +8,7 @@ import {
     handleApiError,
 } from "@/lib/api-utils";
 import { requireAdmin } from "@/lib/auth-helpers";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, desc, and, sql } from "drizzle-orm";
 
 /**
  * GET /api/admin/submissions

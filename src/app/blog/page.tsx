@@ -121,10 +121,10 @@ export default function BlogPage() {
             <section className="bg-gradient-to-b from-light-bg-secondary dark:from-dark-bg-secondary to-light-bg-primary dark:to-dark-bg-primary py-12 sm:py-16">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-3xl mx-auto">
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-light-text-primary dark:text-dark-text-primary mb-4">
                             Blog
                         </h1>
-                        <p className="text-lg text-gray-600 dark:text-gray-400">
+                        <p className="text-lg text-light-text-secondary dark:text-dark-text-secondary">
                             Insights, tutorials, and reviews about the latest
                             tools and technologies
                         </p>
@@ -133,7 +133,7 @@ export default function BlogPage() {
             </section>
 
             {/* Category Filter */}
-            <section className="border-b bg-white dark:bg-gray-950">
+            <section className="border-b border-light-border dark:border-dark-border bg-light-bg-primary dark:bg-dark-bg-primary">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex gap-3 overflow-x-auto py-4">
                         {categories.map((category) => (
@@ -146,7 +146,7 @@ export default function BlogPage() {
                                 className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                                     activeCategory === category.id
                                         ? "bg-light-text-primary dark:bg-dark-text-primary text-white"
-                                        : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                                        : "bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-bg-tertiary dark:hover:bg-dark-bg-tertiary"
                                 }`}
                             >
                                 {category.name}
@@ -157,7 +157,7 @@ export default function BlogPage() {
             </section>
 
             {/* Blog Posts Grid */}
-            <section className="py-12 bg-white dark:bg-gray-950">
+            <section className="py-12 bg-light-bg-primary dark:bg-dark-bg-primary">
                 <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                     {currentPosts.length > 0 ? (
                         <>
@@ -177,7 +177,7 @@ export default function BlogPage() {
                                             )
                                         }
                                         disabled={currentPage === 1}
-                                        className="p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="p-2 rounded-lg border border-light-border dark:border-dark-border hover:bg-light-bg-secondary dark:hover:bg-dark-bg-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
                                         <ChevronLeft className="w-5 h-5" />
                                     </button>
@@ -192,7 +192,7 @@ export default function BlogPage() {
                                             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                                                 currentPage === page
                                                     ? "bg-light-text-primary dark:bg-dark-text-primary text-white"
-                                                    : "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                                                    : "bg-light-bg-secondary dark:bg-dark-bg-secondary text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-bg-tertiary dark:hover:bg-dark-bg-tertiary"
                                             }`}
                                         >
                                             {page}
@@ -206,7 +206,7 @@ export default function BlogPage() {
                                             )
                                         }
                                         disabled={currentPage === totalPages}
-                                        className="p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="p-2 rounded-lg border border-light-border dark:border-dark-border hover:bg-light-bg-secondary dark:hover:bg-dark-bg-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                                     >
                                         <ChevronRight className="w-5 h-5" />
                                     </button>
@@ -215,7 +215,7 @@ export default function BlogPage() {
                         </>
                     ) : (
                         <div className="text-center py-12">
-                            <p className="text-gray-600 dark:text-gray-400 text-lg">
+                            <p className="text-light-text-secondary dark:text-dark-text-secondary text-lg">
                                 No blog posts found in this category.
                             </p>
                         </div>

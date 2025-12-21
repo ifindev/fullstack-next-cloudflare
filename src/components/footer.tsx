@@ -49,11 +49,34 @@ export function Footer() {
                     <div className="space-y-4">
                         <Link
                             href="/"
-                            className="flex items-center space-x-2 font-bold text-xl"
+                            className="flex items-center space-x-2 font-bold text-lg"
                         >
-                            <span className="text-light-text-primary dark:text-dark-text-primary">
-                                🧭
-                            </span>
+                            {/* SVG Logo - Compact Toolbox */}
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 200 200"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="text-light-text-primary dark:text-dark-text-primary"
+                            >
+                                {/* 外框 - 工具箱容器 */}
+                                <rect x="40" y="40" width="120" height="120" rx="24"
+                                      fill="none" stroke="currentColor" strokeWidth="8"/>
+
+                                {/* 工具箱把手 */}
+                                <path d="M 80 40 Q 80 55 100 55 Q 120 55 120 40"
+                                      fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round"/>
+
+                                {/* 扳手符号 */}
+                                <g transform="translate(100, 115)">
+                                    <rect x="-4" y="-25" width="8" height="35" rx="2" fill="currentColor"/>
+                                    <rect x="-12" y="-28" width="24" height="6" rx="1" fill="currentColor"/>
+                                    <rect x="-12" y="-35" width="24" height="4" rx="1" fill="currentColor"/>
+                                </g>
+
+                                {/* 向上箭头 */}
+                                <polygon points="100,75 95,85 105,85" fill="currentColor" opacity="0.4"/>
+                            </svg>
                             <span className="text-light-text-primary dark:text-dark-text-primary">
                                 Toolsail
                             </span>

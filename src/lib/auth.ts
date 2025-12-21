@@ -17,7 +17,7 @@ const createAuth = async () => {
     const db = await getDb();
 
     // Initialize Resend for email sending
-    const resend = new Resend(env.RESEND_API_KEY);
+    const resend = new Resend((env as any).RESEND_API_KEY);
 
     authInstance = betterAuth({
         secret: env.BETTER_AUTH_SECRET,
@@ -30,7 +30,7 @@ const createAuth = async () => {
             sendResetPassword: async ({ user, url }) => {
                 // Send password reset email
                 await resend.emails.send({
-                    from: env.SMTP_FROM_EMAIL || "noreply@toolsail.top",
+                    from: (env as any).SMTP_FROM_EMAIL || "noreply@toolsail.top",
                     to: user.email,
                     subject: "Reset your Toolsail password",
                     html: `
@@ -58,8 +58,8 @@ const createAuth = async () => {
             google: {
                 enabled:
                     process.env.NEXT_PUBLIC_FEATURE_GOOGLE_OAUTH === "true",
-                clientId: env.GOOGLE_CLIENT_ID!,
-                clientSecret: env.GOOGLE_CLIENT_SECRET!,
+                clientId: (env as any).GOOGLE_CLIENT_ID!,
+                clientSecret: (env as any).GOOGLE_CLIENT_SECRET!,
             },
         },
         session: {
@@ -86,4 +86,4 @@ export const getAuth = async () => {
 };
 
 export type Session = Awaited<ReturnType<typeof getAuth>>["$Infer"]["Session"];
-export type User = Awaited<ReturnType<typeof getAuth>>["$Infer"]["User"];
+export type User = Session["user"];

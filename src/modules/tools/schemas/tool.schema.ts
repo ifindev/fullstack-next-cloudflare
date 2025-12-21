@@ -25,6 +25,11 @@ export const tools = sqliteTable("tools", {
     isFeatured: integer("is_featured", { mode: "boolean" })
         .notNull()
         .default(false),
+    
+    // Pricing
+    pricing: text("pricing", { enum: ["Free", "Freemium", "Paid"] })
+        .notNull()
+        .default("Free"),
 
     // Submission tracking
     submissionId: text("submission_id").unique(),

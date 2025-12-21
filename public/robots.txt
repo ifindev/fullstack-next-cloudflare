@@ -1,0 +1,19 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin pages
+Disallow: /admin/
+Disallow: /api/admin/
+Disallow: /dashboard/
+
+# Disallow auth pages
+Disallow: /auth/
+Disallow: /login
+Disallow: /signup
+
+# Disallow API endpoints (except public ones)
+Disallow: /api/dev/
+
+# Sitemap location
+Sitemap: https://next-cf-app.lindalu125.workers.dev/sitemap.xml

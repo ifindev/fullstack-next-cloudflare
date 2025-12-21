@@ -1,0 +1,14 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- 工具箱背景 - 深色 -->
+  <rect x="4" y="4" width="24" height="24" rx="5" fill="#1a1a1a"/>
+  
+  <!-- 把手 - 白色对比 -->
+  <path d="M 11 4 Q 11 9 16 9 Q 21 9 21 4" 
+        fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round"/>
+  
+  <!-- 扳手 - 白色对比 -->
+  <g transform="translate(16, 20)">
+    <rect x="-2" y="-7" width="4" height="10" rx="1" fill="#ffffff"/>
+    <rect x="-4" y="-9" width="8" height="2" rx="0.5" fill="#ffffff"/>
+  </g>
+</svg>

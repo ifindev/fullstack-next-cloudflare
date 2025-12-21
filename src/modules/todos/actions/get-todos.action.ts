@@ -1,7 +1,7 @@
 "use server";
 
 import { and, eq } from "drizzle-orm";
-import { categories, getDb } from "@/db";
+import { getDb, todoCategories as categories } from "@/db";
 import { requireAuth } from "@/modules/auth/utils/auth-utils";
 import { type Todo, todos } from "@/modules/todos/schemas/todo.schema";
 

@@ -18,11 +18,11 @@ import { eq } from "drizzle-orm";
  */
 export async function POST(
     request: NextRequest,
-    { params }: { params: { id: string } },
+    { params }: { params: Promise<{ id: string }> },
 ) {
     try {
         const session = await requireAdmin(request);
-        const { id } = params;
+        const { id } = await params;
         const db = await getDb();
 
         // Validate request body
@@ -34,7 +34,7 @@ export async function POST(
             return validation.error;
         }
 
-        const { reason } = validation.data;
+        const { reason } = validation.data as any;
 
         // Get submission
         const [submission] = await db

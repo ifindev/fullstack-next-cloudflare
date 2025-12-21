@@ -27,8 +27,10 @@ const mockPost = {
     isPublished: true,
 };
 
-export default function EditBlogPage({ params }: { params: { id: string } }) {
-    const postId = params.id;
+import { use } from "react";
 
-    return <BlogForm mode="edit" postId={postId} initialData={mockPost} />;
+export default function EditBlogPage({ params }: { params: Promise<{ id: string }> }) {
+    const { id } = use(params);
+
+    return <BlogForm mode="edit" postId={id} initialData={mockPost} />;
 }
