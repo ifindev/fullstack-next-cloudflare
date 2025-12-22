@@ -2,6 +2,7 @@
 
 import { Trash2 } from "lucide-react";
 import { useState, useTransition } from "react";
+import toast from "react-hot-toast";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -37,7 +38,7 @@ export function DeleteTodo({ todoId }: DeleteTodoProps) {
                 setIsOpen(false);
             } catch (error) {
                 console.error("Error deleting todo:", error);
-                alert(
+                toast.error(
                     `Error deleting todo: ${error instanceof Error ? error.message : "Unknown error"}`,
                 );
             }
