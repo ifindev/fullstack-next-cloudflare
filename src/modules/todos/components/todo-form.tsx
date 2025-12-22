@@ -3,8 +3,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import type { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -72,6 +74,7 @@ export function TodoForm({
     categories: initialCategories,
     initialData,
 }: TodoFormProps) {
+    const router = useRouter();
     const [isPending, startTransition] = useTransition();
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(
@@ -162,12 +165,21 @@ export function TodoForm({
                     formData.append("image", imageFile);
                 }
 
-                if (initialData) {
-                    await updateTodoAction(initialData.id, formData);
-                } else {
-                    await createTodoAction(formData);
-                }
+                // Show success feedback before redirect
+                const actionPromise = initialData
+                    ? updateTodoAction(initialData.id, formData)
+                    : createTodoAction(formData);
+
+                await toast.promise(actionPromise, {
+                    loading: initialData ? "Updating todo..." : "Creating todo...",
+                    success: initialData
+                        ? "Todo updated successfully!"
+                        : "Todo created successfully!",
+                    error: (err) =>
+                        err instanceof Error ? err.message : "Failed to save todo",
+                });
             } catch (error) {
+                // Error already shown by toast.promise
                 console.error("Error saving todo:", error);
             }
         });
